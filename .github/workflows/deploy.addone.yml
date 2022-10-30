@@ -1,0 +1,143 @@
+name: Deploy::Addone
+
+on:
+  workflow_dispatch:
+    inputs:
+      use_cache:
+        description: '是否使用缓存'
+        required: true
+        default: 'true'
+      use_publish:
+        description: '审核通过后是否立即发布'
+        required: true
+        default: 'true'
+  push:
+    tags:
+      - 'v*'
+    paths-ignore:
+      - 'docs/**'
+      - 'scripts/**'
+      - '*.md'
+      - '*.editorconfig'
+      - '*.gitignore'
+
+env:
+  KEY_PEM: ${{ secrets.KEY_PEM }}
+  EDGE_APPID: ${{ secrets.EDGE_APPID }}
+  EDGE_CLIENT_ID: ${{ secrets.EDGE_CLIENT_ID }}
+  EDGE_CLIENT_SECRET: ${{ secrets.EDGE_CLIENT_SECRET }}
+  EDGE_ACCESS_TOKEN_URL: ${{ secrets.EDGE_ACCESS_TOKEN_URL }}
+  CHROME_APPID: ${{ secrets.CHROME_APPID }}
+  CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
+  CHROME_CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECRET }}
+  CHROME_REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Actions
+        uses: actions/checkout@v2
+      - name: Get version from Tags
+        id: prep
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          VERSION=$(echo "${VERSION}" | sed 's/v//')
+          echo ::set-output name=version::${VERSION}
+      - name: Rename Version
+        run: |
+          sed -i "s/\"1.0.0\"/\"${VERSION}\"/" package.json
+        env:
+          VERSION: ${{ steps.prep.outputs.version }}
+      - name: Install Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Cache node modules
+        if: ${{ github.event.inputs.use_cache != 'false' }}
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install yarn dependencies
+        run: yarn
+      - name: yarn patchpackage
+        run: yarn patchpackage
+      - name: Run build
+        run: yarn build:prod.addone
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
+      - name: Generate File 📃
+        run: |
+          cd dist/
+          echo $KEY_PEM > ./key.pem
+          zip -r -FS plugin.zip *
+        env:
+          KEY_PEM: ${{ env.KEY_PEM }}
+      - uses: actions/upload-artifact@v3
+        with:
+          name: plugin.zip
+          path: ./dist/plugin.zip
+  publish-github-artifact:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: plugin.zip
+          path: ./dist
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./dist/plugin.zip
+          asset_name: ${{github.event.repository.name}}.zip
+          asset_content_type: application/zip
+  publish-chrome-store:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: plugin.zip
+          path: ./dist
+      - name: Publish to Chrome store
+        uses: Klemensas/chrome-extension-upload-action@v1.3
+        with:
+          refresh-token: ${{ env.CHROME_REFRESH_TOKEN }}
+          client-id: ${{ env.CHROME_CLIENT_ID }}
+          client-secret: ${{ env.CHROME_CLIENT_SECRET }}
+          file-name: ./dist/plugin.zip
+          app-id: ${{ env.CHROME_APPID }}
+          publish: ${{ github.event.inputs.use_publish != 'false' }}
+  publish-edge-store:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: plugin.zip
+          path: ./dist
+      - name: Publish to Edge store
+        uses: hocgin/action-edge-addone-upload@main
+        with:
+          product_id: ${{ env.EDGE_APPID }}
+          client_id: ${{ env.EDGE_CLIENT_ID }}
+          client_secret: ${{ env.EDGE_CLIENT_SECRET }}
+          access_token_url: ${{ env.EDGE_ACCESS_TOKEN_URL }}
+          addone_file: ./dist/plugin.zip

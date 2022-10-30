@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dm-antd-ssr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: antd-ssr
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: antd-ssr
+    spec:
+      containers:
+        - name: antd-ssr
+          image: registry.cn-hongkong.aliyuncs.com/hocgin/antd-ssr:latest
+          imagePullPolicy: Always
+          ports:
+            - name: web-port
+              containerPort: 7001
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sv-antd-ssr
+spec:
+  type: NodePort
+  ports:
+    - port: 30001
+      targetPort: 7001
+      protocol: TCP
+  selector:
+    app: antd-ssr
