@@ -1,7 +1,7 @@
 import {Container} from '@/components';
 import {WebExtension} from '@hocgin/browser-addone-kit';
 import React, {useEffect, useRef, useState} from "react";
-import * as WebDav from "webdav/web";
+import WebDavService from '@/services/webdav';
 
 
 const Index: React.FC<{
@@ -9,20 +9,17 @@ const Index: React.FC<{
 }> = ({getInstance}) => {
   let [data, setData] = useState<any>({});
 
+
   const _webdavRef = useRef<any>(null);
   useEffect(() => {
-    console.log('WebDav', WebDav);
-    let client = WebDav.createClient("https://dav.jianguoyun.com/dav/", {
-      username: 'hocgin@gmail.com',
-      password: 'az9badd6nzagxdxc',
-    });
-    _webdavRef.current = client;
+    let webDavInfo = WebDavService.get('1');
+    _webdavRef.current = webDavInfo.getClient();
 
     if (getInstance && typeof getInstance === 'function') {
       getInstance(_webdavRef.current);
     }
 
-    client.getDirectoryContents("/我的坚果云").then(setData);
+    webDavInfo.getRootContents().then(setData);
     return () => {
       _webdavRef.current?.destroy();
     };
