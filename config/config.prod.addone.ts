@@ -11,27 +11,35 @@ export default defineConfig({
   extraBabelPlugins: ['transform-remove-console'],
   plugins: ['@hocgin/umijs-plugin-browser-addone'],
   extensions: {
+    name: '__MSG_extension_name__',
+    description: '__MSG_extension_description__',
     icons: '../public/logo.jpg',
-    contentScripts: [
-      {
-        matches: ['https://baidu.com/*'],
-        entries: ['@/pages/_tpl/contentScripts/github'],
-      },
-      {
-        matches: ['https://baidu.com/*', 'https://www.baidu.com/*'],
-        entries: ['@/pages/_tpl/contentScripts/baidu'],
-        runAt: 'document_end',
-      },
-    ],
+    defaultLocale: 'zh_CN',
+    action: {
+      defaultTitle: "打开仪表盘",
+    },
     background: {
-      serviceWorker: '@/pages/_tpl/background/index',
+      serviceWorker: '@/pages/background/index',
     },
     permissions: [
+      'action',
+      'downloads',
       'contextMenus',
       'webRequest',
       'storage',
       'notifications',
     ],
     hostPermissions: ['<all_urls>'],
+    override: {
+      commands: {
+        open_dashboard: {
+          suggested_key: {
+            default: "Alt+O",
+            mac: "Alt+O"
+          },
+          description: "Open Dashboard"
+        }
+      },
+    }
   } as BrowserAddoneExtensionsType,
 });

@@ -32,19 +32,21 @@
     ]
   },
   "dependencies": {
-    "@hocgin/browser-addone-kit": "^1.0.76",
-    "@hocgin/mock-kit": "^1.0.76",
-    "@hocgin/hkit": "^1.0.76",
+    "@hocgin/browser-addone-kit": "^1.0.78",
+    "@hocgin/hkit": "^1.0.78",
+    "@hocgin/mock-kit": "^1.0.78",
     "@hocgin/ui": "^4.2.7",
     "antd": "4.22.5",
     "classnames": "^2.3.1",
+    "cross-fetch": "^3.1.5",
     "mockjs": "^1.1.0",
     "query-string": "^7.0.1",
     "react": "17.x",
-    "react-dom": "17.x"
+    "react-dom": "17.x",
+    "webdav": "^4.11.0"
   },
   "devDependencies": {
-    "@hocgin/umijs-plugin-browser-addone": "^1.0.76",
+    "@hocgin/umijs-plugin-browser-addone": "^1.0.78",
     "@types/mockjs": "^1.0.6",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
@@ -57,7 +59,7 @@
     "lint-staged": "^10.0.7",
     "prettier": "^2.2.0",
     "typescript": "^4.1.2",
-    "yorkie": "^2.0.0",
-    "umi": "^3.5.20"
+    "umi": "^3.5.20",
+    "yorkie": "^2.0.0"
   }
 }

@@ -3,11 +3,9 @@ export default [
     path: '/',
     component: '@/layouts/BasicLayout',
     routes: [
-      { path: '/', component: '@/pages/index' },
-      { path: '/tpl', component: '@/pages/_tpl' },
-      { path: '/tpl/demo', component: '@/pages/_tpl/demo' },
-      { path: '/tpl/ssr', component: '@/pages/_tpl/ssr' },
+      {path: '/', component: '@/pages/index'},
+      {path: '/dashboard', component: '@/pages/dashboard'},
     ],
   },
-  { component: '@/pages/404' },
+  {component: '@/pages/404'},
 ];
