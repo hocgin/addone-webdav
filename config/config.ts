@@ -1,4 +1,4 @@
-import { defineConfig } from 'umi';
+import {defineConfig} from 'umi';
 import routerConfig from '../src/router.config';
 
 export default defineConfig({
@@ -27,10 +27,12 @@ export default defineConfig({
       // => 转到服务端地址
       target: 'http://127.0.0.1:20001/',
       changeOrigin: true,
-      pathRewrite: { '^/api': '' },
+      pathRewrite: {'^/api': ''},
     },
   },
-  theme: {},
+  theme: {
+    '@primary-color': '#262626',
+  },
   routes: [...routerConfig],
   extraBabelPlugins: [
     [

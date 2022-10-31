@@ -18,7 +18,9 @@ const Index: React.FC<{
       label: <UploadButton webDav$={webDav$} directory={true}>上传文件夹</UploadButton>,
       key: 'directory',
     }]}
-  />} type="primary"><UploadOutlined /><UploadButton webDav$={webDav$}>{children}</UploadButton></Dropdown.Button>;
+  />} type="primary">
+    <UploadOutlined /><UploadButton webDav$={webDav$} style={{color: '#fff'}}>{children}</UploadButton>
+  </Dropdown.Button>;
 };
 
 export default Index;
