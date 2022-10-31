@@ -4,6 +4,7 @@ import {EventEmitter} from 'ahooks/lib/useEventEmitter';
 import {WebDavEventType} from '@/_utils/types';
 import {UploadOutlined} from '@ant-design/icons';
 import UploadButton from "@/components/FileContent/UploadFile/UploadButton";
+import styles from "./index.less";
 
 
 const Index: React.FC<{
@@ -19,7 +20,7 @@ const Index: React.FC<{
       key: 'directory',
     }]}
   />} type="primary">
-    <UploadOutlined /><UploadButton webDav$={webDav$} style={{color: '#fff'}}>{children}</UploadButton>
+    <UploadOutlined /><UploadButton webDav$={webDav$} className={styles.uploadButton}>{children}</UploadButton>
   </Dropdown.Button>;
 };
 
