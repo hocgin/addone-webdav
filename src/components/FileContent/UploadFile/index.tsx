@@ -20,7 +20,7 @@ const Index: React.FC<{
       key: 'directory',
     }]}
   />} type="primary">
-    <UploadOutlined /><UploadButton webDav$={webDav$} className={styles.uploadButton}>{children}</UploadButton>
+    <UploadButton webDav$={webDav$} className={styles.uploadButton}><UploadOutlined />{children}</UploadButton>
   </Dropdown.Button>;
 };
 

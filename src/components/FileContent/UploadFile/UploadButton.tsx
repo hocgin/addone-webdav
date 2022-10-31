@@ -7,7 +7,7 @@ import classnames from "classnames";
 const Index: React.FC<{
   style?: any;
   className?: string;
-  children?: string;
+  children?: any;
   directory?: boolean;
   webDav$: EventEmitter<WebDavEventType>;
 }> = ({className, style, children, webDav$, directory = false}) => {
@@ -21,7 +21,7 @@ const Index: React.FC<{
     fileList: [],
     directory: directory
   };
-  return <Upload {...props} className={classnames(className)} style={style}>
+  return <Upload {...props} className={classnames(className)} style={{width: '100%'}}>
     {children}
   </Upload>;
 };
