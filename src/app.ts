@@ -6,12 +6,14 @@ import fetch from "cross-fetch";
 import {addLocale, getAllLocales, localeInfo,} from 'umi';
 
 // webdav 兼容 fetch
-getPatcher().patch("request", (opts: RequestOptions) => fetch(opts.url, {
+getPatcher().patch("request", (opts: RequestOptions) => {
+  console.log('patch', opts);
+  return fetch(opts.url, {
     method: opts.method,
     headers: opts.headers,
     body: opts.data as any
   })
-);
+});
 
 // 国际化配置
 getAllLocales().forEach((locale) => {

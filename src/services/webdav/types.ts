@@ -1,5 +1,6 @@
 import {WebDAVClient} from "webdav";
 import * as WebDav from "webdav/web";
+import {FileStat} from "webdav/dist/node/types";
 
 export interface WebDavOption {
   id?: string;
@@ -13,16 +14,34 @@ export enum WebDavType {
 
 }
 
-export class WebDavInfo {
-  private id: string;
-  private remoteUrl: string;
-  private username: string;
-  private password: string;
-  private rootDir: string;
+export interface WebDavData {
+  id: string;
+  remoteUrl: string;
+  username: string;
+  password: string;
+  rootDir: string;
+}
+
+export interface WebDavFile {
+  filename: string,
+  basename: string,
+  lastmod: string,
+  size: number,
+  type: 'directory' | 'file',
+  etag?: string,
+  mime?: string,
+}
+
+export class WebDavInfo implements WebDavData {
+  public id: string;
+  public remoteUrl: string;
+  public username: string;
+  public password: string;
+  public rootDir: string;
   private client?: WebDAVClient;
 
   constructor({id, remoteUrl, username, password, rootDir = '/'}: WebDavOption) {
-    this.id = id ?? `${remoteUrl}@${username}`;
+    this.id = id ?? encodeURIComponent(`${remoteUrl}@${username}`);
     this.remoteUrl = remoteUrl;
     this.username = username;
     this.password = password;
@@ -39,7 +58,12 @@ export class WebDavInfo {
     return this.client;
   }
 
-  public async getRootContents() {
-    return this.client?.getDirectoryContents(this.rootDir);
+  public async getRootContents(): Promise<FileStat[] | any> {
+    return this.getClient().getDirectoryContents(this.rootDir);
+  }
+
+  public destroy() {
+    //this.client?.destroy?.();
+    delete this.client;
   }
 }

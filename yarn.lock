@@ -1192,6 +1192,18 @@
   resolved "https://registry.npmmirror.com/@qixian.cs/path-to-regexp/-/path-to-regexp-6.1.0.tgz#6b84ad01596332aba95fa29d2e70104698cd5c45"
   integrity sha512-2jIiLiVZB1jnY7IIRQKtoV8Gnr7XIhk4mC88ONGunZE3hYt5IHUG4BE/6+JiTBjjEWQLBeWnZB8hGpppkufiVw==
 
+"@right-menu/core@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.npmjs.org/@right-menu/core/-/core-0.0.7.tgz#65a731cc48b15b782d527e9a19d803c3281bb89b"
+  integrity sha512-DMqdTOfFflBWrBcmsq4oP+vDn47d4YopjOALVxSpt/KJdV0TYwsGiIXMPomd46eHjTHJS7NDDsfajPastgPR7w==
+
+"@right-menu/react@0.0.5":
+  version "0.0.5"
+  resolved "https://registry.npmjs.org/@right-menu/react/-/react-0.0.5.tgz#be6f60320188b440ceee16cb3c47aae0a066dc69"
+  integrity sha512-x56/leWtW+cQhMNwEFxOTnhlGgCETzx4RWrnMq6Be7Bll/kcdzfprozoNUEDcTM1HykcSwxeSxIDuV/KwrzVsQ==
+  dependencies:
+    "@right-menu/core" "^0.0.7"
+
 "@sinonjs/commons@^1.7.0":
   version "1.8.3"
   resolved "https://registry.npmmirror.com/@sinonjs/commons/-/commons-1.8.3.tgz#3802ddd21a50a949b6721ddd72da36e67e7f1b2d"
@@ -2608,6 +2620,20 @@ ahooks@^3.3.8:
   version "3.3.10"
   resolved "https://registry.npmmirror.com/ahooks/-/ahooks-3.3.10.tgz#a65782b0ce29df3508b5ca76355fb3005d64a011"
   integrity sha512-CNZQRnNkvbafV5qdGcx7AT81XJNPa7vAo1XoShvdI8s6oHigTrmc+kWkyWWEywiEchF992Z6oIQEXkSsL034fw==
+  dependencies:
+    "@types/js-cookie" "^2.x.x"
+    ahooks-v3-count "^1.0.0"
+    dayjs "^1.9.1"
+    intersection-observer "^0.12.0"
+    js-cookie "^2.x.x"
+    lodash "^4.17.21"
+    resize-observer-polyfill "^1.5.1"
+    screenfull "^5.0.0"
+
+ahooks@^3.7.2:
+  version "3.7.2"
+  resolved "https://registry.npmjs.org/ahooks/-/ahooks-3.7.2.tgz#0afa42625e77ae1cc4b60b19c45cf12a8cf29b56"
+  integrity sha512-nJPsQJcmJnGaNXiqgZdfO7UMs+o926LQg6VyDYt2vzKhXU8Ze/U87NsA/FeIvlIZB0rQr/j7uotFb1bGPp627A==
   dependencies:
     "@types/js-cookie" "^2.x.x"
     ahooks-v3-count "^1.0.0"

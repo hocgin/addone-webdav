@@ -1,43 +1,48 @@
-import {Container} from '@/components';
-import {WebExtension} from '@hocgin/browser-addone-kit';
-import React, {useEffect, useRef, useState} from "react";
+import { Container } from '@/components';
+import React, { useEffect, useRef, useState } from 'react';
 import WebDavService from '@/services/webdav';
+import { Button, Layout, Menu, Dropdown } from 'antd';
+import { useRequest } from 'ahooks';
+import { WebDavData } from '@/services/webdav/types';
+import FileContent from '@/components/FileContent';
+import styles from './index.less';
 
+const { Header, Footer, Sider, Content } = Layout;
 
 const Index: React.FC<{
   getInstance?: (_: any) => void;
-}> = ({getInstance}) => {
-  let [data, setData] = useState<any>({});
-
-
-  const _webdavRef = useRef<any>(null);
-  useEffect(() => {
-    let webDavInfo = WebDavService.get('1');
-    _webdavRef.current = webDavInfo.getClient();
-
-    if (getInstance && typeof getInstance === 'function') {
-      getInstance(_webdavRef.current);
-    }
-
-    webDavInfo.getRootContents().then(setData);
-    return () => {
-      _webdavRef.current?.destroy();
-    };
-  }, []);
-
-
-  let onClickHi = async () => {
-    let tab: any = await WebExtension.kit.getCurrentTab();
-    WebExtension.tabs.sendMessage(tab.id, {greeting: "hello"}, (response: any) => {
-      console.log('获得响应')
-    })
-  };
-
-
+}> = ({ getInstance }) => {
+  let [webDav, setWebDav] = useState<WebDavData[]>([]);
+  let [activeId, setActiveId] = useState<string | undefined>();
+  useRequest(WebDavService.list, {
+    onSuccess: (data) => {
+      setWebDav(data);
+      if (data.length && !activeId) {
+        setActiveId(data[0].id);
+      }
+    },
+  });
+  console.log('webDav', webDav, activeId);
   return (
-    <Container>
-      <h1 onClick={onClickHi}>{JSON.stringify(data)}</h1>
+    <Container className={styles.container}>
+      <Layout className={styles.layout}>
+        <Sider className={styles.sider}>
+          <div className={styles.siderHeader}>
+            <Button type="primary" block>
+              新增账号
+            </Button>
+          </div>
+          <Menu
+            mode="inline"
+            items={webDav.map(({ id, username }) => ({
+              key: id,
+              label: username,
+            }))}
+          />
+        </Sider>
+        <FileContent clientId={activeId} />
+      </Layout>
     </Container>
   );
-}
+};
 export default Index;

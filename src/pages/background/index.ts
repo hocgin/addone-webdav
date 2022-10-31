@@ -1,5 +1,5 @@
-import {WebExtension} from '@hocgin/browser-addone-kit';
-import {ServiceWorkerOptions} from "@hocgin/browser-addone-kit/es/browser/serviceWorker";
+import { WebExtension } from '@hocgin/browser-addone-kit';
+import { ServiceWorkerOptions } from '@hocgin/browser-addone-kit/es/browser/serviceWorker';
 
 WebExtension.kit.serviceWorker(ServiceWorkerOptions.default);
 
@@ -9,11 +9,11 @@ let openNewWindow = (...args: any) => {
   const windowOptions: any = {
     url: WebExtension.runtime.getURL(`/dashboard.html`),
     height: 715,
-    width: 750,
+    width: 1200,
     type: 'popup',
     focused: true,
   };
   WebExtension.windows.create(windowOptions);
 };
-WebExtension.action.onClicked.addListener(openNewWindow)
+WebExtension.action.onClicked.addListener(openNewWindow);
 WebExtension.commands.onCommand.addListener(openNewWindow);

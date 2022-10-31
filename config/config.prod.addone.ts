@@ -8,7 +8,7 @@ export default defineConfig({
     // 单点登录地址
     ssoServerUrl: '/login',
   },
-  extraBabelPlugins: ['transform-remove-console'],
+  // extraBabelPlugins: ['transform-remove-console'],
   plugins: ['@hocgin/umijs-plugin-browser-addone'],
   extensions: {
     name: '__MSG_extension_name__',
