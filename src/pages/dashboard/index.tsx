@@ -1,17 +1,19 @@
-import { Container } from '@/components';
-import React, { useEffect, useRef, useState } from 'react';
+import {Container} from '@/components';
+import React, {useEffect, useRef, useState} from 'react';
 import WebDavService from '@/services/webdav';
-import { Button, Layout, Menu, Dropdown } from 'antd';
-import { useRequest } from 'ahooks';
-import { WebDavData } from '@/services/webdav/types';
+import {Button, Layout, Menu, Dropdown} from 'antd';
+import {useRequest} from 'ahooks';
+import {WebDavData} from '@/services/webdav/types';
 import FileContent from '@/components/FileContent';
 import styles from './index.less';
+import CreateAccount from '@/components/FileContent/CreateAccount';
+import AccountButton from "@/components/FileContent/AccountButton";
 
-const { Header, Footer, Sider, Content } = Layout;
+const {Header, Footer, Sider, Content} = Layout;
 
 const Index: React.FC<{
   getInstance?: (_: any) => void;
-}> = ({ getInstance }) => {
+}> = ({getInstance}) => {
   let [webDav, setWebDav] = useState<WebDavData[]>([]);
   let [activeId, setActiveId] = useState<string | undefined>();
   useRequest(WebDavService.list, {
@@ -28,15 +30,13 @@ const Index: React.FC<{
       <Layout className={styles.layout}>
         <Sider className={styles.sider}>
           <div className={styles.siderHeader}>
-            <Button type="primary" block>
-              新增账号
-            </Button>
+            <CreateAccount>新增</CreateAccount>
           </div>
           <Menu
             mode="inline"
-            items={webDav.map(({ id, username }) => ({
+            items={webDav.map(({id, username}) => ({
               key: id,
-              label: username,
+              label: <AccountButton>{username}</AccountButton>,
             }))}
           />
         </Sider>
