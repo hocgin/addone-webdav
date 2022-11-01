@@ -1,19 +1,19 @@
-import React, {useState} from 'react';
-import {Image, Modal} from 'antd';
-import {FileStat} from 'webdav/dist/node/types';
-import {Icons} from '@/components';
+import React, { useState } from 'react';
+import { Image, Modal } from 'antd';
+import { FileStat } from 'webdav/dist/node/types';
+import { Icons } from '@/components';
 import styles from './FileItem.less';
 import RightMenu from '@right-menu/react';
-import {OptionsType} from '@right-menu/core';
-import {EventEmitter} from 'ahooks/lib/useEventEmitter';
-import {WebDavEventType} from '@/_utils/types';
-import {useLatest} from 'ahooks';
+import { OptionsType } from '@right-menu/core';
+import { EventEmitter } from 'ahooks/lib/useEventEmitter';
+import { WebDavEventType } from '@/_utils/types';
+import { useLatest } from 'ahooks';
 
 const FileTypeImage: React.FC<{
   src?: string;
   className?: string;
   type: 'file' | 'directory';
-}> = ({className, type, src}) => {
+}> = ({ className, type, src }) => {
   if ('directory' === type) {
     src = Icons.directory();
   } else {
@@ -27,24 +27,31 @@ const Index: React.FC<{
   onClick?: (data: FileStat) => void;
   className?: string;
   data: FileStat;
-}> = ({data, onClick, webDav$}) => {
-
+}> = ({ data, onClick, webDav$ }) => {
   let title = data.basename ?? '文件未命名';
   let options = [
     {
       type: 'li',
       text: '浏览',
-      callback: () => webDav$.emit({type: `preview.${data.type}`, value: data.filename}),
+      callback: () =>
+        webDav$.emit({ type: `preview.${data.type}`, value: data.filename }),
     },
     {
       type: 'li',
       text: '打开',
-      callback: () => webDav$.emit({type: `open.${data.type}`, value: data.filename}),
+      callback: () =>
+        webDav$.emit({ type: `open.${data.type}`, value: data.filename }),
     },
     {
       type: 'li',
       text: '下载',
-      callback: () => webDav$.emit({type: `download.${data.type}`, value: data.filename}),
+      callback: () =>
+        webDav$.emit({ type: `download.${data.type}`, value: data.filename }),
+    },
+    {
+      type: 'li',
+      text: '重命名',
+      callback: () => alert('点击了重命名'),
     },
     {
       type: 'li',
@@ -65,7 +72,7 @@ const Index: React.FC<{
         Modal.confirm({
           title: `确认删除文件"${title}"`,
           onOk: () =>
-            webDav$.emit({type: 'delete.file', value: data.filename}),
+            webDav$.emit({ type: 'delete.file', value: data.filename }),
         }),
     },
   ];

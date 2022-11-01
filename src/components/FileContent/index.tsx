@@ -1,5 +1,5 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {DownloadOutlined, HomeOutlined} from '@ant-design/icons';
+import React, { useEffect, useRef, useState } from 'react';
+import { DownloadOutlined, HomeOutlined } from '@ant-design/icons';
 import {
   Layout,
   Row,
@@ -14,31 +14,33 @@ import Utils from '@/_utils/utils';
 import Breadcrumbs from '@/components/FileContent/Breadcrumbs';
 import FileItem from '@/components/FileContent/FileItem';
 import WebDavService from '@/services/webdav';
-import {useAsyncEffect, useEventEmitter} from 'ahooks';
-import {FileStat} from 'webdav/dist/node/types';
+import { useAsyncEffect, useEventEmitter } from 'ahooks';
+import { FileStat } from 'webdav/dist/node/types';
 import styles from './index.less';
-import {WebDavEventType} from '@/_utils/types';
-import {WebDavInfo} from '@/services/webdav/types';
+import { WebDavEventType } from '@/_utils/types';
+import { WebDavInfo } from '@/services/webdav/types';
 import CreateDirectory from '@/components/FileContent/CreateDirectory';
 import UploadFile from '@/components/FileContent/UploadFile';
-import {RcFile} from 'antd/lib/upload/interface';
-import {Empty} from '@hocgin/ui';
-import {WebExtension} from '@hocgin/browser-addone-kit';
-import {FileViewModal} from "@/components/FileView";
+import { RcFile } from 'antd/lib/upload/interface';
+import { Empty } from '@hocgin/ui';
+import { WebExtension } from '@hocgin/browser-addone-kit';
+import { FileViewModal } from '@/components/FileView';
 
-const {Header, Footer, Sider, Content} = Layout;
+const { Header, Footer, Sider, Content } = Layout;
 
 const Index: React.FC<{
   className?: string;
   rowColumn?: number;
   clientId?: string;
   getInstance?: (_: any) => void;
-}> = ({clientId, rowColumn = 12}) => {
+}> = ({ clientId, rowColumn = 12 }) => {
   console.log('clientId', clientId);
   let [webDavInfo, setWebDavInfo] = useState<WebDavInfo>();
   let [currentPath, setCurrentPath] = useState<string>();
   let [datasource, setDatasource] = useState<FileStat[]>([]);
-  let [previewFilename, setPreviewFilename] = useState<string | undefined>(undefined);
+  let [previewFilename, setPreviewFilename] = useState<string | undefined>(
+    undefined,
+  );
   let rowSpan = 24 / rowColumn;
   const webDav$ = useEventEmitter<WebDavEventType>();
   webDav$.useSubscription(async (event: WebDavEventType) => {
@@ -66,7 +68,7 @@ const Index: React.FC<{
         message.error('文件夹已经存在');
       } else {
         await WebDavService.createDirectory(clientId!, directory);
-        webDav$.emit({type: 'refresh.directory'});
+        webDav$.emit({ type: 'refresh.directory' });
       }
     }
     // 刷新当前目录
@@ -86,23 +88,23 @@ const Index: React.FC<{
         await WebDavService.putFileContents(clientId!, filename, file, {
           overwrite: true,
         });
-        webDav$.emit({type: 'refresh.directory'});
+        webDav$.emit({ type: 'refresh.directory' });
       }
     }
     // 删除选中的文件
     else if (event.type === 'delete.file' && event.value) {
       await WebDavService.deleteFile(clientId!, event.value);
-      webDav$.emit({type: 'refresh.directory'});
+      webDav$.emit({ type: 'refresh.directory' });
     }
     // 下载选中的文件
     else if (event.type === 'download.file' && event.value) {
       let url = await WebDavService.getFileDownloadLink(clientId!, event.value);
-      WebExtension.downloads.download({url});
+      WebExtension.downloads.download({ url });
     }
     // 下载选中的目录
     else if (event.type === 'download.directory' && event.value) {
       let url = await WebDavService.getFileDownloadLink(clientId!, event.value);
-      WebExtension.downloads.download({url});
+      WebExtension.downloads.download({ url });
     }
     // 其他
     else {
@@ -153,7 +155,14 @@ const Index: React.FC<{
                         <FileItem
                           webDav$={webDav$}
                           data={data}
-                          onClick={({filename, type}) => {
+                          onClick={({ filename, type }) => {
+                            if (type === 'file') {
+                              webDav$.emit({
+                                type: `preview.${type}` as any,
+                                value: filename,
+                              });
+                              return;
+                            }
                             webDav$.emit({
                               type: `open.${type}` as any,
                               value: filename,
@@ -175,9 +184,12 @@ const Index: React.FC<{
           <Empty description="未添加账号" />
         )}
       </Content>
-      <FileViewModal clientId={clientId} onCancel={() => setPreviewFilename(undefined)}
-                     visible={!!previewFilename}
-                     filename={previewFilename} />
+      <FileViewModal
+        clientId={clientId}
+        onCancel={() => setPreviewFilename(undefined)}
+        visible={!!previewFilename}
+        filename={previewFilename}
+      />
       {/*<Footer>Footer</Footer>*/}
     </Layout>
   );
