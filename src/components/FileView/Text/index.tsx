@@ -10,7 +10,7 @@ const Index: React.FC<{
     if (!fileUrl) {
       return;
     }
-    setContent(await new File([fileUrl as any], '_').text());
+    setContent(await new File([await fetch(fileUrl).then(r => r.blob())], '_').text());
   }, [fileUrl]);
 
   return (<>{content}</>);

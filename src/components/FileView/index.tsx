@@ -77,7 +77,7 @@ export const FileViewModal: React.FC<{
   return (
     <Modal maskClosable={true}
            closable={false}
-           title={undefined}
+           title={'预览'}
            footer={undefined}
            className={styles.modal}
            onCancel={onCancel}
