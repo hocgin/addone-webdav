@@ -4,7 +4,7 @@ export let ServiceConfig = [
   {
     id: WebDavServiceType.jianguoyun,
     label: '坚果云',
-    remoteUrl: 'https://dav.jianguoyun.com',
+    remoteUrl: 'https://dav.jianguoyun.com/dav',
     rootDir: '/我的坚果云',
     support_auth: [
       WebDavAuthType.digest,
