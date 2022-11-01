@@ -22,5 +22,13 @@ export default class Utils extends LangKit {
     }
     return strings.pop()
   }
+
+
+  static suffix2fileType(suffix: string = 'unknown') {
+    if (['md', 'txt', 'unknown'].includes(suffix)) {
+      return 'text';
+    }
+    return suffix;
+  };
 };
 

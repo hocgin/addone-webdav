@@ -24,7 +24,7 @@ export const FileView: React.FC<{
   if (['png', 'jpeg', 'gif', 'jpg'].includes(fileType)) {
     return <Image preview={false} src={fileUrl} />;
   }
-  if (['md', 'txt', 'js']) {
+  if (['md', 'txt', 'js'].includes(fileType)) {
     return <Text fileUrl={fileUrl} />
   }
   return (
@@ -34,20 +34,13 @@ export const FileView: React.FC<{
 
 const getFileContent = memoizeOne(WebDavService.getFileContents);
 const getFileBase64 = (data: ArrayBuffer, suffix: string = 'unknown') => {
-  let type = 'image';
-  if (['md', 'txt', 'unknown'].includes(suffix)) {
-    suffix = 'plain';
-    type = 'text';
-  }
+  // let type = 'image';
+  // if (['md', 'txt', 'unknown'].includes(suffix)) {
+  //   suffix = 'plain';
+  //   type = 'text';
+  // }
   // return `data:${type}/${suffix};base64,${Buffer.from(data).toString('base64')}`;
   return window.URL.createObjectURL(new Blob([data]))
-};
-
-const suffix2fileType = (suffix: string = 'unknown') => {
-  if (['md', 'txt', 'unknown'].includes(suffix)) {
-    return 'text';
-  }
-  return suffix;
 };
 
 export const FileViewModal: React.FC<{
