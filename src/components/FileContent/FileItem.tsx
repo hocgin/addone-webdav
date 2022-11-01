@@ -28,25 +28,33 @@ const Index: React.FC<{
   className?: string;
   data: FileStat;
 }> = ({data, onClick, webDav$}) => {
+
   let title = data.basename ?? '文件未命名';
   let options = [
     {
       type: 'li',
+      text: '浏览',
+      callback: () => webDav$.emit({type: `preview.${data.type}`, value: data.filename}),
+    },
+    {
+      type: 'li',
       text: '打开',
-      callback: () => alert('打开'),
+      callback: () => webDav$.emit({type: `open.${data.type}`, value: data.filename}),
     },
     {
       type: 'li',
       text: '下载',
-      callback: () => alert('点击了下载文件'),
+      callback: () => webDav$.emit({type: `download.${data.type}`, value: data.filename}),
     },
     {
       type: 'li',
+      disabled: true,
       text: '复制',
       callback: () => alert('点击了复制'),
     },
     {
       type: 'li',
+      disabled: true,
       text: '剪切',
       callback: () => alert('点击了剪切'),
     },

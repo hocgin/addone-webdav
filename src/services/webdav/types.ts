@@ -1,18 +1,6 @@
-import {WebDAVClient} from "webdav";
-import * as WebDav from "webdav/web";
-import {FileStat} from "webdav/dist/node/types";
-
-export interface WebDavOption {
-  id?: string;
-  remoteUrl: string;
-  username: string;
-  password: string;
-  rootDir?: string;
-}
-
-export enum WebDavType {
-
-}
+import { WebDAVClient } from 'webdav';
+import * as WebDav from 'webdav/web';
+import { FileStat } from 'webdav/dist/node/types';
 
 export interface WebDavData {
   // id
@@ -22,7 +10,7 @@ export interface WebDavData {
   // 服务商: 坚果云
   service?: string;
   // 授权类型
-  auth?: 'digest' | 'basic' | 'token';
+  auth?: WebDavAuthType;
   // webdav 服务地址
   remoteUrl: string;
   // digest.username
@@ -33,38 +21,44 @@ export interface WebDavData {
   rootDir: string;
 }
 
-export interface WebDavFile {
-  filename: string,
-  basename: string,
-  lastmod: string,
-  size: number,
-  type: 'directory' | 'file',
-  etag?: string,
-  mime?: string,
+export enum WebDavServiceType {
+  custom = 'custom',
+  jianguoyun = 'jianguoyun',
+}
+
+export enum WebDavAuthType {
+  digest = 'digest',
+  basic = 'basic',
+  token = 'token',
 }
 
 export class WebDavInfo implements WebDavData {
   public title: string;
   public id: string;
   public remoteUrl: string;
-  public auth?: "digest" | "basic" | "token";
-  public service?: string;
+  public auth?: WebDavAuthType = WebDavAuthType.digest;
+  public service?: string = WebDavServiceType.custom;
   public username?: string;
   public password?: string;
-  public rootDir: string;
+  public rootDir: string = '/';
   private client?: WebDAVClient;
 
   constructor(data: WebDavData) {
     this.id = data.id;
-    this.auth = data.auth || 'digest';
-    this.service = data.service || 'custom';
+    if (data.auth) {
+      this.auth = data.auth;
+    }
+    if (data.service) {
+      this.service = data.service;
+    }
     this.remoteUrl = data.remoteUrl;
     this.title = data.title;
     this.username = data.username;
     this.password = data.password;
-    this.rootDir = data.rootDir || '/';
+    if (data.rootDir) {
+      this.rootDir = data.rootDir;
+    }
   }
-
 
   public getClient(): WebDAVClient {
     if (!this.client) {
@@ -86,12 +80,9 @@ export class WebDavInfo implements WebDavData {
   }
 
   public asWebDavData() {
-    return ({
-      id: this.id,
-      remoteUrl: this.remoteUrl,
-      username: this.username,
-      password: this.password,
-      rootDir: this.rootDir,
-    } as WebDavData);
+    return {
+      ...this,
+      client: undefined,
+    } as WebDavData;
   }
 }

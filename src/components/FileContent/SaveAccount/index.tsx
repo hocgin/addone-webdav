@@ -1,6 +1,7 @@
-import React, {useEffect} from 'react';
-import {Button, Form, Input, Modal, Radio, Select} from 'antd';
-import {useBoolean, useRequest} from 'ahooks';
+import React from 'react';
+import {Button} from 'antd';
+import {useBoolean} from 'ahooks';
+import {PlusOutlined} from '@ant-design/icons';
 import SaveModal from "@/components/FileContent/SaveAccount/SaveModal";
 
 const Index: React.FC<{
@@ -12,7 +13,7 @@ const Index: React.FC<{
   let [open, {setTrue, setFalse}] = useBoolean(false);
   return (
     <>
-      <Button type="primary" block onClick={setTrue}>
+      <Button icon={<PlusOutlined />} type="primary" block onClick={setTrue}>
         {children}
       </Button>
       <SaveModal id={id} visible={open} onCancel={setFalse} onOk={onOk} />

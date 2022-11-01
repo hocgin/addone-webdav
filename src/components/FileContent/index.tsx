@@ -20,8 +20,11 @@ import styles from './index.less';
 import {WebDavEventType} from '@/_utils/types';
 import {WebDavInfo} from '@/services/webdav/types';
 import CreateDirectory from '@/components/FileContent/CreateDirectory';
-import UploadFile from "@/components/FileContent/UploadFile";
-import {RcFile} from "antd/lib/upload/interface";
+import UploadFile from '@/components/FileContent/UploadFile';
+import {RcFile} from 'antd/lib/upload/interface';
+import {Empty} from '@hocgin/ui';
+import {WebExtension} from '@hocgin/browser-addone-kit';
+import {FileViewModal} from "@/components/FileView";
 
 const {Header, Footer, Sider, Content} = Layout;
 
@@ -35,6 +38,7 @@ const Index: React.FC<{
   let [webDavInfo, setWebDavInfo] = useState<WebDavInfo>();
   let [currentPath, setCurrentPath] = useState<string>();
   let [datasource, setDatasource] = useState<FileStat[]>([]);
+  let [previewFilename, setPreviewFilename] = useState<string | undefined>(undefined);
   let rowSpan = 24 / rowColumn;
   const webDav$ = useEventEmitter<WebDavEventType>();
   webDav$.useSubscription(async (event: WebDavEventType) => {
@@ -45,6 +49,15 @@ const Index: React.FC<{
         await WebDavService.getDirectoryContents(clientId!, event.value),
       );
       setCurrentPath(event.value);
+    }
+    // 打开文件
+    else if (event.type === 'open.file' && currentPath != event.value) {
+      let url = await WebDavService.getFileDownloadLink(clientId!, event.value);
+      window.open(url);
+    }
+    // 浏览文件
+    else if (event.type === 'preview.file' && currentPath != event.value) {
+      setPreviewFilename(event.value);
     }
     // 创建目录
     else if (event.type === 'create.directory') {
@@ -70,7 +83,9 @@ const Index: React.FC<{
       if (await WebDavService.exists(clientId!, filename)) {
         message.error('文件已经存在');
       } else {
-        await WebDavService.putFileContents(clientId!, filename, file, {overwrite: true})
+        await WebDavService.putFileContents(clientId!, filename, file, {
+          overwrite: true,
+        });
         webDav$.emit({type: 'refresh.directory'});
       }
     }
@@ -79,16 +94,27 @@ const Index: React.FC<{
       await WebDavService.deleteFile(clientId!, event.value);
       webDav$.emit({type: 'refresh.directory'});
     }
+    // 下载选中的文件
+    else if (event.type === 'download.file' && event.value) {
+      let url = await WebDavService.getFileDownloadLink(clientId!, event.value);
+      WebExtension.downloads.download({url});
+    }
+    // 下载选中的目录
+    else if (event.type === 'download.directory' && event.value) {
+      let url = await WebDavService.getFileDownloadLink(clientId!, event.value);
+      WebExtension.downloads.download({url});
+    }
     // 其他
     else {
       console.warn('未匹配到指令', event);
+      message.warn(`操作失败: ${event.type}`);
     }
   });
   useAsyncEffect(async () => {
     if (!clientId) {
       return;
     }
-    let info = WebDavService.getInfo(clientId);
+    let info = await WebDavService.getInfo(clientId);
     setWebDavInfo(info);
     setDatasource(await WebDavService.getRootContents(clientId));
     setCurrentPath(info.rootDir);
@@ -101,36 +127,57 @@ const Index: React.FC<{
           <UploadFile webDav$={webDav$}>上传</UploadFile>
           <Radio.Group>
             <CreateDirectory webDav$={webDav$}>新建文件夹</CreateDirectory>
-            <Radio.Button value="default">新建在线文档</Radio.Button>
-            <Radio.Button value="small">离线下载</Radio.Button>
+            <Radio.Button value="default" disabled>
+              新建在线文档
+            </Radio.Button>
+            <Radio.Button value="small" disabled>
+              离线下载
+            </Radio.Button>
           </Radio.Group>
         </Space>
       </Header>
       <Content className={styles.content}>
-        <Breadcrumbs
-          webDav$={webDav$}
-          base={webDavInfo?.rootDir}
-          current={currentPath}
-        />
-        {Utils.chunk(datasource, rowColumn).map((colData = []) => (
-          <Row>
-            {colData.map((data) => (
-              <Col span={rowSpan}>
-                <FileItem
-                  webDav$={webDav$}
-                  data={data}
-                  onClick={({filename, type}) => {
-                    webDav$.emit({
-                      type: `open.${type}` as any,
-                      value: filename,
-                    });
-                  }}
-                />
-              </Col>
-            ))}
-          </Row>
-        ))}
+        {clientId ? (
+          <>
+            <Breadcrumbs
+              webDav$={webDav$}
+              base={webDavInfo?.rootDir}
+              current={currentPath}
+            />
+            {datasource.length ? (
+              <>
+                {Utils.chunk(datasource, rowColumn).map((colData = []) => (
+                  <Row>
+                    {colData.map((data) => (
+                      <Col span={rowSpan}>
+                        <FileItem
+                          webDav$={webDav$}
+                          data={data}
+                          onClick={({filename, type}) => {
+                            webDav$.emit({
+                              type: `open.${type}` as any,
+                              value: filename,
+                            });
+                          }}
+                        />
+                      </Col>
+                    ))}
+                  </Row>
+                ))}
+              </>
+            ) : (
+              <>
+                <Empty description="空" />
+              </>
+            )}
+          </>
+        ) : (
+          <Empty description="未添加账号" />
+        )}
       </Content>
+      <FileViewModal clientId={clientId} onCancel={() => setPreviewFilename(undefined)}
+                     visible={!!previewFilename}
+                     filename={previewFilename} />
       {/*<Footer>Footer</Footer>*/}
     </Layout>
   );

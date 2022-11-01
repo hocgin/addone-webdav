@@ -14,5 +14,13 @@ export default class Utils extends LangKit {
     }
     return data
   }
+
+  static getSuffix(basename?: string) {
+    let strings = `${basename}`.split('.');
+    if (!strings.length || !basename?.includes('.')) {
+      return undefined;
+    }
+    return strings.pop()
+  }
 };
 
