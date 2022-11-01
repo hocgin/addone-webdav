@@ -15,10 +15,21 @@ export enum WebDavType {
 }
 
 export interface WebDavData {
+  // id
   id: string;
+  // 标题
+  title: string;
+  // 服务商: 坚果云
+  service?: string;
+  // 授权类型
+  auth?: 'digest' | 'basic' | 'token';
+  // webdav 服务地址
   remoteUrl: string;
-  username: string;
-  password: string;
+  // digest.username
+  username?: string;
+  // digest.password
+  password?: string;
+  // 根目录
   rootDir: string;
 }
 
@@ -33,20 +44,27 @@ export interface WebDavFile {
 }
 
 export class WebDavInfo implements WebDavData {
+  public title: string;
   public id: string;
   public remoteUrl: string;
-  public username: string;
-  public password: string;
+  public auth?: "digest" | "basic" | "token";
+  public service?: string;
+  public username?: string;
+  public password?: string;
   public rootDir: string;
   private client?: WebDAVClient;
 
-  constructor({id, remoteUrl, username, password, rootDir = '/'}: WebDavOption) {
-    this.id = id ?? encodeURIComponent(`${remoteUrl}@${username}`);
-    this.remoteUrl = remoteUrl;
-    this.username = username;
-    this.password = password;
-    this.rootDir = rootDir;
+  constructor(data: WebDavData) {
+    this.id = data.id;
+    this.auth = data.auth || 'digest';
+    this.service = data.service || 'custom';
+    this.remoteUrl = data.remoteUrl;
+    this.title = data.title;
+    this.username = data.username;
+    this.password = data.password;
+    this.rootDir = data.rootDir || '/';
   }
+
 
   public getClient(): WebDAVClient {
     if (!this.client) {
@@ -65,5 +83,15 @@ export class WebDavInfo implements WebDavData {
   public destroy() {
     //this.client?.destroy?.();
     delete this.client;
+  }
+
+  public asWebDavData() {
+    return ({
+      id: this.id,
+      remoteUrl: this.remoteUrl,
+      username: this.username,
+      password: this.password,
+      rootDir: this.rootDir,
+    } as WebDavData);
   }
 }

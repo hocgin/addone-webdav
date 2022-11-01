@@ -2,12 +2,14 @@ import {WebDavData, WebDavInfo} from '@/services/webdav/types';
 import Config from '@/config';
 import {WebDAVClient} from 'webdav';
 import {FileStat, PutFileContentsOptions} from 'webdav/dist/node/types';
+import {LangKit} from "@hocgin/hkit";
 
 export default class Index {
   public static Maps: Record<string, WebDavInfo> = {
     '1': new WebDavInfo({
       id: '1',
       remoteUrl: Config.isDev() ? '/dav/' : 'https://dav.jianguoyun.com/dav/',
+      title: 'hocgin@gmail.com',
       username: 'hocgin@gmail.com',
       password: 'az9badd6nzagxdxc',
       rootDir: '/我的坚果云',
@@ -15,13 +17,15 @@ export default class Index {
     '2': new WebDavInfo({
       id: '2',
       remoteUrl: Config.isDev() ? '/dav/' : 'https://dav.jianguoyun.com/dav/',
+      title: 'hocgin2@gmail.com',
       username: 'hocgin2@gmail.com',
       password: 'az9badd6nzagxdxc',
       rootDir: '/我的坚果云',
-    }),
+    } as WebDavData),
     '3': new WebDavInfo({
       id: '3',
       remoteUrl: Config.isDev() ? '/dav/' : 'https://dav.jianguoyun.com/dav/',
+      title: 'hocgin3@gmail.com',
       username: 'hocgin3@gmail.com',
       password: 'az9badd6nzagxdxc',
       rootDir: '/我的坚果云',
@@ -29,6 +33,7 @@ export default class Index {
     '4': new WebDavInfo({
       id: '4',
       remoteUrl: Config.isDev() ? '/dav/' : 'https://dav.jianguoyun.com/dav/',
+      title: 'hocgin4@gmail.com',
       username: 'hocgin4@gmail.com',
       password: 'az9badd6nzagxdxc',
       rootDir: '/我的坚果云',
@@ -36,6 +41,7 @@ export default class Index {
     '5': new WebDavInfo({
       id: '5',
       remoteUrl: Config.isDev() ? '/dav/' : 'https://dav.jianguoyun.com/dav/',
+      title: 'hocgin5@gmail.com',
       username: 'hocgin5@gmail.com',
       password: 'az9badd6nzagxdxc',
       rootDir: '/我的坚果云',
@@ -85,17 +91,28 @@ export default class Index {
     this.getInfo(id).destroy();
   }
 
+  static async get(id: string): Promise<WebDavData> {
+    return Index.Maps[id].asWebDavData();
+  }
+
+
+  static async save(data: WebDavData): Promise<WebDavData> {
+    let id = data.id;
+    if (id) {
+      data = LangKit.merge(Index.get(id), data)
+    } else {
+      id = String(new Date().getTime());
+      data.id = id;
+    }
+    return Index.Maps[id] = new WebDavInfo(data);
+  }
+
   static async list(): Promise<WebDavData[]> {
     let webDavInfos = Object.values(Index.Maps);
-    return webDavInfos.map(
-      (data) =>
-        ({
-          id: data.id,
-          remoteUrl: data.remoteUrl,
-          username: data.username,
-          password: data.password,
-          rootDir: data.rootDir,
-        } as WebDavData),
-    );
+    return webDavInfos.map((data) => data.asWebDavData());
+  }
+
+  static async remove(id: string) {
+    delete Index.Maps[id]
   }
 }

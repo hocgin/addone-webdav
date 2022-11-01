@@ -3,34 +3,53 @@ import {Button, Form, Input, Modal, Radio, Select} from 'antd';
 import {useBoolean, useRequest} from 'ahooks';
 import {Utils} from '@hocgin/ui';
 import {ServiceConfig, getConfig} from './service.config';
+import WebDavService from "@/services/webdav";
+import {WebDavData} from "@/services/webdav/types";
 
 interface ValueType {
+  id?: string;
   title?: string;
   service: string,
   auth?: 'digest' | 'basic' | 'token';
 }
 
+function asValues(data: WebDavData) {
+  return {
+    ...data
+  }
+}
+
 const Index: React.FC<{
-  /**
-   * 设置样式名
-   */
   className?: string;
   children?: string;
-}> = ({children}) => {
+  id?: string;
+  onOk?: () => void
+}> = ({id, onOk, children}) => {
+  let isEdit = id;
+
   let [form] = Form.useForm<ValueType>();
   let serviceOptions = ServiceConfig.map(({label, id}) => ({label, value: id}));
   let [open, {setTrue, setFalse}] = useBoolean(false);
-  let $submit = useRequest(Utils.Lang.nilService(console.log), {
+  let $get = useRequest(WebDavService.get, {
     manual: true,
-    onSuccess: console.log,
+    onSuccess: (data) => form.setFieldsValue(asValues(data)),
+  });
+  let $submit = useRequest(WebDavService.save, {
+    manual: true,
+    onSuccess: onOk,
   });
   const authentication = Form.useWatch('auth', form);
   const service = Form.useWatch('service', form);
   let initialValues: ValueType = {service: 'custom'};
+  useEffect(() => {
+    if (id) {
+      $get.runAsync(id);
+    }
+  });
 
   useEffect(() => {
     let config = getConfig(service) as any;
-    form.setFieldValue('rootPath', config?.rootPath || '/')
+    form.setFieldValue('rootDir', config?.rootDir || '/')
   }, [service])
 
 
@@ -46,7 +65,7 @@ const Index: React.FC<{
       </Button>
       <Modal
         maskClosable={false}
-        title="新增"
+        title={isEdit ? "修改" : "新增"}
         visible={open}
         footer={[
           <Button onClick={setFalse}>取消</Button>,
@@ -87,17 +106,20 @@ const Index: React.FC<{
           </Form.Item>
           {(authentication === 'digest' && (
               <>
-                <Form.Item name="digest.username" label="用户名">
+                <Form.Item name="username" label="用户名">
                   <Input />
                 </Form.Item>
-                <Form.Item name="digest.password" label="密码">
+                <Form.Item name="password" label="密码">
                   <Input type="password" />
                 </Form.Item>
               </>
             )) ||
             (authentication === 'basic' && <>basic</>) ||
             (authentication === 'token' && <>token</>)}
-          <Form.Item name="rootPath" label="根目录">
+          <Form.Item name="remoteUrl" label="WebDav 服务地址">
+            <Input />
+          </Form.Item>
+          <Form.Item name="rootDir" label="根目录">
             <Input />
           </Form.Item>
         </Form>
