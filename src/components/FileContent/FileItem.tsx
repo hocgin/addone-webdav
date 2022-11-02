@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, Modal } from 'antd';
+import { Image, Input, message, Modal } from 'antd';
 import { FileStat } from 'webdav/dist/node/types';
 import { Icons } from '@/components';
 import styles from './FileItem.less';
@@ -8,6 +8,7 @@ import { OptionsType } from '@right-menu/core';
 import { EventEmitter } from 'ahooks/lib/useEventEmitter';
 import { WebDavEventType } from '@/_utils/types';
 import { useLatest } from 'ahooks';
+import Utils from '@/_utils/utils';
 
 const FileTypeImage: React.FC<{
   src?: string;
@@ -28,7 +29,9 @@ const Index: React.FC<{
   className?: string;
   data: FileStat;
 }> = ({ data, onClick, webDav$ }) => {
-  let title = data.basename ?? '文件未命名';
+  let [title, setTitle] = useState(data.basename ?? '文件未命名');
+  let latTitle = useLatest(title);
+
   let options = [
     {
       type: 'li',
@@ -51,7 +54,35 @@ const Index: React.FC<{
     {
       type: 'li',
       text: '重命名',
-      callback: () => alert('点击了重命名'),
+      callback: () => {
+        return Modal.confirm({
+          icon: undefined,
+          content: (
+            <Input
+              placeholder="新名称"
+              defaultValue={title}
+              onChange={(v) => setTitle(v.target.value)}
+            />
+          ),
+          onOk: async () => {
+            let newBasename = latTitle.current;
+            if (!newBasename) {
+              message.error('请输入正确的名称');
+              return;
+            }
+            let fele = Utils.splitPath(data.filename);
+            fele.pop();
+            fele.push(newBasename);
+            webDav$.emit({
+              type: `rename.${data.type}`,
+              value: {
+                from: data.filename,
+                to: `/${fele.join('/')}`,
+              },
+            });
+          },
+        });
+      },
     },
     {
       type: 'li',

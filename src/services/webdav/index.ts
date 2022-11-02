@@ -75,6 +75,11 @@ export default class Index {
     return client.getFileDownloadLink(path);
   }
 
+  static async moveFile(id: string, fpath: string, tpath: string) {
+    let client = await Index.getClient(id);
+    return client.moveFile(fpath, tpath);
+  }
+
   static async createDirectory(id: string, path: string) {
     let client = await Index.getClient(id);
     return client.createDirectory(path);

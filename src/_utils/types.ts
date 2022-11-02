@@ -5,6 +5,8 @@ export interface WebDavEventType {
     | 'delete.file'
     | 'upload.file'
     | 'upload.directory'
+    | 'rename.file'
+    | 'rename.directory'
     | 'preview.file'
     | 'preview.directory'
     | 'download.file'

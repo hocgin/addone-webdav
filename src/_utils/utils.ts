@@ -1,7 +1,6 @@
-import {LangKit} from '@hocgin/hkit';
+import { LangKit } from '@hocgin/hkit';
 
 export default class Utils extends LangKit {
-
   /**
    * 拆分数组
    * @param array
@@ -10,9 +9,9 @@ export default class Utils extends LangKit {
   static chunk<T>(array: T[] = [], maxLength: number): T[][] {
     let data = [];
     for (let i = 0; i < array.length; i += maxLength) {
-      data.push(array.slice(i, i + maxLength))
+      data.push(array.slice(i, i + maxLength));
     }
-    return data
+    return data;
   }
 
   static getSuffix(basename?: string) {
@@ -20,15 +19,15 @@ export default class Utils extends LangKit {
     if (!strings.length || !basename?.includes('.')) {
       return undefined;
     }
-    return strings.pop()
+    return strings.pop();
   }
-
 
   static suffix2fileType(suffix: string = 'unknown') {
     if (['md', 'txt', 'unknown'].includes(suffix)) {
       return 'text';
     }
     return suffix;
-  };
-};
+  }
 
+  static splitPath = (path: string) => path.split('/').filter((s) => s.length);
+}

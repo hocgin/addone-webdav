@@ -3,8 +3,7 @@ import { Breadcrumb } from 'antd';
 import { HomeOutlined } from '@ant-design/icons';
 import { WebDavEventType } from '@/_utils/types';
 import { EventEmitter } from 'ahooks/lib/useEventEmitter';
-
-const splitPath = (path: string) => path.split('/').filter((s) => s.length);
+import Utils from '@/_utils/utils';
 
 const Index: React.FC<{
   webDav$: EventEmitter<WebDavEventType>;
@@ -12,8 +11,8 @@ const Index: React.FC<{
   base?: string;
   current?: string;
 }> = ({ webDav$, base = '/', current = '/' }) => {
-  let currentPaths = splitPath(current);
-  let basePaths = splitPath(base);
+  let currentPaths = Utils.splitPath(current);
+  let basePaths = Utils.splitPath(base);
   let openDirectory = (path: string) =>
     webDav$.emit({ type: `open.directory` as any, value: path });
   return (

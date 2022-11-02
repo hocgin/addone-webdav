@@ -46,11 +46,13 @@ const Index: React.FC<{
   webDav$.useSubscription(async (event: WebDavEventType) => {
     console.log('收到指令', event);
     // 打开目录
-    if (event.type === 'open.directory' && currentPath != event.value) {
-      setDatasource(
-        await WebDavService.getDirectoryContents(clientId!, event.value),
-      );
-      setCurrentPath(event.value);
+    if (event.type === 'open.directory') {
+      if (currentPath != event.value) {
+        setDatasource(
+          await WebDavService.getDirectoryContents(clientId!, event.value),
+        );
+        setCurrentPath(event.value);
+      }
     }
     // 打开文件
     else if (event.type === 'open.file' && currentPath != event.value) {
@@ -95,6 +97,11 @@ const Index: React.FC<{
     else if (event.type === 'delete.file' && event.value) {
       await WebDavService.deleteFile(clientId!, event.value);
       webDav$.emit({ type: 'refresh.directory' });
+    }
+    // 重命名文件
+    else if (event.type === 'rename.file' && event.value) {
+      let { from, to } = event.value;
+      await WebDavService.moveFile(clientId!, from, to);
     }
     // 下载选中的文件
     else if (event.type === 'download.file' && event.value) {
