@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from 'react';
-import {Button, Form, Input, Modal, Radio, Select} from 'antd';
-import {useRequest} from 'ahooks';
+import React, { useEffect, useState } from 'react';
+import { Button, Form, Input, Modal, Radio, Select } from 'antd';
+import { useRequest } from 'ahooks';
 import WebDavService from '@/services/webdav';
 import {
   getConfig,
   ServiceConfig,
 } from '@/components/FileContent/SaveAccount/service.config';
-import {WebDavAuthType, WebDavServiceType} from '@/services/webdav/types';
-import {AuthType} from 'webdav';
-import {UrlCard} from "@/components";
+import { WebDavAuthType, WebDavServiceType } from '@/services/webdav/types';
+import { AuthType } from 'webdav';
+import { UrlCard } from '@/components';
 
 const Index: React.FC<{
   /**
@@ -19,7 +19,7 @@ const Index: React.FC<{
   visible?: boolean;
   onOk?: () => void;
   onCancel?: () => void;
-}> = ({id, onOk, onCancel, visible = false}) => {
+}> = ({ id, onOk, onCancel, visible = false }) => {
   let isEdit = id;
   let [form] = Form.useForm();
   let $get = useRequest(WebDavService.get, {
@@ -34,7 +34,7 @@ const Index: React.FC<{
     service: WebDavServiceType.custom,
     auth: WebDavAuthType.digest,
   };
-  let serviceOptions = ServiceConfig.map(({label, id}) => ({
+  let serviceOptions = ServiceConfig.map(({ label, id }) => ({
     label,
     value: id,
   }));
@@ -76,8 +76,8 @@ const Index: React.FC<{
     >
       <Form
         form={form}
-        labelCol={{span: 6}}
-        wrapperCol={{span: 18}}
+        labelCol={{ span: 6 }}
+        wrapperCol={{ span: 18 }}
         colon={false}
         initialValues={initialValues}
       >
@@ -87,60 +87,63 @@ const Index: React.FC<{
         <Form.Item
           name="title"
           label="名称"
-          rules={[{required: true, message: '名称不能为空'}]}
+          rules={[{ required: true, message: '名称不能为空' }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           name="service"
           label="服务商"
-          rules={[{required: true, message: '服务商不能为空'}]}
+          rules={[{ required: true, message: '服务商不能为空' }]}
         >
           <Select options={serviceOptions} />
         </Form.Item>
         <Form.Item name="auth" label="认证方式">
           <Radio.Group buttonStyle="solid">
-            <Radio.Button value={WebDavAuthType.digest}>账号</Radio.Button>
-            <Radio.Button value={WebDavAuthType.basic} disabled>
-              基础
+            <Radio.Button value={WebDavAuthType.digest}>授权码</Radio.Button>
+            <Radio.Button value={WebDavAuthType.password} disabled>
+              密码
             </Radio.Button>
             <Radio.Button value={WebDavAuthType.token} disabled>
-              授权
+              应用授权
             </Radio.Button>
           </Radio.Group>
         </Form.Item>
         {(authentication === WebDavAuthType.digest && (
-            <>
-              <Form.Item name="username" label="用户名">
-                <Input />
-              </Form.Item>
-              <Form.Item name="password" label="密码">
-                <Input type="password" />
-              </Form.Item>
-            </>
-          )) ||
-          (authentication === WebDavAuthType.basic && <>basic</>) ||
+          <>
+            <Form.Item name="username" label="用户名">
+              <Input />
+            </Form.Item>
+            <Form.Item name="password" label="密码">
+              <Input type="password" />
+            </Form.Item>
+          </>
+        )) ||
+          (authentication === WebDavAuthType.password && <>basic</>) ||
           (authentication === WebDavAuthType.token && <>token</>)}
         <Form.Item
           name="remoteUrl"
           label="WebDav 地址"
-          rules={[{required: true, message: 'WebDav 地址不能为空'}]}
+          rules={[{ required: true, message: 'WebDav 地址不能为空' }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           name="rootDir"
           label="根目录"
-          rules={[{required: true, message: '根目录不能为空'}]}
+          rules={[{ required: true, message: '根目录不能为空' }]}
         >
           <Input />
         </Form.Item>
       </Form>
-      {config?.urlDoc &&
-        <UrlCard title={config.urlDoc?.title}
-                 href={config.urlDoc?.href}
-                 imageSrc={config.urlDoc?.imageSrc}
-                 description={config.urlDoc?.description} />}
+      {config?.urlDoc && (
+        <UrlCard
+          title={config.urlDoc?.title}
+          href={config.urlDoc?.href}
+          imageSrc={config.urlDoc?.imageSrc}
+          description={config.urlDoc?.description}
+        />
+      )}
     </Modal>
   );
 };

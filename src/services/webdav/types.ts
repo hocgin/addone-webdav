@@ -1,6 +1,6 @@
-import {WebDAVClient} from 'webdav';
+import { AuthType, WebDAVClient } from 'webdav';
 import * as WebDav from 'webdav/web';
-import {FileStat} from 'webdav/dist/node/types';
+import { FileStat } from 'webdav/dist/node/types';
 
 export interface WebDavData {
   // id
@@ -32,7 +32,7 @@ export enum WebDavServiceType {
 
 export enum WebDavAuthType {
   digest = 'digest',
-  basic = 'basic',
+  password = 'password',
   token = 'token',
 }
 
@@ -67,6 +67,7 @@ export class WebDavInfo implements WebDavData {
   public getClient(): WebDAVClient {
     if (!this.client) {
       this.client = WebDav.createClient(this.remoteUrl, {
+        authType: AuthType.Digest,
         username: this.username,
         password: this.password,
       });

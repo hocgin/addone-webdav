@@ -71,6 +71,7 @@ const Index: React.FC<{
     }
     // 浏览文件
     else if (event.type === 'preview.file') {
+      setFilename(undefined);
       setFilename(event.value);
       setPreview(true);
     }
