@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 // @ts-ignore
 import FileViewer from 'react-file-viewer';
 import Utils from '@/_utils/utils';
 import WebDavService from '@/services/webdav';
-import {useAsyncEffect, useRequest} from 'ahooks';
-import {Modal, Image} from 'antd';
+import { useAsyncEffect, useRequest } from 'ahooks';
+import { Modal, Image } from 'antd';
 import memoizeOne from 'memoize-one';
 import Text from './Text';
 import styles from './index.less';
@@ -19,16 +19,20 @@ export const FileView: React.FC<{
   className?: string;
   fileType?: string;
   fileUrl?: string;
-}> = ({fileUrl, fileType = 'unknown'}) => {
+}> = ({ fileUrl, fileType = 'unknown' }) => {
   console.log(`fileType=${fileType}, fileUrl=${fileUrl}`);
   if (['png', 'jpeg', 'gif', 'jpg'].includes(fileType)) {
     return <Image preview={false} src={fileUrl} />;
   }
   if (['md', 'txt', 'js'].includes(fileType)) {
-    return <Text fileUrl={fileUrl} />
+    return <Text fileUrl={fileUrl} />;
   }
   return (
-    <FileViewer fileType={fileType} filePath={fileUrl} onError={console.error.bind(this, 'FileView')} />
+    <FileViewer
+      fileType={fileType}
+      filePath={fileUrl}
+      onError={console.error.bind(this, 'FileView')}
+    />
   );
 };
 
@@ -40,42 +44,67 @@ const getFileBase64 = (data: ArrayBuffer, suffix: string = 'unknown') => {
   //   type = 'text';
   // }
   // return `data:${type}/${suffix};base64,${Buffer.from(data).toString('base64')}`;
-  return window.URL.createObjectURL(new Blob([data]))
+  return window.URL.createObjectURL(new Blob([data]));
+};
+
+export const useFileView = (clientId?: string, _filename?: string) => {
+  let [fileUrl, setFileUrl] = useState<string | undefined>();
+  let [fileType, setFileType] = useState<string | undefined>();
+  let updateFileData = (data: ArrayBuffer, filename: string) => {
+    let fileType = Utils.getSuffix(filename);
+    let fileUrl = getFileBase64(data, fileType);
+    setFileType(fileType);
+    setFileUrl(fileUrl);
+  };
+  let $getFileContents = useRequest(getFileContent, {
+    manual: true,
+    onSuccess: (data: ArrayBuffer, params: any) => {
+      console.log('params', params);
+      updateFileData(data, params?.[1]);
+    },
+  });
+  return [
+    fileUrl,
+    fileType,
+    {
+      setFilename: (filename?: string) => {
+        if (clientId && filename) {
+          return $getFileContents.run(clientId, filename);
+        } else {
+          setFileUrl(undefined);
+        }
+      },
+      setAsyncFilename: async (filename?: string) => {
+        if (clientId && filename) {
+          await $getFileContents.runAsync(clientId, filename);
+        } else {
+          setFileUrl(undefined);
+        }
+        return fileUrl;
+      },
+    },
+  ] as const;
 };
 
 export const FileViewModal: React.FC<{
   className?: string;
   visible?: boolean;
   clientId?: string;
-  filename?: string;
+  fileUrl?: string;
+  fileType?: string;
   onCancel?: () => void;
-}> = ({visible, clientId, filename, onCancel}) => {
-  let [fileUrl, setFileUrl] = useState<string | undefined>();
-  let suffix = Utils.getSuffix(filename);
-  let $getFileContents = useRequest(getFileContent, {
-    manual: true,
-    onSuccess: (data: ArrayBuffer) => setFileUrl(getFileBase64(data, suffix)),
-  });
-  useAsyncEffect(async () => {
-    if (visible && clientId && filename) {
-      await $getFileContents.runAsync(clientId, filename);
-    }
-  }, [filename]);
-
-  useEffect(() => {
-    !visible && setFileUrl(undefined);
-  }, [visible]);
-
-  console.log('visible', visible);
+}> = ({ visible, fileUrl, fileType, onCancel }) => {
   return (
-    <Modal maskClosable={true}
-           closable={false}
-           title={'预览'}
-           footer={undefined}
-           className={styles.modal}
-           onCancel={onCancel}
-           visible={visible}>
-      {visible ? <FileView fileType={suffix} fileUrl={fileUrl} /> : <></>}
+    <Modal
+      maskClosable={true}
+      closable={false}
+      title={'预览'}
+      footer={undefined}
+      className={styles.modal}
+      onCancel={onCancel}
+      visible={visible}
+    >
+      {visible ? <FileView fileType={fileType} fileUrl={fileUrl} /> : <></>}
     </Modal>
   );
 };

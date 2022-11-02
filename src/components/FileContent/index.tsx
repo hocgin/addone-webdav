@@ -14,7 +14,7 @@ import Utils from '@/_utils/utils';
 import Breadcrumbs from '@/components/FileContent/Breadcrumbs';
 import FileItem from '@/components/FileContent/FileItem';
 import WebDavService from '@/services/webdav';
-import { useAsyncEffect, useEventEmitter } from 'ahooks';
+import { useAsyncEffect, useBoolean, useEventEmitter } from 'ahooks';
 import { FileStat } from 'webdav/dist/node/types';
 import styles from './index.less';
 import { WebDavEventType } from '@/_utils/types';
@@ -24,9 +24,9 @@ import UploadFile from '@/components/FileContent/UploadFile';
 import { RcFile } from 'antd/lib/upload/interface';
 import { Empty } from '@hocgin/ui';
 import { WebExtension } from '@hocgin/browser-addone-kit';
-import { FileViewModal } from '@/components/FileView';
+import { FileViewModal, useFileView } from '@/components/FileView';
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Footer, Content } = Layout;
 
 const Index: React.FC<{
   className?: string;
@@ -38,9 +38,10 @@ const Index: React.FC<{
   let [webDavInfo, setWebDavInfo] = useState<WebDavInfo>();
   let [currentPath, setCurrentPath] = useState<string>();
   let [datasource, setDatasource] = useState<FileStat[]>([]);
-  let [previewFilename, setPreviewFilename] = useState<string | undefined>(
-    undefined,
-  );
+  let [fileUrl, fileType, { setFilename, setAsyncFilename }] =
+    useFileView(clientId);
+  let [preview, { set: setPreview }] = useBoolean(false);
+
   let rowSpan = 24 / rowColumn;
   const webDav$ = useEventEmitter<WebDavEventType>();
   webDav$.useSubscription(async (event: WebDavEventType) => {
@@ -55,13 +56,16 @@ const Index: React.FC<{
       }
     }
     // 打开文件
-    else if (event.type === 'open.file' && currentPath != event.value) {
-      let url = await WebDavService.getFileDownloadLink(clientId!, event.value);
-      window.open(url);
+    else if (event.type === 'open.file') {
+      await setAsyncFilename(event?.value);
+      if (fileUrl) {
+        console.log('open.fileUrl', fileUrl);
+      }
     }
     // 浏览文件
-    else if (event.type === 'preview.file' && currentPath != event.value) {
-      setPreviewFilename(event.value);
+    else if (event.type === 'preview.file') {
+      setFilename(event.value);
+      setPreview(true);
     }
     // 创建目录
     else if (event.type === 'create.directory') {
@@ -193,9 +197,10 @@ const Index: React.FC<{
       </Content>
       <FileViewModal
         clientId={clientId}
-        onCancel={() => setPreviewFilename(undefined)}
-        visible={!!previewFilename}
-        filename={previewFilename}
+        onCancel={setPreview.bind(this, false)}
+        visible={preview}
+        fileUrl={fileUrl}
+        fileType={fileType}
       />
       {/*<Footer>Footer</Footer>*/}
     </Layout>

@@ -10,6 +10,14 @@
     lodash.debounce "^4.0.8"
     lodash.throttle "^4.1.1"
 
+"@ahooksjs/use-url-state@^3.5.0":
+  version "3.5.0"
+  resolved "https://registry.npmjs.org/@ahooksjs/use-url-state/-/use-url-state-3.5.0.tgz#ae6c6de96f186313ca5f37b4dc0ab6967ad81df7"
+  integrity sha512-DGKV9py3GMIvF0nRSr+fvuZsHRarT6y+XYNl5UnzLoszTwVJGh3hr27EJ97vEMSilI9POFf91MLKFyfkE1t44A==
+  dependencies:
+    ahooks "^3.4.1"
+    query-string "^6.9.0"
+
 "@ampproject/remapping@^2.1.0":
   version "2.2.0"
   resolved "https://registry.npmmirror.com/@ampproject/remapping/-/remapping-2.2.0.tgz#56c133824780de3174aed5ab6834f3026790154d"
@@ -2638,7 +2646,7 @@ ahooks@^3.3.8:
     resize-observer-polyfill "^1.5.1"
     screenfull "^5.0.0"
 
-ahooks@^3.7.2:
+ahooks@^3.4.1, ahooks@^3.7.2:
   version "3.7.2"
   resolved "https://registry.npmjs.org/ahooks/-/ahooks-3.7.2.tgz#0afa42625e77ae1cc4b60b19c45cf12a8cf29b56"
   integrity sha512-nJPsQJcmJnGaNXiqgZdfO7UMs+o926LQg6VyDYt2vzKhXU8Ze/U87NsA/FeIvlIZB0rQr/j7uotFb1bGPp627A==
@@ -8162,7 +8170,7 @@ query-string@^4.1.0:
     object-assign "^4.1.0"
     strict-uri-encode "^1.0.0"
 
-query-string@^6.11.0:
+query-string@^6.11.0, query-string@^6.9.0:
   version "6.14.1"
   resolved "https://registry.npmmirror.com/query-string/-/query-string-6.14.1.tgz#7ac2dca46da7f309449ba0f86b1fd28255b0c86a"
   integrity sha512-XDxAeVmpfu1/6IjyT/gXHOl+S0vQ9owggJ30hhWKdHAsNPOcasn5o9BW0eejZqL2e4vMjhAxoW3jVHcD6mbcYw==

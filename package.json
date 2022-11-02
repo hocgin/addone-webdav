@@ -32,6 +32,7 @@
     ]
   },
   "dependencies": {
+    "@ahooksjs/use-url-state": "^3.5.0",
     "@hocgin/browser-addone-kit": "^1.0.78",
     "@hocgin/hkit": "^1.0.78",
     "@hocgin/mock-kit": "^1.0.78",

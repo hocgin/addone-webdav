@@ -3,9 +3,10 @@ export default [
     path: '/',
     component: '@/layouts/BasicLayout',
     routes: [
-      {path: '/', component: '@/pages/index'},
-      {path: '/dashboard', component: '@/pages/dashboard'},
+      { path: '/', component: '@/pages/index' },
+      { path: '/dashboard', component: '@/pages/dashboard' },
+      { path: '/fileview', component: '@/pages/fileview' },
     ],
   },
-  {component: '@/pages/404'},
+  { component: '@/pages/404' },
 ];
