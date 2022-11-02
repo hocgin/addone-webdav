@@ -26,6 +26,7 @@ import { Empty } from '@hocgin/ui';
 import { WebExtension } from '@hocgin/browser-addone-kit';
 import { FileViewModal, useFileView } from '@/components/FileView';
 import { stringify } from 'query-string';
+import { Search } from '@/components';
 
 const { Header, Footer, Content } = Layout;
 
@@ -113,6 +114,11 @@ const Index: React.FC<{
       let { from, to } = event.value;
       await WebDavService.moveFile(clientId!, from, to);
     }
+    // 重命名文件夹
+    else if (event.type === 'rename.directory' && event.value) {
+      let { from, to } = event.value;
+      await WebDavService.moveFile(clientId!, from, to);
+    }
     // 下载选中的文件
     else if (event.type === 'download.file' && event.value) {
       let url = await WebDavService.getFileDownloadLink(clientId!, event.value);
@@ -154,6 +160,7 @@ const Index: React.FC<{
             </Radio.Button>
           </Radio.Group>
         </Space>
+        <Search />
       </Header>
       <Content className={styles.content}>
         {clientId ? (
