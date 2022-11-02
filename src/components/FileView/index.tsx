@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 // @ts-ignore
 import FileViewer from 'react-file-viewer';
 import Utils from '@/_utils/utils';
 import WebDavService from '@/services/webdav';
-import { useAsyncEffect, useRequest } from 'ahooks';
-import { Modal, Image } from 'antd';
+import {useAsyncEffect, useRequest} from 'ahooks';
+import {Modal, Image} from 'antd';
 import memoizeOne from 'memoize-one';
-import Text from './Text';
+import TextViewer from './TextViewer';
 import styles from './index.less';
+import ZipViewer from "./ZipViewer";
 
 /**
  * https://github.com/plangrid/react-file-viewer
@@ -19,13 +20,16 @@ export const FileView: React.FC<{
   className?: string;
   fileType?: string;
   fileUrl?: string;
-}> = ({ fileUrl, fileType = 'unknown' }) => {
+}> = ({fileUrl, fileType = 'unknown'}) => {
   console.log(`fileType=${fileType}, fileUrl=${fileUrl}`);
   if (['png', 'jpeg', 'gif', 'jpg', 'webp'].includes(fileType)) {
     return <Image preview={false} src={fileUrl} />;
   }
   if (['md', 'txt', 'js'].includes(fileType)) {
-    return <Text fileUrl={fileUrl} />;
+    return <TextViewer fileUrl={fileUrl} />;
+  }
+  if (['zip'].includes(fileType)) {
+    return <ZipViewer fileUrl={fileUrl} />;
   }
   return (
     <FileViewer
@@ -93,7 +97,7 @@ export const FileViewModal: React.FC<{
   fileUrl?: string;
   fileType?: string;
   onCancel?: () => void;
-}> = ({ visible, fileUrl, fileType, onCancel }) => {
+}> = ({visible, fileUrl, fileType, onCancel}) => {
   return (
     <Modal
       maskClosable={true}
