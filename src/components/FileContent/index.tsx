@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { DownloadOutlined, HomeOutlined } from '@ant-design/icons';
+import React, {useEffect, useRef, useState} from 'react';
+import {DownloadOutlined, HomeOutlined} from '@ant-design/icons';
 import {
   Layout,
   Row,
@@ -14,35 +14,35 @@ import Utils from '@/_utils/utils';
 import Breadcrumbs from '@/components/FileContent/Breadcrumbs';
 import FileItem from '@/components/FileContent/FileItem';
 import WebDavService from '@/services/webdav';
-import { useAsyncEffect, useBoolean, useEventEmitter } from 'ahooks';
-import { FileStat } from 'webdav/dist/node/types';
+import {useAsyncEffect, useBoolean, useEventEmitter} from 'ahooks';
+import {FileStat} from 'webdav/dist/node/types';
 import styles from './index.less';
-import { WebDavEventType } from '@/_utils/types';
-import { WebDavInfo } from '@/services/webdav/types';
+import {WebDavEventType} from '@/_utils/types';
+import {WebDavInfo} from '@/services/webdav/types';
 import CreateDirectory from '@/components/FileContent/CreateDirectory';
 import UploadFile from '@/components/FileContent/UploadFile';
-import { RcFile } from 'antd/lib/upload/interface';
-import { Empty } from '@hocgin/ui';
-import { WebExtension } from '@hocgin/browser-addone-kit';
-import { FileViewModal, useFileView } from '@/components/FileView';
-import { stringify } from 'query-string';
-import { Search } from '@/components';
+import {RcFile} from 'antd/lib/upload/interface';
+import {Empty} from '@hocgin/ui';
+import {WebExtension} from '@hocgin/browser-addone-kit';
+import {FileViewModal, useFileView} from '@/components/FileView';
+import {stringify} from 'query-string';
+import {Search} from '@/components';
 
-const { Header, Footer, Content } = Layout;
+const {Header, Footer, Content} = Layout;
 
 const Index: React.FC<{
   className?: string;
   rowColumn?: number;
   clientId?: string;
   getInstance?: (_: any) => void;
-}> = ({ clientId, rowColumn = 12 }) => {
+}> = ({clientId, rowColumn = 12}) => {
   console.log('clientId', clientId);
   let [webDavInfo, setWebDavInfo] = useState<WebDavInfo>();
   let [currentPath, setCurrentPath] = useState<string>();
   let [datasource, setDatasource] = useState<FileStat[]>([]);
-  let [fileUrl, fileType, { setFilename, setAsyncFilename }] =
+  let [fileUrl, fileType, {setFilename, setAsyncFilename}] =
     useFileView(clientId);
-  let [preview, { set: setPreview }] = useBoolean(false);
+  let [preview, {set: setPreview}] = useBoolean(false);
 
   let rowSpan = 24 / rowColumn;
   const webDav$ = useEventEmitter<WebDavEventType>();
@@ -64,7 +64,7 @@ const Index: React.FC<{
         console.log(event.type, fileUrl);
         WebExtension.tabs.create({
           url: WebExtension.runtime.getURL(
-            `/fileview.html?${stringify({ fileUrl, fileType })}`,
+            `/fileview.html?${stringify({fileUrl, fileType})}`,
           ),
         });
       }
@@ -81,7 +81,7 @@ const Index: React.FC<{
         message.error('文件夹已经存在');
       } else {
         await WebDavService.createDirectory(clientId!, directory);
-        webDav$.emit({ type: 'refresh.directory' });
+        webDav$.emit({type: 'refresh.directory'});
       }
     }
     // 刷新当前目录
@@ -101,38 +101,40 @@ const Index: React.FC<{
         await WebDavService.putFileContents(clientId!, filename, file, {
           overwrite: true,
         });
-        webDav$.emit({ type: 'refresh.directory' });
+        webDav$.emit({type: 'refresh.directory'});
       }
     }
     // 删除选中的文件
     else if (event.type === 'delete.file' && event.value) {
       await WebDavService.deleteFile(clientId!, event.value);
-      webDav$.emit({ type: 'refresh.directory' });
+      webDav$.emit({type: 'refresh.directory'});
     }
     // 重命名文件
     else if (event.type === 'rename.file' && event.value) {
-      let { from, to } = event.value;
+      let {from, to} = event.value;
       await WebDavService.moveFile(clientId!, from, to);
+      webDav$.emit({type: 'refresh.directory'});
     }
     // 重命名文件夹
     else if (event.type === 'rename.directory' && event.value) {
-      let { from, to } = event.value;
+      let {from, to} = event.value;
       await WebDavService.moveFile(clientId!, from, to);
+      webDav$.emit({type: 'refresh.directory'});
     }
     // 下载选中的文件
     else if (event.type === 'download.file' && event.value) {
       let url = await WebDavService.getFileDownloadLink(clientId!, event.value);
-      WebExtension.downloads.download({ url });
+      WebExtension.downloads.download({url});
     }
     // 下载选中的目录
     else if (event.type === 'download.directory' && event.value) {
       let url = await WebDavService.getFileDownloadLink(clientId!, event.value);
-      WebExtension.downloads.download({ url });
+      WebExtension.downloads.download({url});
     }
     // 其他
     else {
       console.warn('未匹配到指令', event);
-      message.warn(`操作失败: ${event.type}`);
+      message.warn(`操作失败，${event.type} 暂不支持`);
     }
   });
   useAsyncEffect(async () => {
@@ -179,7 +181,7 @@ const Index: React.FC<{
                         <FileItem
                           webDav$={webDav$}
                           data={data}
-                          onClick={({ filename, type }) => {
+                          onClick={({filename, type}) => {
                             if (type === 'file') {
                               webDav$.emit({
                                 type: `preview.${type}` as any,
