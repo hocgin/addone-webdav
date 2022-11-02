@@ -57,7 +57,7 @@ export default class Index {
     // todo 目前库不支持浏览器端的Stream, 等待其切换为 fetch。
     // link issues https://github.com/perry-mitchell/webdav-client/issues/292
     // file.stream().pipe(client.createWriteStream(filename, options));
-    await client.putFileContents(filename, await file.text(), options);
+    await client.putFileContents(filename, await file.arrayBuffer(), options);
   }
 
   static async exists(id: string, path: string) {
