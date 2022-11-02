@@ -21,7 +21,7 @@ export const FileView: React.FC<{
   fileUrl?: string;
 }> = ({ fileUrl, fileType = 'unknown' }) => {
   console.log(`fileType=${fileType}, fileUrl=${fileUrl}`);
-  if (['png', 'jpeg', 'gif', 'jpg'].includes(fileType)) {
+  if (['png', 'jpeg', 'gif', 'jpg', 'webp'].includes(fileType)) {
     return <Image preview={false} src={fileUrl} />;
   }
   if (['md', 'txt', 'js'].includes(fileType)) {
