@@ -1,6 +1,6 @@
 import React from 'react';
-import { Select } from 'antd';
-import { Empty } from '@hocgin/ui';
+import {Select} from 'antd';
+import {Empty} from '@hocgin/ui';
 
 export const Search: React.FC<{
   className?: string;
@@ -9,7 +9,7 @@ export const Search: React.FC<{
     <Select
       showSearch
       allowClear
-      style={{ width: 200 }}
+      style={{width: 200}}
       placeholder={'搜索..'}
       defaultActiveFirstOption={false}
       showArrow={false}
@@ -17,8 +17,8 @@ export const Search: React.FC<{
       notFoundContent={<Empty />}
       options={[
         {
-          value: 'jack',
-          label: 'Jack',
+          value: 'empty',
+          label: '暂不支持搜索',
         },
       ]}
     />

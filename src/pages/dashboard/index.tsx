@@ -11,6 +11,7 @@ import AccountButton from '@/components/FileContent/AccountButton';
 import SaveAccount from '@/components/FileContent/SaveAccount';
 import SaveModal from '@/components/FileContent/SaveAccount/SaveModal';
 import {Empty} from "@/components";
+import SettingButton from "@/pages/dashboard/SettingButton";
 
 const {Header, Footer, Sider, Content} = Layout;
 
@@ -68,7 +69,7 @@ const Index = () => {
             <Popover content={<><Image src="https://cdn.hocgin.top/uPic/mp-logo.jpg" width={80} alt="公众号" /></>}>
               <QrcodeOutlined />
             </Popover>
-            <SettingOutlined />
+            <SettingButton />
           </Space>
         </Sider>
         <FileContent clientId={activeId} />

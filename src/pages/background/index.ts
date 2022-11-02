@@ -1,5 +1,5 @@
-import { WebExtension } from '@hocgin/browser-addone-kit';
-import { ServiceWorkerOptions } from '@hocgin/browser-addone-kit/es/browser/serviceWorker';
+import {WebExtension} from '@hocgin/browser-addone-kit';
+import {ServiceWorkerOptions} from '@hocgin/browser-addone-kit/es/browser/serviceWorker';
 
 WebExtension.kit.serviceWorker(ServiceWorkerOptions.default);
 
@@ -8,7 +8,7 @@ let openNewWindow = (...args: any) => {
   console.log('快捷键点击', args);
   const windowOptions: any = {
     url: WebExtension.runtime.getURL(`/dashboard.html`),
-    height: 715,
+    height: 800,
     width: 1200,
     type: 'popup',
     focused: true,
