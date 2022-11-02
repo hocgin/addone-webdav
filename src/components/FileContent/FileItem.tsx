@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {Image, Input, message, Modal} from 'antd';
 import {FileStat} from 'webdav/dist/node/types';
 import {Icons} from '@/components';
@@ -7,8 +7,9 @@ import RightMenu from '@right-menu/react';
 import {OptionsType} from '@right-menu/core';
 import {EventEmitter} from 'ahooks/lib/useEventEmitter';
 import {WebDavEventType} from '@/_utils/types';
-import {useLatest} from 'ahooks';
+import {useBoolean, useDrag, useDrop, useLatest} from 'ahooks';
 import Utils from '@/_utils/utils';
+import classnames from 'classnames';
 
 const FileTypeImage: React.FC<{
   src?: string;
@@ -30,9 +31,33 @@ const Index: React.FC<{
   className?: string;
   data: FileStat;
 }> = ({data, onClick, webDav$}) => {
+  const ref = useRef<any>();
+  let [moved, {set: setMoved}] = useBoolean(false);
   let [title, setTitle] = useState(data.basename ?? '文件未命名');
   let latTitle = useLatest(title);
-
+  // 拖动
+  useDrag(data, ref, {
+    onDragStart: console.log.bind(this, 'onDragStart'),
+    onDragEnd: console.log.bind(this, 'onDragEnd'),
+  });
+  // 放入
+  useDrop(ref, {
+    onDom: (aData: FileStat, e) => {
+      console.log('放入', aData);
+      if (data.type === 'directory') {
+        webDav$.emit({
+          type: `move.${aData.type}`,
+          value: {
+            from: aData.filename,
+            to: `${data.filename}/${aData.basename}`,
+          },
+        });
+        setMoved(false);
+      }
+    },
+    onDragEnter: () => data.type === 'directory' && setMoved(true),
+    onDragLeave: () => data.type === 'directory' && setMoved(false),
+  });
   let options = [
     {
       type: 'li',
@@ -75,7 +100,7 @@ const Index: React.FC<{
             fele.pop();
             fele.push(newBasename);
             webDav$.emit({
-              type: `rename.${data.type}`,
+              type: `move.${data.type}`,
               value: {
                 from: data.filename,
                 to: `/${fele.join('/')}`,
@@ -109,11 +134,21 @@ const Index: React.FC<{
     },
   ];
   return (
-    <a className={styles.a} href={`#${data.basename}`}>
+    <a
+      className={classnames(styles.a, {
+        [styles.moved]: moved,
+      })}
+      href={`#${data.basename}`}
+      ref={ref}
+    >
       {/*@ts-ignore  theme={'win10'}*/}
       <RightMenu options={options}>
         <div className={styles.fileInfo} onClick={() => onClick?.(data)}>
-          <FileTypeImage className={styles.image} type={data?.type} suffix={Utils.getSuffix(data.basename)} />
+          <FileTypeImage
+            className={styles.image}
+            type={data?.type}
+            suffix={Utils.getSuffix(data.basename)}
+          />
           <div className={styles.title}>{data.basename}</div>
         </div>
       </RightMenu>

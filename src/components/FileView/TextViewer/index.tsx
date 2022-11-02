@@ -13,7 +13,7 @@ const Index: React.FC<{
     setContent(await new File([await fetch(fileUrl).then(r => r.blob())], '_').text());
   }, [fileUrl]);
 
-  return (<>{content}</>);
+  return (<code style={{textAlign: 'unset'}}>{content}</code>);
 };
 
 export default Index;

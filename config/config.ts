@@ -2,7 +2,7 @@ import {defineConfig} from 'umi';
 import routerConfig from '../src/router.config';
 
 export default defineConfig({
-  title: 'HOCGIN',
+  title: '文件管理 - WebDav',
   locale: {
     antd: true,
   },

@@ -27,6 +27,7 @@ export enum WebDavServiceType {
   custom = 'custom',
   jianguoyun = 'jianguoyun',
   box = 'box',
+  nextcloud = 'nextcloud',
   dropbox = 'dropbox',
 }
 

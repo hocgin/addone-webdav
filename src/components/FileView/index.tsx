@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import FileViewer from 'react-file-viewer';
 import Utils from '@/_utils/utils';
 import WebDavService from '@/services/webdav';
-import {useAsyncEffect, useRequest} from 'ahooks';
+import {useAsyncEffect, useBoolean, useRequest} from 'ahooks';
 import {Modal, Image} from 'antd';
 import memoizeOne from 'memoize-one';
 import TextViewer from './TextViewer';
@@ -69,6 +69,7 @@ export const useFileView = (clientId?: string, _filename?: string) => {
   return [
     fileUrl,
     fileType,
+    $getFileContents.loading,
     {
       setFilename: (filename?: string) => {
         if (clientId && filename) {
@@ -91,12 +92,13 @@ export const useFileView = (clientId?: string, _filename?: string) => {
 
 export const FileViewModal: React.FC<{
   className?: string;
+  loading: boolean;
   visible?: boolean;
   clientId?: string;
   fileUrl?: string;
   fileType?: string;
   onCancel?: () => void;
-}> = ({visible, fileUrl, fileType, onCancel}) => {
+}> = ({visible, loading, fileUrl, fileType, onCancel}) => {
   return (
     <Modal
       maskClosable={true}
@@ -107,7 +109,7 @@ export const FileViewModal: React.FC<{
       onCancel={onCancel}
       visible={visible}
     >
-      {visible ? <FileView fileType={fileType} fileUrl={fileUrl} /> : <></>}
+      {visible && (loading ? <>加载中</> : <FileView fileType={fileType} fileUrl={fileUrl} />)}
     </Modal>
   );
 };

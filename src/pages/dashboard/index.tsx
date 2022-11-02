@@ -49,6 +49,7 @@ const Index = () => {
           </div>
           <div className={styles.siderMenu}>
             {webDav.length ? <Menu
+              onClick={({key}) => setActiveId(key)}
               mode="inline"
               items={webDav.map(({id, username, title}) => ({
                 key: id,

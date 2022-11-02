@@ -8,7 +8,7 @@ export let ServiceConfig = [
     rootDir: '/我的坚果云',
     support_auth: [
       WebDavAuthType.digest,
-      WebDavAuthType.basic,
+      WebDavAuthType.password,
       WebDavAuthType.token,
     ],
     urlDoc: {
@@ -25,7 +25,7 @@ export let ServiceConfig = [
     rootDir: '/',
     support_auth: [
       WebDavAuthType.digest,
-      WebDavAuthType.basic,
+      WebDavAuthType.password,
       WebDavAuthType.token,
     ],
     urlDoc: {
@@ -36,13 +36,30 @@ export let ServiceConfig = [
     }
   },
   {
+    id: WebDavServiceType.nextcloud,
+    remoteUrl: 'https://',
+    label: 'Box',
+    rootDir: '/',
+    support_auth: [
+      WebDavAuthType.digest,
+      WebDavAuthType.password,
+      WebDavAuthType.token,
+    ],
+    urlDoc: {
+      title: 'Nextcloud WebDav 开启方法',
+      imageSrc: 'https://nextcloud.com/wp-content/uploads/2022/03/favicon.png',
+      description: 'https://docs.nextcloud.com',
+      href: 'https://docs.nextcloud.com/server/latest/user_manual/en/files/access_webdav.html',
+    }
+  },
+  {
     id: WebDavServiceType.dropbox,
     remoteUrl: 'https://dav.dropdav.com/',
     label: 'Dropbox',
     rootDir: '/',
     support_auth: [
       WebDavAuthType.digest,
-      WebDavAuthType.basic,
+      WebDavAuthType.password,
       WebDavAuthType.token,
     ],
     urlDoc: {
@@ -58,7 +75,7 @@ export let ServiceConfig = [
     rootDir: '/',
     support_auth: [
       WebDavAuthType.digest,
-      WebDavAuthType.basic,
+      WebDavAuthType.password,
       WebDavAuthType.token,
     ],
     urlDoc: {

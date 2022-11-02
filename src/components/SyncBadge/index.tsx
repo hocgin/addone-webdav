@@ -1,16 +1,15 @@
 import React from 'react';
-import { CloudSyncOutlined } from '@ant-design/icons';
-import { Badge } from 'antd';
+import {CloudSyncOutlined} from '@ant-design/icons';
 import classnames from 'classnames';
 import styles from './index.less';
 
 const Index: React.FC<{
   className?: string;
   count?: number;
-}> = ({ className, count }) => {
+}> = ({className, count = 0}) => {
   return (
     <div className={classnames(className, styles.syncBadge)}>
-      <CloudSyncOutlined style={{ fontSize: 20 }} />
+      <CloudSyncOutlined style={{fontSize: 20}} />
       <span className={styles.dot}>x</span>
       <span className={styles.count}>{`${count}`}</span>
     </div>

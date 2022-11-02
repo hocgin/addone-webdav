@@ -44,7 +44,7 @@ function asJSZipNode(data: JSZip) {
     }
     maps[file.name] = item;
     return item;
-  });
+  }).sort((a1) => a1?.dir ? 1 : -1);
   console.log('nodes.convert', nodes);
   nodes.forEach(item => {
     if (!item.parentKey) {
