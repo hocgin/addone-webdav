@@ -58,6 +58,7 @@ const Index: React.FC<{
   }, [service]);
   return (
     <Modal
+      closable={false}
       maskClosable={false}
       title={isEdit ? '修改' : '新增'}
       visible={visible}

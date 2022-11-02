@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { DownloadOutlined, HomeOutlined } from '@ant-design/icons';
+import { CloudSyncOutlined } from '@ant-design/icons';
 import {
   Layout,
   Row,
@@ -9,6 +9,7 @@ import {
   Space,
   Breadcrumb,
   message,
+  Badge,
 } from 'antd';
 import Utils from '@/_utils/utils';
 import Breadcrumbs from '@/components/FileContent/Breadcrumbs';
@@ -27,6 +28,7 @@ import { WebExtension } from '@hocgin/browser-addone-kit';
 import { FileViewModal, useFileView } from '@/components/FileView';
 import { stringify } from 'query-string';
 import { Search } from '@/components';
+import SyncBadge from '@/components/SyncBadge';
 
 const { Header, Footer, Content } = Layout;
 
@@ -164,7 +166,10 @@ const Index: React.FC<{
             </Radio.Button>
           </Radio.Group>
         </Space>
-        <Search />
+        <div className={styles.leftHeader}>
+          <Search />
+          <SyncBadge />
+        </div>
       </Header>
       <Content className={styles.content}>
         {clientId ? (
