@@ -1,8 +1,9 @@
 import {Container} from '@/components';
 import React, {useState} from 'react';
 import WebDavService from '@/services/webdav';
-import {Layout, Menu} from 'antd';
+import {Layout, Menu, Image, Popover, Space} from 'antd';
 import {useRequest} from 'ahooks';
+import {QrcodeOutlined, SettingOutlined} from '@ant-design/icons';
 import {WebDavData} from '@/services/webdav/types';
 import FileContent from '@/components/FileContent';
 import styles from './index.less';
@@ -45,23 +46,30 @@ const Index = () => {
           <div className={styles.siderHeader}>
             <SaveAccount onOk={() => $list.runAsync()}>新增</SaveAccount>
           </div>
-          {webDav.length ? <Menu
-            mode="inline"
-            items={webDav.map(({id, username, title}) => ({
-              key: id,
-              label: (
-                <AccountButton
-                  id={id}
-                  onEdit={setEditId}
-                  onRemove={() => $remove.runAsync(id)}
-                  remark={username}
-                >
-                  {title}
-                </AccountButton>
-              ),
-            }))}
-          /> : <Empty className={styles.empty} description={'暂无账号, 可以点击🔝按钮新增账号'} />}
-
+          <div className={styles.siderMenu}>
+            {webDav.length ? <Menu
+              mode="inline"
+              items={webDav.map(({id, username, title}) => ({
+                key: id,
+                label: (
+                  <AccountButton
+                    id={id}
+                    onEdit={setEditId}
+                    onRemove={() => $remove.runAsync(id)}
+                    remark={username}
+                  >
+                    {title}
+                  </AccountButton>
+                ),
+              }))}
+            /> : <Empty className={styles.empty} description={'暂无账号, 可以点击🔝按钮新增账号'} />}
+          </div>
+          <Space className={styles.siderTool}>
+            <Popover content={<><Image src="https://cdn.hocgin.top/uPic/mp-logo.jpg" width={80} alt="公众号" /></>}>
+              <QrcodeOutlined />
+            </Popover>
+            <SettingOutlined />
+          </Space>
         </Sider>
         <FileContent clientId={activeId} />
       </Layout>

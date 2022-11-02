@@ -1,6 +1,6 @@
 import React from 'react';
-import { Dropdown, Menu, Modal } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import {Dropdown, Menu, Modal} from 'antd';
+import {DownOutlined, CloudServerOutlined} from '@ant-design/icons';
 
 const Index: React.FC<{
   className?: string;
@@ -9,7 +9,7 @@ const Index: React.FC<{
   remark?: string;
   onRemove?: () => void;
   onEdit?: (id: string) => void;
-}> = ({ id, remark, onEdit, children, onRemove }) => {
+}> = ({id, remark, onEdit, children, onRemove}) => {
   return (
     <Dropdown.Button
       type="link"
@@ -51,7 +51,7 @@ const Index: React.FC<{
       icon={<DownOutlined />}
       trigger={['click']}
     >
-      {children}
+      <CloudServerOutlined /> {children}
     </Dropdown.Button>
   );
 };
