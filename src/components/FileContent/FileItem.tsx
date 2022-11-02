@@ -13,12 +13,13 @@ import Utils from '@/_utils/utils';
 const FileTypeImage: React.FC<{
   src?: string;
   className?: string;
+  suffix?: string;
   type: 'file' | 'directory';
-}> = ({className, type, src}) => {
+}> = ({className, suffix, type, src}) => {
   if ('directory' === type) {
     src = Icons.directory();
   } else {
-    src = Icons.file(type);
+    src = Icons.file(type, suffix);
   }
   return <Image className={className} preview={false} src={src} />;
 };
@@ -112,7 +113,7 @@ const Index: React.FC<{
       {/*@ts-ignore  theme={'win10'}*/}
       <RightMenu options={options}>
         <div className={styles.fileInfo} onClick={() => onClick?.(data)}>
-          <FileTypeImage className={styles.image} type={data?.type} />
+          <FileTypeImage className={styles.image} type={data?.type} suffix={Utils.getSuffix(data.basename)} />
           <div className={styles.title}>{data.basename}</div>
         </div>
       </RightMenu>
