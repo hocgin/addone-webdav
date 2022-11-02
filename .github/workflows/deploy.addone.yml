@@ -69,8 +69,6 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Install yarn dependencies
         run: yarn
-      - name: yarn patchpackage
-        run: yarn patchpackage
       - name: Run build
         run: yarn build:prod.addone
         env:
