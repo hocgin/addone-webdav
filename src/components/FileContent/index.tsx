@@ -25,6 +25,7 @@ import { RcFile } from 'antd/lib/upload/interface';
 import { Empty } from '@hocgin/ui';
 import { WebExtension } from '@hocgin/browser-addone-kit';
 import { FileViewModal, useFileView } from '@/components/FileView';
+import { stringify } from 'query-string';
 
 const { Header, Footer, Content } = Layout;
 
@@ -59,7 +60,12 @@ const Index: React.FC<{
     else if (event.type === 'open.file') {
       await setAsyncFilename(event?.value);
       if (fileUrl) {
-        console.log('open.fileUrl', fileUrl);
+        console.log(event.type, fileUrl);
+        WebExtension.tabs.create({
+          url: WebExtension.runtime.getURL(
+            `/fileview.html?${stringify({ fileUrl, fileType })}`,
+          ),
+        });
       }
     }
     // 浏览文件
