@@ -22,22 +22,21 @@ export const FileView: React.FC<{
   fileUrl?: string;
 }> = ({fileUrl, fileType = 'unknown'}) => {
   console.log(`fileType=${fileType}, fileUrl=${fileUrl}`);
-  if (['png', 'jpeg', 'gif', 'jpg', 'webp'].includes(fileType)) {
-    return <Image preview={false} src={fileUrl} />;
-  }
-  if (['md', 'txt', 'js'].includes(fileType)) {
-    return <TextViewer fileUrl={fileUrl} />;
-  }
-  if (['zip'].includes(fileType)) {
-    return <ZipViewer fileUrl={fileUrl} />;
-  }
-  return (
-    <FileViewer
+  let viewerEl;
+  if (['png', 'jpeg', 'gif', 'jpg', 'webp', 'ico'].includes(fileType)) {
+    viewerEl = <Image preview={false} src={fileUrl} />;
+  } else if (['md', 'txt', 'js'].includes(fileType)) {
+    viewerEl = <TextViewer fileUrl={fileUrl} />;
+  } else if (['zip'].includes(fileType)) {
+    viewerEl = <ZipViewer fileUrl={fileUrl} />;
+  } else {
+    viewerEl = <FileViewer
       fileType={fileType}
       filePath={fileUrl}
       onError={console.error.bind(this, 'FileView')}
-    />
-  );
+    />;
+  }
+  return <div className={styles.viewer}>{viewerEl}</div>;
 };
 
 const getFileContent = memoizeOne(WebDavService.getFileContents);

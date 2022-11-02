@@ -1,0 +1,62 @@
+@import '~@/mixin.less';
+
+.component {
+  display: flex;
+  flex-direction: row;
+  padding: 15px 10px;
+  cursor: pointer;
+  background-color: rgba(247, 247, 247, 0.98);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+
+  &:hover {
+    background-color: #e5e5e5;
+    .dark({
+      background-color: #161616;
+    });
+  }
+
+  &:hover .imageWrapper::after {
+    animation: ro 7s linear infinite;
+
+    @keyframes ro {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  }
+}
+
+.imageWrapper {
+  margin-right: 8px;
+}
+
+.meta {
+  display: flex;
+  text-align: left;
+  flex-direction: column;
+  justify-content: space-around;
+  flex: 1;
+  overflow: hidden;
+
+  .title {
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(48, 54, 89, 0.9);
+    .dark({
+      color: #A4A5A6
+    });
+    .onlyline()
+  }
+
+  .desc {
+    color: rgba(136, 142, 162, 0.8);
+    font-size: 11px;
+    display: flex;
+    //justify-content: flex-end;
+  }
+}

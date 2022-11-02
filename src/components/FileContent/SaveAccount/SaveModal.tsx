@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Form, Input, Modal, Radio, Select} from 'antd';
 import {useRequest} from 'ahooks';
 import WebDavService from '@/services/webdav';
@@ -8,6 +8,7 @@ import {
 } from '@/components/FileContent/SaveAccount/service.config';
 import {WebDavAuthType, WebDavServiceType} from '@/services/webdav/types';
 import {AuthType} from 'webdav';
+import {UrlCard} from "@/components";
 
 const Index: React.FC<{
   /**
@@ -25,6 +26,8 @@ const Index: React.FC<{
     manual: true,
     onSuccess: (data) => form.setFieldsValue(data),
   });
+  let [config, setConfig] = useState<any>();
+
   const authentication = Form.useWatch('auth', form);
   const service = Form.useWatch('service', form);
   let initialValues = {
@@ -51,6 +54,7 @@ const Index: React.FC<{
     let config = getConfig(service) as any;
     form.setFieldValue('rootDir', config?.rootDir);
     form.setFieldValue('remoteUrl', config?.remoteUrl);
+    setConfig(config);
   }, [service]);
   return (
     <Modal
@@ -132,6 +136,11 @@ const Index: React.FC<{
           <Input />
         </Form.Item>
       </Form>
+      {config?.urlDoc &&
+        <UrlCard title={config.urlDoc?.title}
+                 href={config.urlDoc?.href}
+                 imageSrc={config.urlDoc?.imageSrc}
+                 description={config.urlDoc?.description} />}
     </Modal>
   );
 };

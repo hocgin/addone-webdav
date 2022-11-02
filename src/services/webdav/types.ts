@@ -1,6 +1,6 @@
-import { WebDAVClient } from 'webdav';
+import {WebDAVClient} from 'webdav';
 import * as WebDav from 'webdav/web';
-import { FileStat } from 'webdav/dist/node/types';
+import {FileStat} from 'webdav/dist/node/types';
 
 export interface WebDavData {
   // id
@@ -13,10 +13,12 @@ export interface WebDavData {
   auth?: WebDavAuthType;
   // webdav 服务地址
   remoteUrl: string;
+  // ======================================================================
   // digest.username
   username?: string;
   // digest.password
   password?: string;
+  // ======================================================================
   // 根目录
   rootDir: string;
 }
@@ -24,6 +26,8 @@ export interface WebDavData {
 export enum WebDavServiceType {
   custom = 'custom',
   jianguoyun = 'jianguoyun',
+  box = 'box',
+  dropbox = 'dropbox',
 }
 
 export enum WebDavAuthType {
