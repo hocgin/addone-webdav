@@ -1,6 +1,7 @@
 import React from 'react';
 import { Dropdown, Menu, Modal } from 'antd';
 import { DownOutlined, CloudServerOutlined } from '@ant-design/icons';
+import styles from './index.less';
 
 const Index: React.FC<{
   className?: string;
@@ -49,9 +50,10 @@ const Index: React.FC<{
         />
       }
       icon={<DownOutlined />}
+      className={styles.btn}
       trigger={['click']}
     >
-      <CloudServerOutlined style={{ fontSize: 25 }} /> {children}
+      <CloudServerOutlined style={{ fontSize: 20 }} /> {children}
     </Dropdown.Button>
   );
 };
