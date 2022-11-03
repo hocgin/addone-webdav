@@ -41,7 +41,7 @@ export class WebDavInfo implements WebDavData {
   public title: string;
   public id: string;
   public remoteUrl: string;
-  public auth?: WebDavAuthType = WebDavAuthType.digest;
+  public auth?: WebDavAuthType = WebDavAuthType.password;
   public service?: string = WebDavServiceType.custom;
   public username?: string;
   public password?: string;
@@ -68,7 +68,7 @@ export class WebDavInfo implements WebDavData {
   public getClient(): WebDAVClient {
     if (!this.client) {
       this.client = WebDav.createClient(this.remoteUrl, {
-        authType: AuthType.Digest,
+        authType: this.auth as any,
         username: this.username,
         password: this.password,
       });
