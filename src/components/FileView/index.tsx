@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 // @ts-ignore
 import FileViewer from 'react-file-viewer';
 import Utils from '@/_utils/utils';
 import WebDavService from '@/services/webdav';
-import {useAsyncEffect, useBoolean, useRequest} from 'ahooks';
-import {Modal, Image} from 'antd';
+import { useAsyncEffect, useBoolean, useRequest } from 'ahooks';
+import { Modal, Image } from 'antd';
 import memoizeOne from 'memoize-one';
 import TextViewer from './TextViewer';
 import styles from './index.less';
-import ZipViewer from "./ZipViewer";
+import ZipViewer from './ZipViewer';
 
 /**
  * https://github.com/plangrid/react-file-viewer
@@ -20,7 +20,7 @@ export const FileView: React.FC<{
   className?: string;
   fileType?: string;
   fileUrl?: string;
-}> = ({fileUrl, fileType = 'unknown'}) => {
+}> = ({ fileUrl, fileType = 'unknown' }) => {
   console.log(`fileType=${fileType}, fileUrl=${fileUrl}`);
   let viewerEl;
   if (['png', 'jpeg', 'gif', 'jpg', 'webp', 'ico'].includes(fileType)) {
@@ -30,11 +30,13 @@ export const FileView: React.FC<{
   } else if (['zip'].includes(fileType)) {
     viewerEl = <ZipViewer fileUrl={fileUrl} />;
   } else {
-    viewerEl = <FileViewer
-      fileType={fileType}
-      filePath={fileUrl}
-      onError={console.error.bind(this, 'FileView')}
-    />;
+    viewerEl = (
+      <FileViewer
+        fileType={fileType}
+        filePath={fileUrl}
+        onError={console.error.bind(this, 'FileView')}
+      />
+    );
   }
   return <div className={styles.viewer}>{viewerEl}</div>;
 };
@@ -98,18 +100,23 @@ export const FileViewModal: React.FC<{
   fileUrl?: string;
   fileType?: string;
   onCancel?: () => void;
-}> = ({visible, loading, fileUrl, fileType, onCancel}) => {
+}> = ({ visible, loading, fileUrl, fileType, onCancel }) => {
   return (
     <Modal
       maskClosable={true}
       closable={false}
       title={'预览'}
-      footer={undefined}
+      footer={null}
       className={styles.modal}
       onCancel={onCancel}
       visible={visible}
     >
-      {visible && (loading ? <>加载中</> : <FileView fileType={fileType} fileUrl={fileUrl} />)}
+      {visible &&
+        (loading ? (
+          <>加载中</>
+        ) : (
+          <FileView fileType={fileType} fileUrl={fileUrl} />
+        ))}
     </Modal>
   );
 };
