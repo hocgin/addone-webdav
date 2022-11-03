@@ -7,8 +7,8 @@ export let ServiceConfig = [
     remoteUrl: 'https://dav.jianguoyun.com/dav',
     rootDir: '/我的坚果云',
     support_auth: [
-      WebDavAuthType.digest,
       WebDavAuthType.password,
+      WebDavAuthType.digest,
       WebDavAuthType.token,
     ],
     urlDoc: {
@@ -24,8 +24,8 @@ export let ServiceConfig = [
     label: 'Box',
     rootDir: '/',
     support_auth: [
-      WebDavAuthType.digest,
       WebDavAuthType.password,
+      WebDavAuthType.digest,
       WebDavAuthType.token,
     ],
     urlDoc: {
@@ -38,11 +38,11 @@ export let ServiceConfig = [
   {
     id: WebDavServiceType.nextcloud,
     remoteUrl: 'https://',
-    label: 'Box',
+    label: 'Nextcloud',
     rootDir: '/',
     support_auth: [
-      WebDavAuthType.digest,
       WebDavAuthType.password,
+      WebDavAuthType.digest,
       WebDavAuthType.token,
     ],
     urlDoc: {
@@ -58,8 +58,8 @@ export let ServiceConfig = [
     label: 'Dropbox',
     rootDir: '/',
     support_auth: [
-      WebDavAuthType.digest,
       WebDavAuthType.password,
+      WebDavAuthType.digest,
       WebDavAuthType.token,
     ],
     urlDoc: {
@@ -74,8 +74,8 @@ export let ServiceConfig = [
     label: '自定义',
     rootDir: '/',
     support_auth: [
-      WebDavAuthType.digest,
       WebDavAuthType.password,
+      WebDavAuthType.digest,
       WebDavAuthType.token,
     ],
     urlDoc: {
