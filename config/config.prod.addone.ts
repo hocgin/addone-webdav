@@ -1,5 +1,5 @@
-import { defineConfig } from 'umi';
-import { BrowserAddoneExtensionsType } from '@hocgin/umijs-plugin-browser-addone';
+import {defineConfig} from 'umi';
+import {BrowserAddoneExtensionsType} from '@hocgin/umijs-plugin-browser-addone';
 
 export default defineConfig({
   define: {
@@ -25,9 +25,7 @@ export default defineConfig({
       'action',
       'downloads',
       'contextMenus',
-      'webRequest',
       'storage',
-      'notifications',
     ],
     hostPermissions: ['<all_urls>'],
     override: {
