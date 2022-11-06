@@ -22,7 +22,7 @@ export default defineConfig({
     background: {
       serviceWorker: '@/pages/background/index',
     },
-    permissions: ['executeScript', 'downloads', 'contextMenus', 'storage'],
+    permissions: ['scripting', 'downloads', 'contextMenus', 'storage'],
     contentScripts: [
       WebExtension.kit.tbkScriptConfig(['@/pages/contentscripts/tbk']),
       WebExtension.kit.authorizationScriptConfig([
