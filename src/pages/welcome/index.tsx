@@ -1,8 +1,8 @@
-import {useHistory, useLocation, useParams} from "dumi";
 import {useEffect} from "react";
 import {WebExtension} from "@hocgin/browser-addone-kit";
+import {useHistory} from "umi";
 
-export default ({children}) => {
+export default () => {
   const {location}: any = useHistory();
   let query: any = location?.query ?? {};
   useEffect(() => {
