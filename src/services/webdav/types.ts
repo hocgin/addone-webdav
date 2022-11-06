@@ -1,6 +1,6 @@
-import { AuthType, WebDAVClient } from 'webdav';
+import {WebDAVClient} from 'webdav';
 import * as WebDav from 'webdav/web';
-import { FileStat } from 'webdav/dist/node/types';
+import {FileStat} from 'webdav/dist/node/types';
 
 export interface WebDavData {
   // id

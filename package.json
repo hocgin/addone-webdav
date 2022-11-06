@@ -33,10 +33,10 @@
   },
   "dependencies": {
     "@ahooksjs/use-url-state": "^3.5.0",
-    "@hocgin/browser-addone-kit": "^1.0.78",
-    "@hocgin/hkit": "^1.0.78",
-    "@hocgin/mock-kit": "^1.0.78",
-    "@hocgin/ui": "^4.2.7",
+    "@hocgin/browser-addone-kit": "^1.0.85",
+    "@hocgin/hkit": "^1.0.85",
+    "@hocgin/mock-kit": "^1.0.85",
+    "@hocgin/ui": "^4.2.8",
     "@right-menu/react": "0.0.5",
     "ahooks": "^3.7.2",
     "antd": "4.22.5",
@@ -51,7 +51,7 @@
     "webdav": "^4.11.0"
   },
   "devDependencies": {
-    "@hocgin/umijs-plugin-browser-addone": "^1.0.78",
+    "@hocgin/umijs-plugin-browser-addone": "^1.0.85",
     "@types/mockjs": "^1.0.6",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",

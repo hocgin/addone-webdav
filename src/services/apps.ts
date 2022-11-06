@@ -1,14 +1,11 @@
-import { stringify } from 'query-string';
-import { Utils } from '@hocgin/ui';
-
-let { useGet } = Utils.Request;
+import {stringify} from 'query-string';
+import {useGet, StructKit} from '@hocgin/hkit';
 
 export default class {
-  static ssr({ id, ...payload }: any): Promise<string> {
-
+  static ssr({id, ...payload}: any): Promise<string> {
     let queryString = stringify(payload);
     return useGet(`/api/ssr?${queryString}`)
-      .then(Utils.Struct.thenTryErrorIfExits)
-      .then(Utils.Struct.thenData);
+      .then(StructKit.thenTryErrorIfExits)
+      .then(StructKit.thenData);
   }
 }

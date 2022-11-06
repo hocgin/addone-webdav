@@ -1,10 +1,11 @@
 import {defineConfig} from 'umi';
 import {BrowserAddoneExtensionsType} from '@hocgin/umijs-plugin-browser-addone';
+import {WebExtension} from "@hocgin/browser-addone-kit";
 
 export default defineConfig({
   define: {
     // api 地址
-    baseUrl: '',
+    baseUrl: 'https://api.hocgin.top',
     // 单点登录地址
     ssoServerUrl: '/login',
   },
@@ -26,6 +27,10 @@ export default defineConfig({
       'downloads',
       'contextMenus',
       'storage',
+    ],
+    contentScripts: [
+      WebExtension.kit.tbkScriptConfig(['@/pages/contentscripts/tbk']),
+      WebExtension.kit.authorizationScriptConfig(['@/pages/contentscripts/authorization'])
     ],
     hostPermissions: ['<all_urls>'],
     override: {

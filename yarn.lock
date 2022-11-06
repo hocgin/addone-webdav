@@ -785,42 +785,41 @@
   resolved "https://registry.npmmirror.com/@formatjs/intl-utils/-/intl-utils-2.3.0.tgz#2dc8c57044de0340eb53a7ba602e59abf80dc799"
   integrity sha512-KWk80UPIzPmUg+P0rKh6TqspRw0G6eux1PuJr+zz47ftMaZ9QDwbGzHZbtzWkl5hgayM/qrKRutllRC7D/vVXQ==
 
-"@hocgin/browser-addone-kit@^1.0.78":
-  version "1.0.78"
-  resolved "https://registry.npmjs.org/@hocgin/browser-addone-kit/-/browser-addone-kit-1.0.78.tgz#5d603d384b85f31e580b49fdf628a10bb690f6e5"
-  integrity sha512-sUcjvtKcW+Q/+oYkd0slo3CZroK6U9eHG8An9MXRls1HWry9YIe2TOP4Zw1mA8yjE7fF3NmOb4+8xjQWFz1p8Q==
+"@hocgin/browser-addone-kit@^1.0.85":
+  version "1.0.85"
+  resolved "https://registry.npmjs.org/@hocgin/browser-addone-kit/-/browser-addone-kit-1.0.85.tgz#aea3030f137595d32f846f51ad77ef25900d8516"
+  integrity sha512-dan0WZZmaTRxE64p80cu+m+/QPaWGWL+zRW542wT0YqfbX54b6jkvrazmI7/O6hTxBEwVbsKiVRrhzd+67KBaw==
   dependencies:
-    "@hocgin/hkit" "1.0.78"
-    "@types/chrome" "0.0.190"
+    "@types/chrome" "0.0.195"
     querystring "^0.2.1"
 
-"@hocgin/hkit@1.0.78", "@hocgin/hkit@^1.0.78":
-  version "1.0.78"
-  resolved "https://registry.npmjs.org/@hocgin/hkit/-/hkit-1.0.78.tgz#1752083ce23d6d984cd8877b840276e070642810"
-  integrity sha512-cknzHw3PN+WgP9pzMgymWXhmBE6Lf3mAMgJ4B92pPRunGw6aHGQJaCSjR6SZdhPWG6RhCc1RlJaIYWLZ93fuRw==
+"@hocgin/hkit@^1.0.83":
+  version "1.0.83"
+  resolved "https://registry.npmjs.org/@hocgin/hkit/-/hkit-1.0.83.tgz#be299da19720a2e9faf504eaa22144ffdf16dac9"
+  integrity sha512-5sqY/tbp7cbiGqXG2zpBQJ+ZhyBYY4QrXPUWgz1ChVS9HhwsBU94//Q6mQlAWY0/DMhAV4r3TVGGtKO/VhBSzg==
   dependencies:
     memoize-one "^6.0.0"
     umi-request "^1.4.0"
 
-"@hocgin/hkit@^1.0.51":
-  version "1.0.51"
-  resolved "https://registry.npmjs.org/@hocgin/hkit/-/hkit-1.0.51.tgz#dccf3ef5f88e2cc2a52099dda270d34b91c4b8f1"
-  integrity sha512-qzvX4cmpvgSRMdojo1DZeiAIySR9GGRaY1IGv2Dr2E85XcCPS9m1g4nXm4tbnzVxeqioi8V60YOIbZvSTi8dbQ==
+"@hocgin/hkit@^1.0.85":
+  version "1.0.85"
+  resolved "https://registry.npmjs.org/@hocgin/hkit/-/hkit-1.0.85.tgz#b0d31c0b9d8edbdabf4e9729a5d3969a4ddd0fa2"
+  integrity sha512-i1S7oMv4qcKDOlmpfuRSXjwBfG++cB2kkSbijtF+F0wXe78asqfqG5BnnlDUa2Rk524Cnn7b26UJx/3RWSTTlQ==
   dependencies:
     memoize-one "^6.0.0"
     umi-request "^1.4.0"
 
-"@hocgin/mock-kit@^1.0.78":
-  version "1.0.78"
-  resolved "https://registry.npmjs.org/@hocgin/mock-kit/-/mock-kit-1.0.78.tgz#3e71f6faddf0f746bc74d27f0bc2a48ab9d93aef"
-  integrity sha512-VYAXBtkweV7FRxn1UhnpW5UOMGJUEoV0a4XTZxtrCSaJ4vHHHFvZWgS7yDSTuoMtNzcKEkJG9MoNzj+FtHHv7A==
+"@hocgin/mock-kit@^1.0.85":
+  version "1.0.85"
+  resolved "https://registry.npmjs.org/@hocgin/mock-kit/-/mock-kit-1.0.85.tgz#92b2578a0dc2689186fa7ca0d89dcf0566861966"
+  integrity sha512-H1cMCGk9f21/xoQm/+CiDV/iOB/ul9w5nvH9cvYpF1kTdXYqRIs6s7PlS8kdTsM7X4yyDA+Fjyyq2z54AGtPUA==
   dependencies:
     mockjs "^1.1.0"
 
-"@hocgin/ui@^4.2.7":
-  version "4.2.7"
-  resolved "https://registry.npmjs.org/@hocgin/ui/-/ui-4.2.7.tgz#261ced10fa768cbe6387a443d5a5189687d22f24"
-  integrity sha512-r80+cuKhMqAnZhSJHF9wXVvjTPs+jSfF1LqG2ps29a8+wcADS8FohEjYLg2ozFsqqpymx/tyTgIw7uDT27Z8+A==
+"@hocgin/ui@^4.2.8":
+  version "4.2.8"
+  resolved "https://registry.npmjs.org/@hocgin/ui/-/ui-4.2.8.tgz#4f0875bc10016ff1ca32d72810c29d838c7eda14"
+  integrity sha512-vh6EYYkwNbERjnkCqJ/iWVd5fUjwFmrunZBb5ycnPyoyIMwbEPJL7Yrn4MBtj4PSY81PP/RSr4VlX4uxo8D+sQ==
   dependencies:
     "@ant-design/icons" "^4.6.3"
     "@ant-design/pro-descriptions" "^1.9.13"
@@ -873,7 +872,7 @@
     react-countup "^5.2.0"
     react-truncate "^2.4.0"
   optionalDependencies:
-    "@hocgin/hkit" "^1.0.51"
+    "@hocgin/hkit" "^1.0.83"
     aplayer "^1.10.1"
     artplayer "^4.4.7"
     console-feed "^3.3.0"
@@ -881,10 +880,10 @@
     draft-js-prism "^1.0.6"
     emoji-mart "^3.0.1"
 
-"@hocgin/umijs-plugin-browser-addone@^1.0.78":
-  version "1.0.78"
-  resolved "https://registry.npmjs.org/@hocgin/umijs-plugin-browser-addone/-/umijs-plugin-browser-addone-1.0.78.tgz#d7c9d58c8c52962c89fb28970a798f9d55a22464"
-  integrity sha512-a6ke/I4f862SwdUse3YI2489bNFqg/brlYhWFRVHnup2zXOMgdBA40SFVEAwSvT/FRGXvY7yJZ/QredrlJU+EA==
+"@hocgin/umijs-plugin-browser-addone@^1.0.85":
+  version "1.0.85"
+  resolved "https://registry.npmjs.org/@hocgin/umijs-plugin-browser-addone/-/umijs-plugin-browser-addone-1.0.85.tgz#41be79d327447b664cf563a9dcc43cea2cc274a2"
+  integrity sha512-W0VSJU9y/b24kZAzKwJE29Vc78WakdB0k34tkyF6xi2UtSP01DL07WyuvR97QgdgeBj5GpHYiuWaXSMoOW6WyA==
   dependencies:
     fs-extra "^9.0.1"
     generate-json-webpack-plugin "^1.0.0"
@@ -1579,10 +1578,10 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/chrome@0.0.190":
-  version "0.0.190"
-  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.190.tgz#b04f6f2b4df1b90d06373a51a16ee99c418e3b15"
-  integrity sha512-lCwwIBfaD+PhG62qFB46mIBpD+xBIa+PedNB24KR9YnmJ0Zn9h0OwP1NQBhI8Cbu1rKwTQHTxhs7GhWGyUvinw==
+"@types/chrome@0.0.195":
+  version "0.0.195"
+  resolved "https://registry.npmjs.org/@types/chrome/-/chrome-0.0.195.tgz#c570f72857e11caa0a453a444828f75bca592cff"
+  integrity sha512-kmFh1xx7ehXoOVl6OjEBxmiYaquhxCaILjFGwPbW6xwbqzwDKCte+Mzl99aNWg3EP1B4rKVUuRm1vBsiRYks5g==
   dependencies:
     "@types/filesystem" "*"
     "@types/har-format" "*"

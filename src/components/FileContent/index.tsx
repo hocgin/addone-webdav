@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {CloudSyncOutlined} from '@ant-design/icons';
 import {
   Layout,
   Row,
@@ -28,7 +27,7 @@ import {WebExtension} from '@hocgin/browser-addone-kit';
 import {FileViewModal, useFileView} from '@/components/FileView';
 import {stringify} from 'query-string';
 import {Search} from '@/components';
-import SyncBadge from '@/components/SyncBadge';
+import {SyncBadge} from '@/components';
 
 const {Header, Footer, Content} = Layout;
 

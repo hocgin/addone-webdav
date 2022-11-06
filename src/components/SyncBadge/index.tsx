@@ -3,7 +3,7 @@ import {CloudSyncOutlined} from '@ant-design/icons';
 import classnames from 'classnames';
 import styles from './index.less';
 
-const Index: React.FC<{
+export const SyncBadge: React.FC<{
   className?: string;
   count?: number;
 }> = ({className, count = 0}) => {
@@ -16,4 +16,3 @@ const Index: React.FC<{
   );
 };
 
-export default Index;
