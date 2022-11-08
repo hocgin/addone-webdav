@@ -14,7 +14,7 @@ export default defineConfig({
   extensions: {
     name: '__MSG_extension_name__',
     description: '__MSG_extension_description__',
-    icons: '../public/logo.jpg',
+    icons: '../public/logo.png',
     defaultLocale: 'zh_CN',
     action: {
       defaultTitle: '打开仪表盘',
