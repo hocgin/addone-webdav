@@ -73,6 +73,7 @@ jobs:
         run: yarn build:prod.addone
         env:
           NODE_OPTIONS: '--max_old_space_size=4096'
+          USE_LOG: true
       - name: Generate File 📃
         run: |
           cd dist/

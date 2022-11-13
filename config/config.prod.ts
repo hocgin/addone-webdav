@@ -7,5 +7,4 @@ export default defineConfig({
     // 单点登录地址
     ssoServerUrl: '/login',
   },
-  extraBabelPlugins: ['transform-remove-console'],
 });

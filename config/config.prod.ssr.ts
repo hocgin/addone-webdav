@@ -16,5 +16,4 @@ export default defineConfig({
   hash: true,
   // cdn 地址
   publicPath: `https://cdn.hocgin.top/${dirName}/`,
-  extraBabelPlugins: ['transform-remove-console'],
 });
