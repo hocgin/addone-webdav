@@ -38,42 +38,42 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Actions
-        uses: actions/checkout@v2
-      - name: Get version from Tags
-        id: prep
-        run: |
-          VERSION=${GITHUB_REF#refs/tags/}
-          VERSION=$(echo "${VERSION}" | sed 's/v//')
-          echo ::set-output name=version::${VERSION}
+        uses: actions/checkout@v3
+      - id: prep
+        uses: hocgin/action-env@main
       - name: Rename Version
         run: |
           sed -i "s/\"1.0.0\"/\"${VERSION}\"/" package.json
         env:
-          VERSION: ${{ steps.prep.outputs.version }}
+          VERSION: ${{ steps.prep.outputs.version_number }}
       - name: Install Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '14.x'
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Cache node modules
-        if: ${{ github.event.inputs.use_cache != 'false' }}
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          version: 7
+          run_install: false
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
-      - name: Install yarn dependencies
-        run: yarn
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
       - name: Run build
-        run: yarn build:prod.addone
+        run: npm run build:prod.addone
         env:
           NODE_OPTIONS: '--max_old_space_size=4096'
-          USE_LOG: true
+          USE_LOG: false
       - name: Generate File 📃
         run: |
           cd dist/

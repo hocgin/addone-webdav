@@ -1,10 +1,13 @@
 import {RequestOptions, getPatcher} from "webdav";
 import fetch from "cross-fetch";
-import {addLocale, getAllLocales, localeInfo,} from 'umi';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import '@/request.config';
 
+dayjs.extend(relativeTime);
+
 // webdav 兼容 fetch
-getPatcher().patch("request", (opts: RequestOptions) => {
+getPatcher().patch("request", (opts: RequestOptions | any) => {
   console.log('patch', opts);
   return fetch(opts.url, {
     method: opts.method,
@@ -13,21 +16,6 @@ getPatcher().patch("request", (opts: RequestOptions) => {
   })
 });
 
-// 国际化配置
-getAllLocales().forEach((locale) => {
-  let momentLocale =
-    {
-      'zh-CN': 'zh-cn',
-      'en-US': 'en',
-    }[locale] ?? 'zh-cn';
-  let localeItem = localeInfo[locale];
-  addLocale(locale, localeItem.messages, {
-    antd: localeItem.antd,
-    momentLocale: !!localeItem.momentLocale
-      ? localeItem.momentLocale
-      : momentLocale,
-  });
-});
 
 // 全局状态配置
 export async function getInitialState() {

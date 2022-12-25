@@ -140,7 +140,7 @@ const Index: React.FC<{
     // 其他
     else {
       console.warn('未匹配到指令', event);
-      message.warn(`操作失败，${event.type} 暂不支持`);
+      message.warning(`操作失败，${event.type} 暂不支持`);
     }
   });
   useAsyncEffect(async () => {

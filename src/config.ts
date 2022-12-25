@@ -30,18 +30,11 @@ export default class Config {
 
   static getSsoServerUrl() {
     // @ts-ignore
-    return fullHostname(ssoServerUrl);
+    return ssoServerUrl;
   }
 
   static getBaseUrl() {
     // @ts-ignore
-    return fullHostname(baseUrl);
+    return baseUrl;
   }
 }
-
-let fullHostname = (shouldUrl: string) => {
-  if (shouldUrl.startsWith('http')) {
-    return shouldUrl;
-  }
-  return `${shouldUrl}`;
-};

@@ -1,5 +1,9 @@
-import {defineConfig} from 'umi';
+import { defineConfig } from 'umi';
 import routerConfig from '../src/router.config';
+import { theme } from 'antd';
+
+const { defaultAlgorithm, defaultSeed } = theme;
+const mapToken = defaultAlgorithm(defaultSeed);
 
 export const useLogger = () => {
   let result: any = [];
@@ -15,7 +19,7 @@ export const useLogger = () => {
 };
 
 export default defineConfig({
-  title: '文件管理 - WebDav',
+  title: 'HOCGIN',
   locale: {
     antd: true,
   },
@@ -40,23 +44,18 @@ export default defineConfig({
       // => 转到服务端地址
       target: 'http://127.0.0.1:20001/',
       changeOrigin: true,
-      pathRewrite: {'^/api': ''},
+      pathRewrite: { '^/api': '' },
     },
   },
-  theme: {
-    '@primary-color': '#262626',
-  },
+  theme: {},
   routes: [...routerConfig],
   extraBabelPlugins: [
-    [
-      'import',
-      {
-        libraryName: '@hocgin/ui',
-        camel2DashComponentName: false,
-        style: true,
-      },
-      '@hocgin/ui',
-    ],
     ...useLogger(),
   ],
+  lessLoader: {
+    modifyVars: {
+      ...mapToken,
+      // 'ant-prefix': ANT_PREFIX_CLS,
+    },
+  },
 });
