@@ -1,6 +1,6 @@
 import React from 'react';
-import { Dropdown, Menu, Modal } from 'antd';
-import { DownOutlined, CloudServerOutlined } from '@ant-design/icons';
+import {Dropdown, Menu, Modal} from 'antd';
+import {DownOutlined, CloudServerOutlined} from '@ant-design/icons';
 import styles from './index.less';
 
 const Index: React.FC<{
@@ -10,10 +10,10 @@ const Index: React.FC<{
   remark?: string;
   onRemove?: () => void;
   onEdit?: (id: string) => void;
-}> = ({ id, remark, onEdit, children, onRemove }) => {
+}> = ({id, remark, onEdit, children, onRemove}) => {
   return (
     <Dropdown.Button
-      type="link"
+      type="text"
       overlay={
         <Menu
           items={[
@@ -49,11 +49,11 @@ const Index: React.FC<{
           ]}
         />
       }
-      icon={<DownOutlined />}
+      icon={<DownOutlined/>}
       className={styles.btn}
       trigger={['click']}
     >
-      <CloudServerOutlined style={{ fontSize: 20 }} /> {children}
+      <CloudServerOutlined style={{fontSize: 20}}/> {children}
     </Dropdown.Button>
   );
 };
