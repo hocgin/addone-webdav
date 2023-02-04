@@ -8,28 +8,28 @@ import styles from './index.less';
 
 const Index: React.FC<{
   children?: any;
+  disabled?: boolean;
   webDav$: EventEmitter<WebDavEventType>;
-}> = ({ children, webDav$ }) => {
+}> = ({ children, disabled, webDav$ }) => {
   return (
     <Dropdown.Button
-      overlay={
-        <Menu
-          items={[
-            {
-              label: <UploadButton webDav$={webDav$}>上传文件</UploadButton>,
-              key: 'file',
-            },
-            {
-              label: (
-                <UploadButton webDav$={webDav$} directory={true}>
-                  上传文件夹
-                </UploadButton>
-              ),
-              key: 'directory',
-            },
-          ]}
-        />
-      }
+      disabled={disabled}
+      menu={{
+        items: [
+          {
+            label: <UploadButton webDav$={webDav$}>上传文件</UploadButton>,
+            key: 'file',
+          },
+          {
+            label: (
+              <UploadButton webDav$={webDav$} directory={true}>
+                上传文件夹
+              </UploadButton>
+            ),
+            key: 'directory',
+          },
+        ],
+      }}
       type="primary"
     >
       <UploadButton webDav$={webDav$} className={styles.uploadButton}>

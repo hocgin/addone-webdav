@@ -6,8 +6,9 @@ import { WebDavEventType } from '@/_utils/types';
 
 const Index: React.FC<{
   children?: any;
+  disabled?: boolean;
   webDav$: EventEmitter<WebDavEventType>;
-}> = ({ children, webDav$ }) => {
+}> = ({ disabled, children, webDav$ }) => {
   let { modal } = App.useApp();
   let [title, setTitle] = React.useState<string>();
   const latestTitle = useLatest(title);
@@ -26,7 +27,11 @@ const Index: React.FC<{
       },
     });
   };
-  return <Radio.Button onClick={onClick}>{children}</Radio.Button>;
+  return (
+    <Radio.Button onClick={onClick} disabled={disabled}>
+      {children}
+    </Radio.Button>
+  );
 };
 
 export default Index;
