@@ -1,6 +1,6 @@
-import { defineConfig } from 'umi';
-import { BrowserAddoneExtensionsType } from '@hocgin/umijs-plugin-browser-addone';
-import { WebExtension } from '@hocgin/browser-addone-kit';
+import {defineConfig} from 'umi';
+import {BrowserAddoneExtensionsType} from '@hocgin/umijs-plugin-browser-addone';
+import {WebExtension} from '@hocgin/browser-addone-kit';
 
 export default defineConfig({
   define: {
@@ -21,7 +21,7 @@ export default defineConfig({
     background: {
       serviceWorker: '@/pages/background/index',
     },
-    permissions: ['downloads', 'contextMenus', 'storage'],
+    permissions: ['scripting', 'downloads', 'contextMenus', 'storage'],
     contentScripts: [
       WebExtension.kit.tbkScriptConfig(['@/pages/contentscripts/tbk']),
       WebExtension.kit.authorizationScriptConfig([
