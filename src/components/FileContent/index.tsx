@@ -176,8 +176,8 @@ const Index: React.FC<{
           </Radio.Group>
         </Space>
         <div className={styles.leftHeader}>
-          <Search />
-          <SyncBadge />
+          <Search/>
+          <SyncBadge/>
         </div>
       </Header>
       <Content className={styles.content}>
@@ -218,12 +218,12 @@ const Index: React.FC<{
               </>
             ) : (
               <>
-                <Empty description="空" />
+                <Empty/>
               </>
             )}
           </>
         ) : (
-          <Empty description="未添加账号" />
+          <Empty description="未添加账号"/>
         )}
       </Content>
       <FileViewModal
