@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Input, Modal, Radio } from 'antd';
+import { App, Input, Radio } from 'antd';
 import { useLatest } from 'ahooks';
 import { EventEmitter } from 'ahooks/lib/useEventEmitter';
 import { WebDavEventType } from '@/_utils/types';
@@ -8,11 +8,13 @@ const Index: React.FC<{
   children?: any;
   webDav$: EventEmitter<WebDavEventType>;
 }> = ({ children, webDav$ }) => {
+  let { modal } = App.useApp();
   let [title, setTitle] = React.useState<string>();
   const latestTitle = useLatest(title);
   let onClick = () => {
-    Modal.confirm({
-      icon: undefined,
+    modal.confirm({
+      title: `新建文件夹`,
+      icon: <></>,
       content: (
         <Input
           placeholder="请输入文件夹名称"

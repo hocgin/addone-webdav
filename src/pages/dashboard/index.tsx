@@ -13,7 +13,7 @@ import SaveModal from '@/components/FileContent/SaveAccount/SaveModal';
 import {Empty} from "@/components";
 import SettingButton from "@/pages/dashboard/SettingButton";
 
-const {Header, Footer, Sider, Content} = Layout;
+const {Sider} = Layout;
 
 const Index = () => {
   let [webDav, setWebDav] = useState<WebDavData[]>([]);

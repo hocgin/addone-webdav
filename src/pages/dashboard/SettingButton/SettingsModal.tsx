@@ -1,20 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Form, Input, Modal, Radio, Select } from 'antd';
-import { useRequest } from 'ahooks';
-import WebDavService from '@/services/webdav';
-import {
-  getConfig,
-  ServiceConfig,
-} from '@/components/FileContent/SaveAccount/service.config';
-import { WebDavAuthType, WebDavServiceType } from '@/services/webdav/types';
-import { AuthType } from 'webdav';
-import { UrlCard } from '@/components';
+import React from 'react';
+import {Form, Modal, Select} from 'antd';
 
 const Index: React.FC<{
   className?: string;
   visible?: boolean;
   onCancel?: () => void;
-}> = ({ onCancel, visible = false }) => {
+}> = ({onCancel, visible = false}) => {
   let [form] = Form.useForm();
   return (
     <Modal
@@ -26,8 +17,8 @@ const Index: React.FC<{
     >
       <Form
         form={form}
-        labelCol={{ span: 4 }}
-        wrapperCol={{ span: 20 }}
+        labelCol={{span: 4}}
+        wrapperCol={{span: 20}}
         colon={false}
       >
         <Form.Item name="lang" label="语言">

@@ -19,7 +19,7 @@ export const useLogger = () => {
 };
 
 export default defineConfig({
-  title: 'HOCGIN',
+  title: '文件管理 - WebDav',
   locale: {
     antd: true,
   },

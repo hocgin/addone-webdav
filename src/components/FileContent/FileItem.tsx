@@ -1,10 +1,9 @@
 import React, {useRef, useState} from 'react';
-import {Image, Input, message, Modal} from 'antd';
+import {Image, Input, message, Modal, App} from 'antd';
 import {FileStat} from 'webdav/dist/node/types';
 import {Icons} from '@/components';
 import styles from './FileItem.less';
 import RightMenu from '@right-menu/react';
-import {OptionsType} from '@right-menu/core';
 import {EventEmitter} from 'ahooks/lib/useEventEmitter';
 import {WebDavEventType} from '@/_utils/types';
 import {useBoolean, useDrag, useDrop, useLatest} from 'ahooks';
@@ -22,7 +21,7 @@ const FileTypeImage: React.FC<{
   } else {
     src = Icons.file(type, suffix);
   }
-  return <Image className={className} preview={false} src={src} />;
+  return <Image className={className} preview={false} src={src}/>;
 };
 
 const Index: React.FC<{
@@ -31,7 +30,9 @@ const Index: React.FC<{
   className?: string;
   data: FileStat;
 }> = ({data, onClick, webDav$}) => {
+  console.log('data', data);
   const ref = useRef<any>();
+  let {modal} = App.useApp();
   let [moved, {set: setMoved}] = useBoolean(false);
   let [title, setTitle] = useState(data.basename ?? '文件未命名');
   let latTitle = useLatest(title);
@@ -81,12 +82,14 @@ const Index: React.FC<{
       type: 'li',
       text: '重命名',
       callback: () => {
-        return Modal.confirm({
-          icon: undefined,
+        console.log('重命名.data', data);
+        modal.confirm({
+          title: `重命名`,
+          icon: <></>,
           content: (
             <Input
               placeholder="新名称"
-              defaultValue={title}
+              defaultValue={data.basename}
               onChange={(v) => setTitle(v.target.value)}
             />
           ),
@@ -126,8 +129,8 @@ const Index: React.FC<{
       type: 'li',
       text: '删除',
       callback: () =>
-        Modal.confirm({
-          title: `确认删除文件"${title}"`,
+        modal.confirm({
+          title: `确认删除文件"${data.basename}"`,
           onOk: () =>
             webDav$.emit({type: 'delete.file', value: data.filename}),
         }),
