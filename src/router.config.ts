@@ -8,5 +8,4 @@ export default [
       { path: '/fileview', component: '@/pages/fileview' },
     ],
   },
-  { component: '@/pages/404' },
 ];
