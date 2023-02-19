@@ -41,8 +41,6 @@
   "recommend": { "message": "REC" },
   "wx_qrcode": { "message": "Official Account" },
   "fileview_error": { "message": "File address error" },
-  "no_account": {
-    "message": "No account yet, click the \uD83D\uDD1D button to add an account"
-  },
+  "no_account": {"message": "No account yet, click the \uD83D\uDD1D button to add an account"},
   "preview": { "message": "Preview" }
 }
