@@ -9,6 +9,7 @@ import memoizeOne from 'memoize-one';
 import TextViewer from './TextViewer';
 import styles from './index.less';
 import ZipViewer from './ZipViewer';
+import { i18nKit } from '@hocgin/browser-addone-kit';
 
 /**
  * https://github.com/plangrid/react-file-viewer
@@ -105,7 +106,7 @@ export const FileViewModal: React.FC<{
     <Modal
       maskClosable={true}
       closable={false}
-      title={'预览'}
+      title={i18nKit.getMessage('preview' as any)}
       footer={null}
       className={styles.modal}
       onCancel={onCancel}

@@ -1,6 +1,6 @@
-import {defineConfig} from 'umi';
-import {BrowserAddoneExtensionsType} from '@hocgin/umijs-plugin-browser-addone';
-import {WebExtension} from '@hocgin/browser-addone-kit';
+import { defineConfig } from 'umi';
+import { BrowserAddoneExtensionsType } from '@hocgin/umijs-plugin-browser-addone';
+import { WebExtension } from '@hocgin/browser-addone-kit';
 
 export default defineConfig({
   define: {
@@ -14,9 +14,9 @@ export default defineConfig({
     name: '__MSG_extension_name__',
     description: '__MSG_extension_description__',
     icons: '../public/logo.png',
-    defaultLocale: 'zh_CN',
+    defaultLocale: 'en',
     action: {
-      defaultTitle: '打开仪表盘',
+      defaultTitle: '__MSG_extension_action_title__',
     },
     background: {
       serviceWorker: '@/pages/background/index',

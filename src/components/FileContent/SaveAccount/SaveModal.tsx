@@ -1,14 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import {Button, Form, Input, Modal, Radio, Select} from 'antd';
-import {useRequest} from 'ahooks';
+import React, { useEffect, useState } from 'react';
+import { Button, Form, Input, Modal, Radio, Select } from 'antd';
+import { useRequest } from 'ahooks';
 import WebDavService from '@/services/webdav';
 import {
   getConfig,
   ServiceConfig,
 } from '@/components/FileContent/SaveAccount/service.config';
-import {WebDavAuthType, WebDavServiceType} from '@/services/webdav/types';
-import {AuthType} from 'webdav';
-import {UrlCard} from '@/components';
+import { WebDavAuthType, WebDavServiceType } from '@/services/webdav/types';
+import { AuthType } from 'webdav';
+import { UrlCard } from '@/components';
+import { i18nKit } from '@hocgin/browser-addone-kit';
 
 const Index: React.FC<{
   /**
@@ -19,7 +20,7 @@ const Index: React.FC<{
   visible?: boolean;
   onOk?: () => void;
   onCancel?: () => void;
-}> = ({id, onOk, onCancel, visible = false}) => {
+}> = ({ id, onOk, onCancel, visible = false }) => {
   let isEdit = id;
   let [form] = Form.useForm();
   let $get = useRequest(WebDavService.get, {
@@ -34,10 +35,11 @@ const Index: React.FC<{
     service: WebDavServiceType.custom,
     auth: WebDavAuthType.password,
   };
-  let serviceOptions: any[] = ServiceConfig.map(({label, id}) => ({
-    label,
-    value: id as any,
-  })) ?? [];
+  let serviceOptions: any[] =
+    ServiceConfig.map(({ label, id }) => ({
+      label,
+      value: id as any,
+    })) ?? [];
   useEffect(() => {
     id && $get.runAsync(id);
   }, [id]);
@@ -60,25 +62,31 @@ const Index: React.FC<{
     <Modal
       closable={false}
       maskClosable={false}
-      title={isEdit ? '修改' : '新增'}
-      visible={visible}
+      title={
+        isEdit
+          ? i18nKit.getMessage('modify' as any)
+          : i18nKit.getMessage('add' as any)
+      }
+      open={visible}
       footer={[
-        <Button onClick={onCancel}>取消</Button>,
+        <Button onClick={onCancel}>
+          {i18nKit.getMessage('cancel' as any)}
+        </Button>,
         <Button
           key="submit"
           type="primary"
           loading={$submit.loading}
           onClick={onFinish}
         >
-          保存
+          {i18nKit.getMessage('save' as any)}
         </Button>,
       ]}
       onCancel={onCancel}
     >
       <Form
         form={form}
-        labelCol={{span: 6}}
-        wrapperCol={{span: 18}}
+        labelCol={{ span: 6 }}
+        wrapperCol={{ span: 18 }}
         colon={false}
         initialValues={initialValues}
       >
@@ -87,21 +95,33 @@ const Index: React.FC<{
         </Form.Item>
         <Form.Item
           name="title"
-          label="名称"
-          rules={[{required: true, message: '名称不能为空'}]}
+          label={i18nKit.getMessage('title' as any)}
+          rules={[
+            {
+              required: true,
+              message: i18nKit.getMessage('title_required' as any),
+            },
+          ]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           name="service"
-          label="服务商"
-          rules={[{required: true, message: '服务商不能为空'}]}
+          label={i18nKit.getMessage('service' as any)}
+          rules={[
+            {
+              required: true,
+              message: i18nKit.getMessage('service_required' as any),
+            },
+          ]}
         >
           <Select options={serviceOptions} />
         </Form.Item>
-        <Form.Item name="auth" label="认证方式">
+        <Form.Item name="auth" label={i18nKit.getMessage('auth' as any)}>
           <Radio.Group buttonStyle="solid">
-            <Radio.Button value={WebDavAuthType.password}>密码</Radio.Button>
+            <Radio.Button value={WebDavAuthType.password}>
+              {i18nKit.getMessage('auth_password' as any)}
+            </Radio.Button>
             {/*<Radio.Button value={WebDavAuthType.digest} disabled>*/}
             {/*  密码*/}
             {/*</Radio.Button>*/}
@@ -111,28 +131,44 @@ const Index: React.FC<{
           </Radio.Group>
         </Form.Item>
         {(authentication === WebDavAuthType.password && (
-            <>
-              <Form.Item name="username" label="用户名">
-                <Input />
-              </Form.Item>
-              <Form.Item name="password" label="密码">
-                <Input type="password" />
-              </Form.Item>
-            </>
-          )) ||
+          <>
+            <Form.Item
+              name="username"
+              label={i18nKit.getMessage('username' as any)}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              name="password"
+              label={i18nKit.getMessage('password' as any)}
+            >
+              <Input type="password" />
+            </Form.Item>
+          </>
+        )) ||
           (authentication === WebDavAuthType.digest && <>digest</>) ||
           (authentication === WebDavAuthType.token && <>token</>)}
         <Form.Item
           name="remoteUrl"
-          label="WebDav 地址"
-          rules={[{required: true, message: 'WebDav 地址不能为空'}]}
+          label={i18nKit.getMessage('webdav_address' as any)}
+          rules={[
+            {
+              required: true,
+              message: i18nKit.getMessage('webdav_address_required' as any),
+            },
+          ]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           name="rootDir"
-          label="根目录"
-          rules={[{required: true, message: '根目录不能为空'}]}
+          label={i18nKit.getMessage(`root_dir` as any)}
+          rules={[
+            {
+              required: true,
+              message: i18nKit.getMessage(`root_dir_required` as any),
+            },
+          ]}
         >
           <Input />
         </Form.Item>

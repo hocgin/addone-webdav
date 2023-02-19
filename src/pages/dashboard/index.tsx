@@ -1,19 +1,20 @@
-import {Container, StoreLink} from '@/components';
-import React, {useState} from 'react';
+import { Container, StoreLink } from '@/components';
+import React, { useState } from 'react';
 import WebDavService from '@/services/webdav';
-import {Layout, Menu, Image, Popover, Space} from 'antd';
-import {useRequest} from 'ahooks';
-import {QrcodeOutlined} from '@ant-design/icons';
-import {WebDavData} from '@/services/webdav/types';
+import { Layout, Menu, Image, Popover, Space } from 'antd';
+import { useRequest } from 'ahooks';
+import { QrcodeOutlined } from '@ant-design/icons';
+import { WebDavData } from '@/services/webdav/types';
 import FileContent from '@/components/FileContent';
 import styles from './index.less';
 import AccountButton from '@/components/FileContent/AccountButton';
 import SaveAccount from '@/components/FileContent/SaveAccount';
 import SaveModal from '@/components/FileContent/SaveAccount/SaveModal';
-import {Empty} from "@/components";
-import SettingButton from "@/pages/dashboard/SettingButton";
+import { Empty } from '@/components';
+import SettingButton from '@/pages/dashboard/SettingButton';
+import { i18nKit } from '@hocgin/browser-addone-kit';
 
-const {Sider} = Layout;
+const { Sider } = Layout;
 
 const Index = () => {
   let [webDav, setWebDav] = useState<WebDavData[]>([]);
@@ -26,7 +27,7 @@ const Index = () => {
       if (
         data.length &&
         (!activeId ||
-          (activeId && !data.map(({id}) => id).includes(activeId)))
+          (activeId && !data.map(({ id }) => id).includes(activeId)))
       ) {
         setActiveId(data[0].id);
       } else if (!data.length) {
@@ -45,38 +46,57 @@ const Index = () => {
       <Layout className={styles.layout}>
         <Sider theme={'light'} className={styles.sider}>
           <div className={styles.siderHeader}>
-            <SaveAccount onOk={() => $list.runAsync()}>新增</SaveAccount>
+            <SaveAccount onOk={() => $list.runAsync()}>
+              {i18nKit.getMessage('add' as any)}
+            </SaveAccount>
           </div>
           <div className={styles.siderMenu}>
-            {webDav.length ? <Menu
-              onClick={({key}) => setActiveId(key)}
-              mode="inline"
-              items={webDav.map(({id, username, title}) => ({
-                key: id,
-                label: (
-                  <AccountButton
-                    id={id}
-                    onEdit={setEditId}
-                    onRemove={() => $remove.runAsync(id)}
-                    remark={username}
-                  >
-                    {title}
-                  </AccountButton>
-                ),
-              }))}
-            /> : <Empty className={styles.empty} description={'暂无账号, 可以点击🔝按钮新增账号'}/>}
+            {webDav.length ? (
+              <Menu
+                onClick={({ key }) => setActiveId(key)}
+                mode="inline"
+                items={webDav.map(({ id, username, title }) => ({
+                  key: id,
+                  label: (
+                    <AccountButton
+                      id={id}
+                      onEdit={setEditId}
+                      onRemove={() => $remove.runAsync(id)}
+                      remark={username}
+                    >
+                      {title}
+                    </AccountButton>
+                  ),
+                }))}
+              />
+            ) : (
+              <Empty
+                className={styles.empty}
+                description={i18nKit.getMessage('no_account' as any)}
+              />
+            )}
           </div>
           <Space className={styles.siderTool}>
             <Space>
-              <Popover content={<><Image src="https://cdn.hocgin.top/uPic/mp-logo.jpg" width={80} alt="公众号"/></>}>
-                <QrcodeOutlined/>
+              <Popover
+                content={
+                  <>
+                    <Image
+                      src="https://cdn.hocgin.top/uPic/mp-logo.jpg"
+                      width={80}
+                      alt={i18nKit.getMessage(`wx_qrcode` as any)}
+                    />
+                  </>
+                }
+              >
+                <QrcodeOutlined />
               </Popover>
-              <SettingButton/>
+              <SettingButton />
             </Space>
-            <StoreLink/>
+            <StoreLink />
           </Space>
         </Sider>
-        <FileContent clientId={activeId}/>
+        <FileContent clientId={activeId} />
       </Layout>
       <SaveModal
         id={editId}

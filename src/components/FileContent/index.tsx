@@ -23,7 +23,7 @@ import CreateDirectory from '@/components/FileContent/CreateDirectory';
 import UploadFile from '@/components/FileContent/UploadFile';
 import { RcFile } from 'antd/lib/upload/interface';
 import { Empty } from '@hocgin/ui';
-import { WebExtension } from '@hocgin/browser-addone-kit';
+import { i18nKit, WebExtension } from '@hocgin/browser-addone-kit';
 import { FileViewModal, useFileView } from '@/components/FileView';
 import { stringify } from 'query-string';
 import { Search } from '@/components';
@@ -164,14 +164,18 @@ const Index: React.FC<{
     <Layout>
       <Header className={styles.header}>
         <Space direction={'horizontal'}>
-          <UploadFile webDav$={webDav$}>上传</UploadFile>
+          <UploadFile webDav$={webDav$}>
+            {i18nKit.getMessage('upload' as any)}
+          </UploadFile>
           <Radio.Group>
-            <CreateDirectory webDav$={webDav$}>新建文件夹</CreateDirectory>
+            <CreateDirectory webDav$={webDav$}>
+              {i18nKit.getMessage('new_dir' as any)}
+            </CreateDirectory>
             <Radio.Button value="default" disabled>
-              新建在线文档
+              {i18nKit.getMessage('new_doc' as any)}
             </Radio.Button>
             <Radio.Button value="small" disabled>
-              离线下载
+              {i18nKit.getMessage('offline_download' as any)}
             </Radio.Button>
           </Radio.Group>
         </Space>

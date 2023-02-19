@@ -5,6 +5,7 @@ import { WebDavEventType } from '@/_utils/types';
 import { UploadOutlined } from '@ant-design/icons';
 import UploadButton from '@/components/FileContent/UploadFile/UploadButton';
 import styles from './index.less';
+import { i18nKit } from '@hocgin/browser-addone-kit';
 
 const Index: React.FC<{
   children?: any;
@@ -17,13 +18,17 @@ const Index: React.FC<{
       menu={{
         items: [
           {
-            label: <UploadButton webDav$={webDav$}>上传文件</UploadButton>,
+            label: (
+              <UploadButton webDav$={webDav$}>
+                {i18nKit.getMessage('upload_file' as any)}
+              </UploadButton>
+            ),
             key: 'file',
           },
           {
             label: (
               <UploadButton webDav$={webDav$} directory={true}>
-                上传文件夹
+                {i18nKit.getMessage('upload_dir' as any)}
               </UploadButton>
             ),
             key: 'directory',

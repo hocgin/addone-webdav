@@ -3,6 +3,7 @@ import { App, Input, Radio } from 'antd';
 import { useLatest } from 'ahooks';
 import { EventEmitter } from 'ahooks/lib/useEventEmitter';
 import { WebDavEventType } from '@/_utils/types';
+import { i18nKit } from '@hocgin/browser-addone-kit';
 
 const Index: React.FC<{
   children?: any;
@@ -14,11 +15,11 @@ const Index: React.FC<{
   const latestTitle = useLatest(title);
   let onClick = () => {
     modal.confirm({
-      title: `新建文件夹`,
+      title: i18nKit.getMessage('create_dir' as any),
       icon: <></>,
       content: (
         <Input
-          placeholder="请输入文件夹名称"
+          placeholder={i18nKit.getMessage('input_dir_placeholder' as any)}
           onChange={(v) => setTitle(v.target.value)}
         />
       ),

@@ -1,8 +1,48 @@
 {
-  "extension_name": {
-    "message": "FileManager - WebDav"
+  "extension_name": { "message": "File Management - WebDav" },
+  "extension_description": { "message": "File Management WebDav" },
+  "extension_action_title": { "message": "Open Dashboard" },
+  "modify": { "message": "Modify" },
+  "add": { "message": "Add" },
+  "cancel": { "message": "Cancel" },
+  "save": { "message": "Save" },
+  "upload": { "message": "Upload" },
+  "new_dir": { "message": "New folder" },
+  "new_doc": { "message": "New online document" },
+  "offline_download": { "message": "Offline download" },
+  "title": { "message": "Name" },
+  "title_required": { "message": "Name is required" },
+  "service": { "message": "Service Provider" },
+  "service_required": { "message": "Service Provider is required" },
+  "auth": { "message": "Authentication Method" },
+  "auth_password": { "message": "Password" },
+  "username": { "message": "Username" },
+  "password": { "message": "Password" },
+  "webdav_address": { "message": "WebDav Address" },
+  "webdav_address_required": { "message": "WebDav Address is required" },
+  "root_dir": { "message": "Root Directory" },
+  "root_dir_required": { "message": "Root Directory is required" },
+  "confirm_del_account": { "message": "Confirm to delete account" },
+  "del": { "message": "Delete" },
+  "create_dir": { "message": "Create Folder" },
+  "input_dir_placeholder": { "message": "Please enter folder name" },
+  "search_placeholder": { "message": "Search.." },
+  "upload_file": { "message": "Upload File" },
+  "upload_dir": { "message": "Upload Folder" },
+  "open": { "message": "Open" },
+  "download": { "message": "Download" },
+  "rename": { "message": "Rename" },
+  "newtitle": { "message": "New Name" },
+  "newtitle_error_message": { "message": "Please enter a valid name" },
+  "click_copy": { "message": "Copy" },
+  "click_cut": { "message": "Cut" },
+  "click_del": { "message": "Delete" },
+  "confirm_delete": { "message": "Confirm to delete file" },
+  "recommend": { "message": "REC" },
+  "wx_qrcode": { "message": "Official Account" },
+  "fileview_error": { "message": "File address error" },
+  "no_account": {
+    "message": "No account yet, click the \uD83D\uDD1D button to add an account"
   },
-  "extension_description": {
-    "message": "FileManager - WebDav"
-  }
+  "preview": { "message": "Preview" }
 }

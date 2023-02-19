@@ -2,6 +2,7 @@ import React from 'react';
 import { App, Dropdown, Menu, Modal } from 'antd';
 import { DownOutlined, CloudServerOutlined } from '@ant-design/icons';
 import styles from './index.less';
+import { i18nKit } from '@hocgin/browser-addone-kit';
 
 const Index: React.FC<{
   className?: string;
@@ -25,7 +26,7 @@ const Index: React.FC<{
                 rel="noopener noreferrer"
                 onClick={() => onEdit?.(id)}
               >
-                修改
+                {i18nKit.getMessage('modify' as any)}
               </a>
             ),
           },
@@ -37,12 +38,12 @@ const Index: React.FC<{
                 rel="noopener noreferrer"
                 onClick={() =>
                   modal.confirm({
-                    title: `确认删除账号`,
+                    title: i18nKit.getMessage('confirm_del_account' as any),
                     onOk: onRemove,
                   })
                 }
               >
-                删除
+                {i18nKit.getMessage('del' as any)}
               </a>
             ),
           },
