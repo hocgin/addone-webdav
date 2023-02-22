@@ -23,7 +23,7 @@ import CreateDirectory from '@/components/FileContent/CreateDirectory';
 import UploadFile from '@/components/FileContent/UploadFile';
 import { RcFile } from 'antd/lib/upload/interface';
 import { Empty } from '@hocgin/ui';
-import { i18nKit, WebExtension } from '@hocgin/browser-addone-kit';
+import { I18nKit, WebExtension } from '@hocgin/browser-addone-kit';
 import { FileViewModal, useFileView } from '@/components/FileView';
 import { stringify } from 'query-string';
 import { Search } from '@/components';
@@ -165,17 +165,17 @@ const Index: React.FC<{
       <Header className={styles.header}>
         <Space direction={'horizontal'}>
           <UploadFile webDav$={webDav$}>
-            {i18nKit.getMessage('upload' as any)}
+            {I18nKit.getMessageOrDefault('upload' as any)}
           </UploadFile>
           <Radio.Group>
             <CreateDirectory webDav$={webDav$}>
-              {i18nKit.getMessage('new_dir' as any)}
+              {I18nKit.getMessageOrDefault('new_dir' as any)}
             </CreateDirectory>
             <Radio.Button value="default" disabled>
-              {i18nKit.getMessage('new_doc' as any)}
+              {I18nKit.getMessageOrDefault('new_doc' as any)}
             </Radio.Button>
             <Radio.Button value="small" disabled>
-              {i18nKit.getMessage('offline_download' as any)}
+              {I18nKit.getMessageOrDefault('offline_download' as any)}
             </Radio.Button>
           </Radio.Group>
         </Space>

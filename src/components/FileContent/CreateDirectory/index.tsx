@@ -1,30 +1,30 @@
 import * as React from 'react';
-import { App, Input, Radio } from 'antd';
-import { useLatest } from 'ahooks';
-import { EventEmitter } from 'ahooks/lib/useEventEmitter';
-import { WebDavEventType } from '@/_utils/types';
-import { i18nKit } from '@hocgin/browser-addone-kit';
+import {App, Input, Radio} from 'antd';
+import {useLatest} from 'ahooks';
+import {EventEmitter} from 'ahooks/lib/useEventEmitter';
+import {WebDavEventType} from '@/_utils/types';
+import {I18nKit} from '@hocgin/browser-addone-kit';
 
 const Index: React.FC<{
   children?: any;
   disabled?: boolean;
   webDav$: EventEmitter<WebDavEventType>;
-}> = ({ disabled, children, webDav$ }) => {
-  let { modal } = App.useApp();
+}> = ({disabled, children, webDav$}) => {
+  let {modal} = App.useApp();
   let [title, setTitle] = React.useState<string>();
   const latestTitle = useLatest(title);
   let onClick = () => {
     modal.confirm({
-      title: i18nKit.getMessage('create_dir' as any),
+      title: I18nKit.getMessageOrDefault('create_dir' as any),
       icon: <></>,
       content: (
         <Input
-          placeholder={i18nKit.getMessage('input_dir_placeholder' as any)}
+          placeholder={I18nKit.getMessageOrDefault('input_dir_placeholder' as any)}
           onChange={(v) => setTitle(v.target.value)}
         />
       ),
       onOk: async () => {
-        webDav$.emit({ type: 'create.directory', value: latestTitle.current });
+        webDav$.emit({type: 'create.directory', value: latestTitle.current});
       },
     });
   };

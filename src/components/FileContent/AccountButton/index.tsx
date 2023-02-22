@@ -2,7 +2,7 @@ import React from 'react';
 import { App, Dropdown, Menu, Modal } from 'antd';
 import { DownOutlined, CloudServerOutlined } from '@ant-design/icons';
 import styles from './index.less';
-import { i18nKit } from '@hocgin/browser-addone-kit';
+import { I18nKit } from '@hocgin/browser-addone-kit';
 
 const Index: React.FC<{
   className?: string;
@@ -26,7 +26,7 @@ const Index: React.FC<{
                 rel="noopener noreferrer"
                 onClick={() => onEdit?.(id)}
               >
-                {i18nKit.getMessage('modify' as any)}
+                {I18nKit.getMessageOrDefault('modify' as any)}
               </a>
             ),
           },
@@ -38,12 +38,12 @@ const Index: React.FC<{
                 rel="noopener noreferrer"
                 onClick={() =>
                   modal.confirm({
-                    title: i18nKit.getMessage('confirm_del_account' as any),
+                    title: I18nKit.getMessageOrDefault('confirm_del_account' as any),
                     onOk: onRemove,
                   })
                 }
               >
-                {i18nKit.getMessage('del' as any)}
+                {I18nKit.getMessageOrDefault('del' as any)}
               </a>
             ),
           },

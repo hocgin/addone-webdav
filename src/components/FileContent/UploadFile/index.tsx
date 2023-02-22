@@ -5,7 +5,7 @@ import { WebDavEventType } from '@/_utils/types';
 import { UploadOutlined } from '@ant-design/icons';
 import UploadButton from '@/components/FileContent/UploadFile/UploadButton';
 import styles from './index.less';
-import { i18nKit } from '@hocgin/browser-addone-kit';
+import { I18nKit } from '@hocgin/browser-addone-kit';
 
 const Index: React.FC<{
   children?: any;
@@ -20,7 +20,7 @@ const Index: React.FC<{
           {
             label: (
               <UploadButton webDav$={webDav$}>
-                {i18nKit.getMessage('upload_file' as any)}
+                {I18nKit.getMessageOrDefault('upload_file' as any)}
               </UploadButton>
             ),
             key: 'file',
@@ -28,7 +28,7 @@ const Index: React.FC<{
           {
             label: (
               <UploadButton webDav$={webDav$} directory={true}>
-                {i18nKit.getMessage('upload_dir' as any)}
+                {I18nKit.getMessageOrDefault('upload_dir' as any)}
               </UploadButton>
             ),
             key: 'directory',

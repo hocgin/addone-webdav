@@ -32,8 +32,8 @@
     ]
   },
   "dependencies": {
-    "@hocgin/browser-addone-kit": "^2.0.40",
-    "@hocgin/hkit": "^2.0.40",
+    "@hocgin/browser-addone-kit": "^2.0.42",
+    "@hocgin/hkit": "^2.0.42",
     "@hocgin/ui": "^5.0.20",
     "antd": "^5.2.2",
     "@ahooksjs/use-url-state": "^3.5.0",

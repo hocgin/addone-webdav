@@ -12,7 +12,7 @@ import SaveAccount from '@/components/FileContent/SaveAccount';
 import SaveModal from '@/components/FileContent/SaveAccount/SaveModal';
 import { Empty } from '@/components';
 import SettingButton from '@/pages/dashboard/SettingButton';
-import { i18nKit } from '@hocgin/browser-addone-kit';
+import { I18nKit } from '@hocgin/browser-addone-kit';
 
 const { Sider } = Layout;
 
@@ -47,7 +47,7 @@ const Index = () => {
         <Sider theme={'light'} className={styles.sider}>
           <div className={styles.siderHeader}>
             <SaveAccount onOk={() => $list.runAsync()}>
-              {i18nKit.getMessage('add' as any)}
+              {I18nKit.getMessageOrDefault('add' as any)}
             </SaveAccount>
           </div>
           <div className={styles.siderMenu}>
@@ -72,7 +72,7 @@ const Index = () => {
             ) : (
               <Empty
                 className={styles.empty}
-                description={i18nKit.getMessage('no_account' as any)}
+                description={I18nKit.getMessageOrDefault('no_account' as any)}
               />
             )}
           </div>
@@ -84,7 +84,7 @@ const Index = () => {
                     <Image
                       src="https://cdn.hocgin.top/uPic/mp-logo.jpg"
                       width={80}
-                      alt={i18nKit.getMessage(`wx_qrcode` as any)}
+                      alt={I18nKit.getMessageOrDefault(`wx_qrcode` as any)}
                     />
                   </>
                 }

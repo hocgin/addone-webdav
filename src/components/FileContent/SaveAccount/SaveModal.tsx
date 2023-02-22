@@ -9,7 +9,7 @@ import {
 import { WebDavAuthType, WebDavServiceType } from '@/services/webdav/types';
 import { AuthType } from 'webdav';
 import { UrlCard } from '@/components';
-import { i18nKit } from '@hocgin/browser-addone-kit';
+import { I18nKit } from '@hocgin/browser-addone-kit';
 
 const Index: React.FC<{
   /**
@@ -64,13 +64,13 @@ const Index: React.FC<{
       maskClosable={false}
       title={
         isEdit
-          ? i18nKit.getMessage('modify' as any)
-          : i18nKit.getMessage('add' as any)
+          ? I18nKit.getMessageOrDefault('modify' as any)
+          : I18nKit.getMessageOrDefault('add' as any)
       }
       open={visible}
       footer={[
         <Button onClick={onCancel}>
-          {i18nKit.getMessage('cancel' as any)}
+          {I18nKit.getMessageOrDefault('cancel' as any)}
         </Button>,
         <Button
           key="submit"
@@ -78,7 +78,7 @@ const Index: React.FC<{
           loading={$submit.loading}
           onClick={onFinish}
         >
-          {i18nKit.getMessage('save' as any)}
+          {I18nKit.getMessageOrDefault('save' as any)}
         </Button>,
       ]}
       onCancel={onCancel}
@@ -95,11 +95,11 @@ const Index: React.FC<{
         </Form.Item>
         <Form.Item
           name="title"
-          label={i18nKit.getMessage('title' as any)}
+          label={I18nKit.getMessageOrDefault('title' as any)}
           rules={[
             {
               required: true,
-              message: i18nKit.getMessage('title_required' as any),
+              message: I18nKit.getMessageOrDefault('title_required' as any),
             },
           ]}
         >
@@ -107,20 +107,20 @@ const Index: React.FC<{
         </Form.Item>
         <Form.Item
           name="service"
-          label={i18nKit.getMessage('service' as any)}
+          label={I18nKit.getMessageOrDefault('service' as any)}
           rules={[
             {
               required: true,
-              message: i18nKit.getMessage('service_required' as any),
+              message: I18nKit.getMessageOrDefault('service_required' as any),
             },
           ]}
         >
           <Select options={serviceOptions} />
         </Form.Item>
-        <Form.Item name="auth" label={i18nKit.getMessage('auth' as any)}>
+        <Form.Item name="auth" label={I18nKit.getMessageOrDefault('auth' as any)}>
           <Radio.Group buttonStyle="solid">
             <Radio.Button value={WebDavAuthType.password}>
-              {i18nKit.getMessage('auth_password' as any)}
+              {I18nKit.getMessageOrDefault('auth_password' as any)}
             </Radio.Button>
             {/*<Radio.Button value={WebDavAuthType.digest} disabled>*/}
             {/*  密码*/}
@@ -134,13 +134,13 @@ const Index: React.FC<{
           <>
             <Form.Item
               name="username"
-              label={i18nKit.getMessage('username' as any)}
+              label={I18nKit.getMessageOrDefault('username' as any)}
             >
               <Input />
             </Form.Item>
             <Form.Item
               name="password"
-              label={i18nKit.getMessage('password' as any)}
+              label={I18nKit.getMessageOrDefault('password' as any)}
             >
               <Input type="password" />
             </Form.Item>
@@ -150,11 +150,11 @@ const Index: React.FC<{
           (authentication === WebDavAuthType.token && <>token</>)}
         <Form.Item
           name="remoteUrl"
-          label={i18nKit.getMessage('webdav_address' as any)}
+          label={I18nKit.getMessageOrDefault('webdav_address' as any)}
           rules={[
             {
               required: true,
-              message: i18nKit.getMessage('webdav_address_required' as any),
+              message: I18nKit.getMessageOrDefault('webdav_address_required' as any),
             },
           ]}
         >
@@ -162,11 +162,11 @@ const Index: React.FC<{
         </Form.Item>
         <Form.Item
           name="rootDir"
-          label={i18nKit.getMessage(`root_dir` as any)}
+          label={I18nKit.getMessageOrDefault(`root_dir` as any)}
           rules={[
             {
               required: true,
-              message: i18nKit.getMessage(`root_dir_required` as any),
+              message: I18nKit.getMessageOrDefault(`root_dir_required` as any),
             },
           ]}
         >

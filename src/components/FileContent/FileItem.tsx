@@ -9,7 +9,7 @@ import {WebDavEventType} from '@/_utils/types';
 import {useBoolean, useDrag, useDrop, useLatest} from 'ahooks';
 import Utils from '@/_utils/utils';
 import classnames from 'classnames';
-import {i18nKit} from '@hocgin/browser-addone-kit';
+import {I18nKit} from '@hocgin/browser-addone-kit';
 
 const FileTypeImage: React.FC<{
   src?: string;
@@ -63,33 +63,33 @@ const Index: React.FC<{
   let options = [
     {
       type: 'li',
-      text: i18nKit.getMessage(`preview` as any),
+      text: I18nKit.getMessageOrDefault(`preview` as any),
       callback: () =>
         webDav$.emit({type: `preview.${data.type}`, value: data.filename} as WebDavEventType),
     },
     {
       type: 'li',
-      text: i18nKit.getMessage(`open` as any),
+      text: I18nKit.getMessageOrDefault(`open` as any),
       callback: () =>
         webDav$.emit({type: `open.${data.type}`, value: data.filename} as WebDavEventType),
     },
     {
       type: 'li',
-      text: i18nKit.getMessage(`download` as any),
+      text: I18nKit.getMessageOrDefault(`download` as any),
       callback: () =>
         webDav$.emit({type: `download.${data.type}`, value: data.filename} as WebDavEventType),
     },
     {
       type: 'li',
-      text: i18nKit.getMessage(`rename` as any),
+      text: I18nKit.getMessageOrDefault(`rename` as any),
       callback: () => {
         console.log('重命名.data', data);
         modal.confirm({
-          title: i18nKit.getMessage(`rename` as any),
+          title: I18nKit.getMessageOrDefault(`rename` as any),
           icon: <></>,
           content: (
             <Input
-              placeholder={i18nKit.getMessage(`newtitle` as any)}
+              placeholder={I18nKit.getMessageOrDefault(`newtitle` as any)}
               defaultValue={data.basename}
               onChange={(v) => setTitle(v.target.value)}
             />
@@ -98,7 +98,7 @@ const Index: React.FC<{
             let newBasename = latTitle.current;
             if (!newBasename) {
               message.error(
-                i18nKit.getMessage(`newtitle_error_message` as any),
+                I18nKit.getMessageOrDefault(`newtitle_error_message` as any),
               );
               return;
             }
@@ -119,21 +119,21 @@ const Index: React.FC<{
     {
       type: 'li',
       disabled: true,
-      text: i18nKit.getMessage(`click_copy` as any),
+      text: I18nKit.getMessageOrDefault(`click_copy` as any),
       callback: () => alert('点击了复制'),
     },
     {
       type: 'li',
       disabled: true,
-      text: i18nKit.getMessage(`click_cut` as any),
+      text: I18nKit.getMessageOrDefault(`click_cut` as any),
       callback: () => alert('点击了剪切'),
     },
     {
       type: 'li',
-      text: i18nKit.getMessage(`click_del` as any),
+      text: I18nKit.getMessageOrDefault(`click_del` as any),
       callback: () =>
         modal.confirm({
-          title: `${i18nKit.getMessage(`confirm_delete` as any)}"${
+          title: `${I18nKit.getMessageOrDefault(`confirm_delete` as any)}"${
             data.basename
           }"`,
           onOk: () =>
