@@ -1,6 +1,7 @@
 import { defineConfig } from 'umi';
 import { BrowserAddoneExtensionsType } from '@hocgin/umijs-plugin-browser-addone';
 import { WebExtension } from '@hocgin/browser-addone-kit';
+import pkg from '../package.json';
 
 export default defineConfig({
   define: {
@@ -8,6 +9,7 @@ export default defineConfig({
     baseUrl: 'https://api.hocgin.top',
     // 单点登录地址
     ssoServerUrl: '/login',
+    projectId: pkg.name,
   },
   plugins: ['@hocgin/umijs-plugin-browser-addone'],
   extensions: {
