@@ -1,28 +1,28 @@
-import React, { useRef, useState } from 'react';
-import { Image, Input, message, Modal, App } from 'antd';
-import { FileStat } from 'webdav/dist/node/types';
-import { Icons } from '@/components';
+import React, {useRef, useState} from 'react';
+import {Image, Input, message, Modal, App} from 'antd';
+import {FileStat} from 'webdav/dist/node/types';
+import {Icons} from '@/components';
 import styles from './FileItem.less';
 import RightMenu from '@right-menu/react';
-import { EventEmitter } from 'ahooks/lib/useEventEmitter';
-import { WebDavEventType } from '@/_utils/types';
-import { useBoolean, useDrag, useDrop, useLatest } from 'ahooks';
+import {EventEmitter} from 'ahooks/lib/useEventEmitter';
+import {WebDavEventType} from '@/_utils/types';
+import {useBoolean, useDrag, useDrop, useLatest} from 'ahooks';
 import Utils from '@/_utils/utils';
 import classnames from 'classnames';
-import { i18nKit } from '@hocgin/browser-addone-kit';
+import {i18nKit} from '@hocgin/browser-addone-kit';
 
 const FileTypeImage: React.FC<{
   src?: string;
   className?: string;
   suffix?: string;
   type: 'file' | 'directory';
-}> = ({ className, suffix, type, src }) => {
+}> = ({className, suffix, type, src}) => {
   if ('directory' === type) {
     src = Icons.directory();
   } else {
     src = Icons.file(type, suffix);
   }
-  return <Image className={className} preview={false} src={src} />;
+  return <Image className={className} preview={false} src={src}/>;
 };
 
 const Index: React.FC<{
@@ -30,11 +30,11 @@ const Index: React.FC<{
   onClick?: (data: FileStat) => void;
   className?: string;
   data: FileStat;
-}> = ({ data, onClick, webDav$ }) => {
+}> = ({data, onClick, webDav$}) => {
   console.log('data', data);
   const ref = useRef<any>();
-  let { modal } = App.useApp();
-  let [moved, { set: setMoved }] = useBoolean(false);
+  let {modal} = App.useApp();
+  let [moved, {set: setMoved}] = useBoolean(false);
   let [title, setTitle] = useState(data.basename ?? '文件未命名');
   let latTitle = useLatest(title);
   // 拖动
@@ -53,7 +53,7 @@ const Index: React.FC<{
             from: aData.filename,
             to: `${data.filename}/${aData.basename}`,
           },
-        });
+        } as WebDavEventType);
         setMoved(false);
       }
     },
@@ -65,19 +65,19 @@ const Index: React.FC<{
       type: 'li',
       text: i18nKit.getMessage(`preview` as any),
       callback: () =>
-        webDav$.emit({ type: `preview.${data.type}`, value: data.filename }),
+        webDav$.emit({type: `preview.${data.type}`, value: data.filename} as WebDavEventType),
     },
     {
       type: 'li',
       text: i18nKit.getMessage(`open` as any),
       callback: () =>
-        webDav$.emit({ type: `open.${data.type}`, value: data.filename }),
+        webDav$.emit({type: `open.${data.type}`, value: data.filename} as WebDavEventType),
     },
     {
       type: 'li',
       text: i18nKit.getMessage(`download` as any),
       callback: () =>
-        webDav$.emit({ type: `download.${data.type}`, value: data.filename }),
+        webDav$.emit({type: `download.${data.type}`, value: data.filename} as WebDavEventType),
     },
     {
       type: 'li',
@@ -111,7 +111,7 @@ const Index: React.FC<{
                 from: data.filename,
                 to: `/${fele.join('/')}`,
               },
-            });
+            } as WebDavEventType);
           },
         });
       },
@@ -137,7 +137,7 @@ const Index: React.FC<{
             data.basename
           }"`,
           onOk: () =>
-            webDav$.emit({ type: 'delete.file', value: data.filename }),
+            webDav$.emit({type: 'delete.file', value: data.filename}),
         }),
     },
   ];
@@ -150,11 +150,11 @@ const Index: React.FC<{
       ref={ref}
     >
       {/*@ts-ignore  theme={'win10'}*/}
-      <RightMenu options={options}>
+      <RightMenu options={options as any}>
         <div className={styles.fileInfo} onClick={() => onClick?.(data)}>
           <FileTypeImage
             className={styles.image}
-            type={data?.type}
+            type={data?.type as any}
             suffix={Utils.getSuffix(data.basename)}
           />
           <div className={styles.title}>{data.basename}</div>

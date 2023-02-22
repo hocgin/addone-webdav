@@ -1,5 +1,5 @@
 import React from 'react';
-import {message, Upload, UploadProps} from "antd";
+import {Upload, UploadProps} from "antd";
 import {EventEmitter} from "ahooks/lib/useEventEmitter";
 import {WebDavEventType} from "@/_utils/types";
 import classnames from "classnames";

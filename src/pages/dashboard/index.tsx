@@ -101,7 +101,7 @@ const Index = () => {
       <SaveModal
         id={editId}
         visible={editId as any}
-        onCancel={setEditId.bind(this, undefined)}
+        onCancel={setEditId.bind(this, undefined as any)}
         onOk={() => $list.runAsync()}
       />
     </Container>
