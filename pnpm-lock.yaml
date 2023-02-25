@@ -2,8 +2,8 @@ lockfileVersion: 5.4
 
 specifiers:
   '@ahooksjs/use-url-state': ^3.5.0
-  '@hocgin/browser-addone-kit': ^2.0.42
-  '@hocgin/hkit': ^2.0.42
+  '@hocgin/browser-addone-kit': ^2.0.43
+  '@hocgin/hkit': ^2.0.43
   '@hocgin/ui': ^5.0.20
   '@hocgin/umijs-plugin-browser-addone': ^1.0.93
   '@right-menu/react': 0.0.5
@@ -33,9 +33,9 @@ specifiers:
 
 dependencies:
   '@ahooksjs/use-url-state': 3.5.0_rlw3ibuvnpt5jvejeevjcf4ije
-  '@hocgin/browser-addone-kit': 2.0.42_uwhne266dkejezmfk5wyv5g2yi
-  '@hocgin/hkit': 2.0.42_dayjs@1.11.7
-  '@hocgin/ui': 5.0.20_poy4gliwvv2jbjmn755xrqpgf4
+  '@hocgin/browser-addone-kit': 2.0.43_vweyub5lsgmuzp2ntsr6r6t5di
+  '@hocgin/hkit': 2.0.43_dayjs@1.11.7
+  '@hocgin/ui': 5.0.20_l6ljgptib3pdvrc3hpq6sbfcna
   '@right-menu/react': 0.0.5
   antd: 5.2.2_biqbaboplfbrettd7655fr4n2y
   classnames: 2.3.2
@@ -1048,27 +1048,27 @@ packages:
     deprecated: the package is rather renamed to @formatjs/ecma-abstract with some changes in functionality (primarily selectUnit is removed and we don't plan to make any further changes to this package
     dev: true
 
-  /@hocgin/ahooks-kit/2.0.16_uwhne266dkejezmfk5wyv5g2yi:
+  /@hocgin/ahooks-kit/2.0.16_vweyub5lsgmuzp2ntsr6r6t5di:
     resolution: {integrity: sha512-ClWKkbb4X6xibyKM7fkfW1e+2IH+HVzW3u+FVqnVZSuvzAdG7l8jCEVai5BtirjoqbNZsaSZXg70yjei5k1H/A==}
     peerDependencies:
       '@hocgin/hkit': workspace:*
       react: ^18
       react-dom: ^18
     dependencies:
-      '@hocgin/hkit': 2.0.42_dayjs@1.11.7
+      '@hocgin/hkit': 2.0.43_dayjs@1.11.7
       ahooks: 3.7.3_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     dev: false
 
-  /@hocgin/browser-addone-kit/2.0.42_uwhne266dkejezmfk5wyv5g2yi:
-    resolution: {integrity: sha512-eQy+Dgehai4unk4+zam8S8ebcQUWzMBleav8wH2l2otLzZzD8ya8UKEUdjNp5M3lb4N54VoPHw3DrQ+/rgXKng==}
+  /@hocgin/browser-addone-kit/2.0.43_vweyub5lsgmuzp2ntsr6r6t5di:
+    resolution: {integrity: sha512-Z6fhonIqzqImrY8C0pi7ovfSOR7HesaVv1AJJN4E9OZh2cglc+b1Cp+UavMHMI4HINULGD+MjHvmKCTj9qKG9A==}
     peerDependencies:
       '@hocgin/hkit': workspace:*
       react: ^18
       react-dom: ^18
     dependencies:
-      '@hocgin/hkit': 2.0.42_dayjs@1.11.7
+      '@hocgin/hkit': 2.0.43_dayjs@1.11.7
       expiry-map: 2.0.0
       js-md5: 0.7.3
       query-string: 7.1.3
@@ -1076,8 +1076,8 @@ packages:
       react-dom: 18.2.0_react@18.2.0
     dev: false
 
-  /@hocgin/hkit/2.0.42_dayjs@1.11.7:
-    resolution: {integrity: sha512-sv5e1r4t5cgDo1T0qdFKPqBFUvn+BXiKovpGKH7ZsK1ofKL/FEjdAIeK80/yYhoe11MSaQaV1T5H6urQjr7+0w==}
+  /@hocgin/hkit/2.0.43_dayjs@1.11.7:
+    resolution: {integrity: sha512-yoBjjhwOiX4CNmQsHhn8k4GKpUoSVLPEFNKiOFw6ZoOvgfyd8xCWcRx2dKPcodelCLxJ6f1C5JwN/RjHAmEL2A==}
     peerDependencies:
       dayjs: ^1.11.1
     dependencies:
@@ -1086,7 +1086,7 @@ packages:
       umi-request: 1.4.0
     dev: false
 
-  /@hocgin/ui/5.0.20_poy4gliwvv2jbjmn755xrqpgf4:
+  /@hocgin/ui/5.0.20_l6ljgptib3pdvrc3hpq6sbfcna:
     resolution: {integrity: sha512-TRI7OxIMpiJn4h7nybAHb5mMh31rkCvQGMBwFynhTNSZNWIdyv70MCaHWRrvlUMcdZxeRQElMvFiaYvpER+17A==}
     peerDependencies:
       '@hocgin/ahooks-kit': ^2.0.16
@@ -1099,8 +1099,8 @@ packages:
       '@ant-design/icons': 5.0.1_biqbaboplfbrettd7655fr4n2y
       '@ant-design/pro-components': 2.3.47_xrdag4fhnsdts4zkyqbvlsya5e
       '@babel/runtime': 7.20.7
-      '@hocgin/ahooks-kit': 2.0.16_uwhne266dkejezmfk5wyv5g2yi
-      '@hocgin/hkit': 2.0.42_dayjs@1.11.7
+      '@hocgin/ahooks-kit': 2.0.16_vweyub5lsgmuzp2ntsr6r6t5di
+      '@hocgin/hkit': 2.0.43_dayjs@1.11.7
       '@tiptap/core': 2.0.0-beta.209_rd5pjtxohzfgv2zee3iufpqkay
       '@tiptap/extension-blockquote': 2.0.0-beta.209_f4ffqkgz5d3wev7su7t7l2rrua
       '@tiptap/extension-bold': 2.0.0-beta.209_f4ffqkgz5d3wev7su7t7l2rrua

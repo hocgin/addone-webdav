@@ -20,20 +20,9 @@
     "test": "umi-test",
     "test:coverage": "umi-test --coverage"
   },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
-  "lint-staged": {
-    "*.{js,jsx,less,md,json}": [
-      "prettier --write"
-    ],
-    "*.ts?(x)": [
-      "prettier --parser=typescript --write"
-    ]
-  },
   "dependencies": {
-    "@hocgin/browser-addone-kit": "^2.0.42",
-    "@hocgin/hkit": "^2.0.42",
+    "@hocgin/browser-addone-kit": "^2.0.43",
+    "@hocgin/hkit": "^2.0.43",
     "@hocgin/ui": "^5.0.20",
     "antd": "^5.2.2",
     "@ahooksjs/use-url-state": "^3.5.0",
