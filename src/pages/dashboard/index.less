@@ -1,0 +1,60 @@
+.container {
+  height: 100%;
+}
+
+.layout {
+  height: 100vh;
+}
+
+.sider {
+  background-color: #fff;
+
+  :global(.ant-layout-sider-children) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .siderHeader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 6px 10px 2px;
+  }
+
+  .siderMenu {
+    flex: 1 1;
+    margin-top: 4px;
+    border-top: 1px dashed #eaeaea;
+
+    :global(.ant-menu-item-selected) {
+      background-color: #6666661a;
+    }
+  }
+
+  .siderTool {
+    padding: 8px;
+    border-top: 1px dashed #eaeaea;
+    justify-content: space-between;
+  }
+
+  :global(.ant-menu-item) {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  :global(.ant-btn-group) {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  :global(.ant-btn-group .ant-btn:first-child) {
+    flex: 1;
+  }
+}
+
+.empty {
+  margin: 5px;
+}
