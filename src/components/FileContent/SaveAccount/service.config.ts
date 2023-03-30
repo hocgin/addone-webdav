@@ -81,8 +81,8 @@ export let ServiceConfig = [
     urlDoc: {
       title: '参考文档',
       imageSrc: 'https://cdn.hocgin.top/uPic/favicon.ico',
-      description: 'https://www.hocgin.top/webdav/doc.html',
-      href: 'https://www.hocgin.top/webdav/doc.html',
+      description: 'https://logspot.hocgin.top/addone-webdav',
+      href: 'https://logspot.hocgin.top/addone-webdav',
     }
   },
 ];
