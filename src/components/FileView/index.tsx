@@ -11,6 +11,8 @@ import styles from './index.less';
 import ZipViewer from './ZipViewer';
 import MdViewer from './MdViewer';
 import {I18nKit} from '@hocgin/browser-addone-kit';
+import AudioViewer from "@/components/FileView/AudioViewer";
+import VideoViewer from "@/components/FileView/VideoViewer";
 
 /**
  * https://github.com/plangrid/react-file-viewer
@@ -25,12 +27,16 @@ export const FileView: React.FC<{
 }> = ({fileUrl, fileType = 'unknown'}) => {
   console.log(`fileType=${fileType}, fileUrl=${fileUrl}`);
   let viewerEl;
-  if (['png', 'jpeg', 'gif', 'jpg', 'webp', 'ico'].includes(fileType)) {
+  if (['png', 'svg', 'bmp', 'jpeg', 'gif', 'jpg', 'webp', 'ico'].includes(fileType)) {
     viewerEl = <Image preview={false} src={fileUrl}/>;
   } else if (['txt', 'js'].includes(fileType)) {
     viewerEl = <TextViewer fileUrl={fileUrl}/>;
   } else if (['md'].includes(fileType)) {
     viewerEl = <MdViewer fileUrl={fileUrl}/>;
+  } else if (['.mp3', '.wma', '.rm', '.wav', '.mid', '.ape', '.flac'].includes(fileType)) {
+    viewerEl = <AudioViewer fileUrl={fileUrl}/>;
+  } else if (['.mpg', '.mp4', '.mpeg', '.avi', '.rm', '.rmvb', '.mov', '.wmv', '.asf', '.dat', '.asx', '.wvx', '.mpe', '.mpa'].includes(fileType)) {
+    viewerEl = <VideoViewer fileUrl={fileUrl}/>;
   } else if (['zip'].includes(fileType)) {
     viewerEl = <ZipViewer fileUrl={fileUrl}/>;
   } else {
