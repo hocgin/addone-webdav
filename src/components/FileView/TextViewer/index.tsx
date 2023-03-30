@@ -7,9 +7,7 @@ const Index: React.FC<{
 }> = ({fileUrl}) => {
   let [content, setContent] = useState<string>();
   useAsyncEffect(async () => {
-    if (!fileUrl) {
-      return;
-    }
+    if (!fileUrl) return;
     setContent(await new File([await fetch(fileUrl).then(r => r.blob())], '_').text());
   }, [fileUrl]);
 
