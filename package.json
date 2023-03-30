@@ -21,8 +21,8 @@
     "test:coverage": "umi-test --coverage"
   },
   "dependencies": {
-    "@hocgin/browser-addone-kit": "^2.0.43",
-    "@hocgin/hkit": "^2.0.43",
+    "@hocgin/browser-addone-kit": "^2.0.60",
+    "@hocgin/hkit": "^2.0.60",
     "@hocgin/ui": "^5.0.20",
     "antd": "^5.2.2",
     "@ahooksjs/use-url-state": "^3.5.0",
@@ -42,7 +42,6 @@
     "@types/mockjs": "^1.0.6",
     "@types/react": "^18.x",
     "@types/react-dom": "^18.x",
-    "@umijs/plugin-qiankun": "^2.37.2",
     "@umijs/preset-react": "^1.8.30",
     "@umijs/test": "^3.5.20",
     "babel-plugin-transform-remove-console": "^6.9.4",

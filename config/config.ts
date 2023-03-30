@@ -24,12 +24,6 @@ export default defineConfig({
     antd: true,
   },
   antd: {},
-  dva: {},
-  qiankun: {
-    slave: {
-      shouldNotModifyDefaultBase: true,
-    },
-  },
   outputPath: './dist',
   favicon: 'https://cdn.hocgin.top/uPic/favicon.ico',
   nodeModulesTransform: {
