@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Utils from '@/_utils/utils';
 import WebDavService from '@/services/webdav';
 import {useRequest} from 'ahooks';
-import {Modal, Image} from 'antd';
+import {Modal, Image, Skeleton} from 'antd';
 import memoizeOne from 'memoize-one';
 import TextViewer from './TextViewer';
 import styles from './index.less';
@@ -29,7 +29,9 @@ export const FileView: React.FC<{
   let viewerEl;
   if (['png', 'svg', 'bmp', 'jpeg', 'gif', 'jpg', 'webp', 'ico'].includes(fileType)) {
     viewerEl = <Image preview={false} src={fileUrl}/>;
-  } else if (['txt', 'js'].includes(fileType)) {
+  } else if (['txt', 'js', 'json', 'java', 'css', 'sh',
+    'html',
+    'ejs', 'ts', 'tsx'].includes(fileType)) {
     viewerEl = <TextViewer fileUrl={fileUrl}/>;
   } else if (['md'].includes(fileType)) {
     viewerEl = <MdViewer fileUrl={fileUrl}/>;
@@ -115,14 +117,10 @@ export const FileViewModal: React.FC<{
       footer={null}
       className={styles.modal}
       onCancel={onCancel}
-      open={visible}
-    >
-      {visible &&
-        (loading ? (
-          <>加载中</>
-        ) : (
-          <FileView fileType={fileType} fileUrl={fileUrl}/>
-        ))}
+      open={visible}>
+      {(visible && loading)
+        ? <Skeleton active/>
+        : <FileView fileType={fileType} fileUrl={fileUrl}/>}
     </Modal>
   );
 };

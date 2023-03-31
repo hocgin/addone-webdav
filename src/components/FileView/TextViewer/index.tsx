@@ -1,17 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import {useAsyncEffect} from "ahooks";
+import SyntaxHighlighter from "react-syntax-highlighter";
 
 const Index: React.FC<{
   className?: string;
   fileUrl?: string;
 }> = ({fileUrl}) => {
-  let [content, setContent] = useState<string>();
+  let [content, setContent] = useState<string | any>();
   useAsyncEffect(async () => {
     if (!fileUrl) return;
     setContent(await new File([await fetch(fileUrl).then(r => r.blob())], '_').text());
   }, [fileUrl]);
-
-  return (<code style={{textAlign: 'unset'}}>{content}</code>);
+  return (<SyntaxHighlighter language={'javascript'}>{content}</SyntaxHighlighter>);
 };
 
 export default Index;
