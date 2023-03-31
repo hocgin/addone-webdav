@@ -1,6 +1,4 @@
 import React, {useEffect, useState} from 'react';
-// @ts-ignore
-import FileViewer from 'react-file-viewer';
 import Utils from '@/_utils/utils';
 import WebDavService from '@/services/webdav';
 import {useRequest} from 'ahooks';
@@ -13,7 +11,8 @@ import MdViewer from './MdViewer';
 import {I18nKit} from '@hocgin/browser-addone-kit';
 import AudioViewer from "@/components/FileView/AudioViewer";
 import VideoViewer from "@/components/FileView/VideoViewer";
-import PdfViewer from "@/components/FileView/PdfViewer";
+// @ts-ignore
+import FileViewer from 'react-file-viewer';
 
 /**
  * https://github.com/plangrid/react-file-viewer
@@ -40,16 +39,10 @@ export const FileView: React.FC<{
     viewerEl = <VideoViewer fileUrl={fileUrl}/>;
   } else if (['zip'].includes(fileType)) {
     viewerEl = <ZipViewer fileUrl={fileUrl}/>;
-  } else if (['pdf'].includes(fileType)) {
-    viewerEl = <PdfViewer filePath={fileUrl}/>;
   } else {
-    // viewerEl = (
-    //   <FileViewer
-    //     fileType={fileType}
-    //     filePath={fileUrl}
-    //     onError={console.error.bind(this, 'FileView')}
-    //   />
-    // );
+    viewerEl = (
+      <FileViewer fileType={fileType as any} filePath={fileUrl}/>
+    );
   }
   return <div className={styles.viewer}>{viewerEl}</div>;
 };
@@ -122,7 +115,7 @@ export const FileViewModal: React.FC<{
       footer={null}
       className={styles.modal}
       onCancel={onCancel}
-      visible={visible}
+      open={visible}
     >
       {visible &&
         (loading ? (
