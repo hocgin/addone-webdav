@@ -33,8 +33,9 @@
     "query-string": "^7.0.1",
     "react": "18.x",
     "react-dom": "18.x",
-    "react-file-viewer": "^1.2.1",
     "react-markdown": "^8.0.6",
+    "react-pdf": "2.2.0",
+    "react-visibility-sensor": "^5.1.1",
     "webdav": "^4.11.0"
   },
   "devDependencies": {
@@ -46,6 +47,7 @@
     "@umijs/test": "^3.5.20",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "cross-env": "^7.0.3",
+    "install": "^0.13.0",
     "lint-staged": "^10.0.7",
     "mockjs": "^1.1.0",
     "prettier": "^2.2.0",

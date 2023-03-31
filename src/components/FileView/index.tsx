@@ -13,6 +13,7 @@ import MdViewer from './MdViewer';
 import {I18nKit} from '@hocgin/browser-addone-kit';
 import AudioViewer from "@/components/FileView/AudioViewer";
 import VideoViewer from "@/components/FileView/VideoViewer";
+import PdfViewer from "@/components/FileView/PdfViewer";
 
 /**
  * https://github.com/plangrid/react-file-viewer
@@ -39,14 +40,16 @@ export const FileView: React.FC<{
     viewerEl = <VideoViewer fileUrl={fileUrl}/>;
   } else if (['zip'].includes(fileType)) {
     viewerEl = <ZipViewer fileUrl={fileUrl}/>;
+  } else if (['pdf'].includes(fileType)) {
+    viewerEl = <PdfViewer filePath={fileUrl}/>;
   } else {
-    viewerEl = (
-      <FileViewer
-        fileType={fileType}
-        filePath={fileUrl}
-        onError={console.error.bind(this, 'FileView')}
-      />
-    );
+    // viewerEl = (
+    //   <FileViewer
+    //     fileType={fileType}
+    //     filePath={fileUrl}
+    //     onError={console.error.bind(this, 'FileView')}
+    //   />
+    // );
   }
   return <div className={styles.viewer}>{viewerEl}</div>;
 };
