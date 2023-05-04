@@ -63,33 +63,33 @@ const Index: React.FC<{
   let options = [
     {
       type: 'li',
-      text: I18nKit.getMessageOrDefault(`preview` as any),
+      text: I18nKit.getMessageOrDefault(`preview`),
       callback: () =>
         webDav$.emit({type: `preview.${data.type}`, value: data.filename} as WebDavEventType),
     },
     {
       type: 'li',
-      text: I18nKit.getMessageOrDefault(`open` as any),
+      text: I18nKit.getMessageOrDefault(`open`),
       callback: () =>
         webDav$.emit({type: `open.${data.type}`, value: data.filename} as WebDavEventType),
     },
     {
       type: 'li',
-      text: I18nKit.getMessageOrDefault(`download` as any),
+      text: I18nKit.getMessageOrDefault(`download`),
       callback: () =>
         webDav$.emit({type: `download.${data.type}`, value: data.filename} as WebDavEventType),
     },
     {
       type: 'li',
-      text: I18nKit.getMessageOrDefault(`rename` as any),
+      text: I18nKit.getMessageOrDefault(`rename`),
       callback: () => {
         console.log('重命名.data', data);
         modal.confirm({
-          title: I18nKit.getMessageOrDefault(`rename` as any),
+          title: I18nKit.getMessageOrDefault(`rename`),
           icon: <></>,
           content: (
             <Input
-              placeholder={I18nKit.getMessageOrDefault(`newtitle` as any)}
+              placeholder={I18nKit.getMessageOrDefault(`newtitle`)}
               defaultValue={data.basename}
               onChange={(v) => setTitle(v.target.value)}
             />
@@ -98,7 +98,7 @@ const Index: React.FC<{
             let newBasename = latTitle.current;
             if (!newBasename) {
               message.error(
-                I18nKit.getMessageOrDefault(`newtitle_error_message` as any),
+                I18nKit.getMessageOrDefault(`newtitle_error_message`),
               );
               return;
             }
@@ -119,21 +119,21 @@ const Index: React.FC<{
     {
       type: 'li',
       disabled: true,
-      text: I18nKit.getMessageOrDefault(`click_copy` as any),
+      text: I18nKit.getMessageOrDefault(`click_copy`),
       callback: () => alert('点击了复制'),
     },
     {
       type: 'li',
       disabled: true,
-      text: I18nKit.getMessageOrDefault(`click_cut` as any),
+      text: I18nKit.getMessageOrDefault(`click_cut`),
       callback: () => alert('点击了剪切'),
     },
     {
       type: 'li',
-      text: I18nKit.getMessageOrDefault(`click_del` as any),
+      text: I18nKit.getMessageOrDefault(`click_del`),
       callback: () =>
         modal.confirm({
-          title: `${I18nKit.getMessageOrDefault(`confirm_delete` as any)}"${
+          title: `${I18nKit.getMessageOrDefault(`confirm_delete`)}"${
             data.basename
           }"`,
           onOk: () =>
@@ -150,11 +150,11 @@ const Index: React.FC<{
       ref={ref}
     >
       {/*@ts-ignore  theme={'win10'}*/}
-      <RightMenu options={options as any}>
+      <RightMenu options={options}>
         <div className={styles.fileInfo} onClick={() => onClick?.(data)}>
           <FileTypeImage
             className={styles.image}
-            type={data?.type as any}
+            type={data?.type}
             suffix={Utils.getSuffix(data.basename)}
           />
           <div className={styles.title}>{data.basename}</div>

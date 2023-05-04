@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Modal, Select, Radio} from 'antd';
+import {Form, Modal, Radio} from 'antd';
 import {useRequest} from "ahooks";
 import AppStorage, {UserSettingKey} from "@/_utils/storage";
 import {OpenType} from '@/_types';
