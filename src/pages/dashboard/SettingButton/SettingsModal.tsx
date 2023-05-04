@@ -1,40 +1,42 @@
 import React from 'react';
-import {Form, Modal, Select} from 'antd';
+import {Form, Modal, Select, Radio} from 'antd';
+import {useRequest} from "ahooks";
+import AppStorage, {UserSettingKey} from "@/_utils/storage";
+import {OpenType} from '@/_types';
 
 const Index: React.FC<{
+  settingKey?: UserSettingKey;
   className?: string;
   visible?: boolean;
   onCancel?: () => void;
-}> = ({onCancel, visible = false}) => {
+}> = ({onCancel, visible = false, settingKey = UserSettingKey.Common}) => {
   let [form] = Form.useForm();
-  return (
-    <Modal
-      closable={false}
-      maskClosable={false}
-      title="设置"
-      visible={visible}
-      onCancel={onCancel}
-    >
-      <Form
-        form={form}
-        labelCol={{span: 4}}
-        wrapperCol={{span: 20}}
-        colon={false}
-      >
-        <Form.Item name="lang" label="语言">
-          <Select
-            options={[
-              {
-                label: '中文',
-                value: 'zh-CN',
-              },
-            ]}
-            defaultValue={'zh-CN'}
-          />
-        </Form.Item>
-      </Form>
-    </Modal>
-  );
+  useRequest(AppStorage.getUserSettingWithKey, {
+    defaultParams: [settingKey],
+    onSuccess: form.setFieldsValue,
+  });
+  return <Modal closable={false} maskClosable={false} title="设置" open={visible} onCancel={onCancel}
+                onOk={async () => {
+                  let values = form.getFieldsValue();
+                  console.log('onFinish', values);
+                  await AppStorage.updateUserSettingWithKey(settingKey, values);
+                  onCancel?.();
+                }}>
+    <Form form={form} labelCol={{span: 4}} wrapperCol={{span: 20}} colon={false}>
+      <Form.Item label="打开方式" name="openType">
+        <Radio.Group buttonStyle="solid">
+          <Radio.Button value={OpenType.Popup}>弹窗</Radio.Button>
+          <Radio.Button value={OpenType.Tab}>标签页</Radio.Button>
+        </Radio.Group>
+      </Form.Item>
+      <Form.Item name="lang" label="语言">
+        <Select options={[{
+          label: '中文',
+          value: 'zh-CN',
+        }]} defaultValue={'zh-CN'}/>
+      </Form.Item>
+    </Form>
+  </Modal>;
 };
 
 export default Index;

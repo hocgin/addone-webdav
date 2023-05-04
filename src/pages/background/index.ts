@@ -2,23 +2,30 @@ import {WebExtension} from '@hocgin/browser-addone-kit';
 import {ServiceWorkerOptions} from '@hocgin/browser-addone-kit/dist/esm/browser/serviceWorker';
 import '@/request.config';
 import Config from "@/config";
+import AppStorage, {UserSettingKey} from "@/_utils/storage";
+import {OpenType} from "@/_types";
 
 WebExtension.kit.serviceWorker({
   ...ServiceWorkerOptions.default,
+  canLogin: false,
   projectId: Config.getProjectId(),
 });
 
 // 点击打开弹窗
-let openNewWindow = (...args: any) => {
+let openNewWindow = async (...args) => {
   console.log('快捷键点击', args);
-  const windowOptions: any = {
-    url: WebExtension.runtime.getURL(`/dashboard.html`),
-    height: 800,
-    width: 1200,
-    type: 'popup',
-    focused: true,
-  };
-  WebExtension.windows.create(windowOptions);
+  let commonSettings = await AppStorage.getUserSettingWithKey(UserSettingKey.Common);
+  if (commonSettings?.openType === OpenType.Popup) {
+    WebExtension.windows.create({
+      url: WebExtension.runtime.getURL(`/dashboard.html`),
+      height: 800,
+      width: 1200,
+      type: 'popup',
+      focused: true,
+    });
+  } else {
+    WebExtension.kit.openURL(WebExtension.runtime.getURL(`/dashboard.html`));
+  }
 };
 WebExtension.action.onClicked.addListener(openNewWindow);
 WebExtension.commands.onCommand.addListener(openNewWindow);
