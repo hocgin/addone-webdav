@@ -29,12 +29,6 @@ const Index: React.FC<{
           <Radio.Button value={OpenType.Tab}>标签页</Radio.Button>
         </Radio.Group>
       </Form.Item>
-      <Form.Item name="lang" label="语言">
-        <Select options={[{
-          label: '中文',
-          value: 'zh-CN',
-        }]} defaultValue={'zh-CN'}/>
-      </Form.Item>
     </Form>
   </Modal>;
 };
