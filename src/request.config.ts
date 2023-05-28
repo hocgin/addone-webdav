@@ -7,10 +7,11 @@ import {WebExtension} from "@hocgin/browser-addone-kit";
 defaultRequestOptions({
   baseUrl: Config.getBaseUrl(),
   ssoServerUrl: Config.getSsoServerUrl(),
+  useDefault: false,
   addHeaders: async () => {
     let headers: any = {};
     if (Config.isDev()) {
-      // headers['X-Username'] = 'hocgin';
+      headers['X-Username'] = 'hocgin';
     }
     headers['Authorization'] = `Bearer ${await WebExtension.kit.getUserToken()}`;
     return headers;

@@ -27,7 +27,7 @@ export default defineConfig({
     permissions: ['scripting', 'downloads', 'contextMenus', 'storage'],
     contentScripts: [
       WebExtension.kit.tbkScriptConfig(['@/pages/contentscripts/tbk']),
-      WebExtension.kit.authorizationScriptConfig(['@/pages/contentscripts/authorization']),
+      WebExtension.kit.authorizationScriptConfig(['@/pages/contentscripts/authorization'], pkg.name),
     ],
     hostPermissions: ['<all_urls>'],
     override: {
