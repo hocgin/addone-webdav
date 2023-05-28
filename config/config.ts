@@ -25,7 +25,7 @@ export default defineConfig({
   },
   antd: {},
   outputPath: './dist',
-  favicon: 'https://cdn.hocgin.top/uPic/favicon.ico',
+  favicon: 'https://cdn.hocgin.top/icons/20220222.addone-webdav.jpeg',
   nodeModulesTransform: {
     type: 'none',
   },
