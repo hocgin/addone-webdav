@@ -144,9 +144,7 @@ const Index: React.FC<{
     }
   });
   useAsyncEffect(async () => {
-    if (!clientId) {
-      return;
-    }
+    if (!clientId) return;
     try {
       let info = await WebDavService.getInfo(clientId);
       setWebDavInfo(info);
