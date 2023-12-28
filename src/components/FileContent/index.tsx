@@ -207,11 +207,11 @@ const Index: React.FC<{
                         icon={config?.grid ? <MenuOutlined /> : <AppstoreOutlined />} />
               </Flex>
             </div>
-            <div className={classNames((config?.grid ? styles.grid : styles.list), styles.body)}>
-              {datasource.length ? datasource.map((data) => {
+            {datasource.length ? <div className={classNames((config?.grid ? styles.grid : styles.list), styles.body)}>
+              {datasource.map((data) => {
                 return <FileItem grid={config?.grid} webDav$={webDav$} data={data} onClick={onClickFile} />;
-              }) : <Empty />}
-            </div>
+              })}
+            </div> : <Empty />}
           </>
         ) : <Empty description="" />}
       </Content>
