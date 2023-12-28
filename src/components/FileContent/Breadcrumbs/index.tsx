@@ -70,9 +70,8 @@ const Index: React.FC<{
                                   }
                                   openDirectory(filename);
                                 }}>
-            <span>{title}</span>
-          </BreadcrumbItem>
-        )
+          <span>{title}</span>
+        </BreadcrumbItem>)
       })}
     </Breadcrumb>
   );
