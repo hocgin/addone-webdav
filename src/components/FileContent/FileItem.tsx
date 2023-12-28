@@ -22,15 +22,17 @@ const FileTypeImage: React.FC<{
   } else {
     src = Icons.file(type, suffix);
   }
-  return <Image className={className} preview={false} src={src}/>;
+  return <Image className={className} preview={false} src={src} />;
 };
 
-const Index: React.FC<{
+type FileItemType = {
   webDav$: EventEmitter<WebDavEventType>;
   onClick?: (data: FileStat) => void;
   className?: string;
+  grid?: boolean;
   data: FileStat;
-}> = ({data, onClick, webDav$}) => {
+};
+const Index: React.FC<FileItemType> = ({data, onClick, webDav$, ...props}) => {
   console.log('data', data);
   const ref = useRef<any>();
   let {modal} = App.useApp();
@@ -141,27 +143,22 @@ const Index: React.FC<{
         }),
     },
   ];
-  return (
-    <a
-      className={classnames(styles.a, {
-        [styles.moved]: moved,
-      })}
-      href={`#${data.basename}`}
-      ref={ref}
-    >
-      {/*@ts-ignore  theme={'win10'}*/}
-      <RightMenu options={options}>
-        <div className={styles.fileInfo} onClick={() => onClick?.(data)}>
-          <FileTypeImage
-            className={styles.image}
-            type={data?.type}
-            suffix={Utils.getSuffix(data.basename)}
-          />
-          <div className={styles.title}>{data.basename}</div>
-        </div>
-      </RightMenu>
-    </a>
-  );
+  return <a className={classnames(styles.a, {
+    [styles.moved]: moved,
+  })} href={`#${data.basename}`} ref={ref}>
+    {/*@ts-ignore  theme={'win10'}*/}
+    <RightMenu options={options}>
+      <div className={classnames(styles.fileInfo, (props?.grid ? styles.grid : styles.list))}
+           onClick={() => onClick?.(data)}>
+        <FileTypeImage
+          className={styles.image}
+          type={data?.type}
+          suffix={Utils.getSuffix(data.basename)}
+        />
+        <div className={styles.title}>{data.basename}</div>
+      </div>
+    </RightMenu>
+  </a>;
 };
 
 export default Index;

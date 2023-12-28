@@ -1,20 +1,15 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Layout,
-  Row,
-  Col,
-  Button,
+  Flex,
   Radio,
   Space,
-  Breadcrumb,
-  message,
-  Badge,
+  message, Button,
 } from 'antd';
-import Utils from '@/_utils/utils';
 import Breadcrumbs from '@/components/FileContent/Breadcrumbs';
 import FileItem from '@/components/FileContent/FileItem';
 import WebDavService from '@/services/webdav';
-import {useAsyncEffect, useBoolean, useEventEmitter} from 'ahooks';
+import {useAsyncEffect, useBoolean, useEventEmitter, useLocalStorageState} from 'ahooks';
 import {FileStat} from 'webdav/dist/node/types';
 import styles from './index.less';
 import {WebDavEventType} from '@/_utils/types';
@@ -28,6 +23,8 @@ import {FileViewModal, useFileView} from '@/components/FileView';
 import {stringify} from 'query-string';
 import {Search} from '@/components';
 import {SyncBadge} from '@/components';
+import classNames from "classnames";
+import {MenuOutlined, AppstoreOutlined} from '@ant-design/icons';
 
 const {Header, Footer, Content} = Layout;
 
@@ -38,6 +35,7 @@ const Index: React.FC<{
   getInstance?: (_: any) => void;
 }> = ({clientId, rowColumn = 12}) => {
   console.log('clientId', clientId);
+  let [config, setConfig] = useLocalStorageState('config', {defaultValue: {grid: true}});
   let [webDavInfo, setWebDavInfo] = useState<WebDavInfo>();
   let [currentPath, setCurrentPath] = useState<string>();
   let [datasource, setDatasource] = useState<FileStat[]>([]);
@@ -198,32 +196,24 @@ const Index: React.FC<{
       <Content className={styles.content}>
         {clientId ? (
           <>
-            <div>
+            <div className={styles.bodyHeader}>
               <Breadcrumbs
                 webDav$={webDav$}
                 base={webDavInfo?.rootDir}
                 current={currentPath}
               />
+              <Flex gap={1}>
+                <Button type='text' size={'small'} onClick={() => setConfig({...config, grid: !config?.grid})}
+                        icon={config?.grid ? <MenuOutlined /> : <AppstoreOutlined />} />
+              </Flex>
             </div>
-            {datasource.length ? (
-              <>
-                {Utils.chunk(datasource, rowColumn).map((colData = []) => (
-                  <Row>
-                    {colData.map((data) => {
-                      return (
-                        <Col span={rowSpan}>
-                          <FileItem webDav$={webDav$} data={data} onClick={onClickFile} />
-                        </Col>
-                      );
-                    })}
-                  </Row>
-                ))}
-              </>
-            ) : <Empty />}
+            <div className={classNames((config?.grid ? styles.grid : styles.list), styles.body)}>
+              {datasource.length ? datasource.map((data) => {
+                return <FileItem grid={config?.grid} webDav$={webDav$} data={data} onClick={onClickFile} />;
+              }) : <Empty />}
+            </div>
           </>
-        ) : (
-          <Empty description="" />
-        )}
+        ) : <Empty description="" />}
       </Content>
       <FileViewModal
         loading={loadingFile}

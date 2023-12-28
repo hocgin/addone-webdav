@@ -50,8 +50,8 @@ const Index: React.FC<{
 }> = ({webDav$, base = '/', current = '/'}) => {
   let currentPaths = Utils.splitPath(current);
   let basePaths = Utils.splitPath(base);
-  let openDirectory = (path: string) =>
-    webDav$.emit({type: `open.directory` as any, value: path});
+  let openDirectory = (path: string) => webDav$.emit({type: `open.directory` as any, value: path});
+  console.log('currentPaths', currentPaths);
   return (
     <Breadcrumb>
       <BreadcrumbItem webDav$={webDav$} filename={base} href={`#/`} onClick={() => openDirectory(base)}>

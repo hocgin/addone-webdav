@@ -17,4 +17,32 @@
   border-left: 1px solid #eaeaea;
   border-top-left-radius: 5px;
   padding: 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+.body {
+
+}
+
+.bodyHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.grid {
+  --size: 100px;
+
+  display: grid;
+  justify-content: space-between;
+  grid-template-columns: repeat(auto-fill, var(--size));
+  grid-gap: 2px;
+  overflow-y: auto;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
 }
